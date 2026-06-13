@@ -1,0 +1,44 @@
+name: CD
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:  # Allow manual trigger
+
+env:
+  FLUTTER_VERSION: "3.35.0"
+
+jobs:
+  build-web:
+    name: Build Web
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+          cache: "gradle"
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: "stable"
+          cache: true
+
+      - name: Bootstrap workspace
+        run: dart run melos bootstrap
+
+      - name: Generate code
+        run: dart run melos run generate
+
+      - name: Build condor_code web
+        run: cd apps/condor_code_app && flutter build web -t lib/main.dart --dart-define=BUILD_TYPE=prod --dart-define=DATA_SOURCE=remote
+
+      - name: Build condor_code_admin web
+        run: cd apps/condor_code_admin_app && flutter build web -t lib/main.dart --dart-define=BUILD_TYPE=prod --dart-define=DATA_SOURCE=remote

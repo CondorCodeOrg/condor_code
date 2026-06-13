@@ -1,0 +1,38 @@
+name: data
+description: "A new Flutter package project."
+publish_to: none
+version: 0.0.1
+homepage:
+resolution: workspace
+
+environment:
+  sdk: ^3.9.0
+  flutter: ">=3.35.0 <4.0.0"
+
+dependencies:
+  # Firebase
+  firebase_core: ^4.1.1
+  firebase_remote_config: ^6.0.2
+  firebase_auth: ^6.1.0
+  cloud_firestore: ^6.0.2
+  firebase_storage: ^13.0.2
+  dio: ^5.4.3+1
+  shared_preferences: ^2.3.1
+
+  domain:
+    path: ../domain
+
+  get_it: any
+  flutter:
+    sdk: flutter
+  google_sign_in: any
+  injectable: any
+  logger: any
+  json_annotation: ^4.9.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner: ^2.4.14
+  json_serializable: ^6.9.5
+  

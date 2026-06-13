@@ -1,0 +1,23 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - "lib/generated/**"
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+
+linter:
+  rules:
+    avoid_print: true
+    prefer_const_constructors: true
+    prefer_const_literals_to_create_immutables: true
+    prefer_final_fields: true
+    prefer_final_locals: true
+    prefer_single_quotes: true
+    always_use_package_imports: true
+    avoid_relative_lib_imports: true
+    unnecessary_this: true
+
+    annotate_overrides: true
+    type_annotate_public_apis: true
+    sort_child_properties_last: true

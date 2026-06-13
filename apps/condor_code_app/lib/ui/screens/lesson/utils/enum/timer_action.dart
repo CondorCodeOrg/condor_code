@@ -1,0 +1,1 @@
+enum TimerAction { start, stop }

@@ -1,0 +1,219 @@
+{
+  "@@locale": "en",
+  "courses": "Courses",
+  "lessonsAmount": "{count} lessons",
+  "@lessonsAmount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "informationWhereCoursesLocated": "{courseName} course currently is under development. \nLet us know if you're interested in it!",
+  "@informationWhereCoursesLocated": {
+    "placeholders": {
+      "courseName": {
+        "type": "String"
+      }
+    }
+  },
+  "informationWhereLessonsLocated": "{lessonName} lessons currently is under development. \nLet us know if you're interested in it!",
+  "@informationWhereLessonsLocated": {
+    "placeholders": {
+      "lessonName": {
+        "type": "String"
+      }
+    }
+  },
+  "lessonsName": "{lessonsName} Lessons",
+  "@lessonsName": {
+    "placeholders": {
+      "lessonsName": {
+        "type": "String"
+      }
+    }
+  },
+  "canNotOpenUrl": "We can not open {url}",
+  "@canNotOpenUrl": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "checkKnowledgeAppBar": "{coursesName}. Check knowledge",
+  "@checkKnowledgeAppBar": {
+    "placeholders": {
+      "coursesName": {
+        "type": "String"
+      }
+    }
+  },
+  "informationWhereTasksLocated": "{coursesName} tasks currently is under development. \nLet us know if you're interested in it!",
+  "@informationWhereTasksLocated": {
+    "placeholders": {
+      "coursesName": {
+        "type": "String"
+      }
+    }
+  },
+  "emptyCoursesList": "Courses currently is under development. \nLet us know if you're interested in it!",
+  "answer": "Answer",
+  "task": "Task",
+  "profile": "Profile",
+  "registration": "Registration",
+  "subscriptions": "subscriptions",
+  "subscribers": "subscribers",
+  "addFriends": "Add Friends",
+  "statistics": "Statistics",
+  "recommendedFriends": "Recommended friends",
+  "viewAll": "view all",
+  "achievements": "Achievements",
+  "letUsKnow": "Let us know",
+  "noCoursesInformation": "No courses here yet",
+  "noLessonsInformation": "No lessons here yet",
+  "watchOnYouTube": "Watch on YouTube",
+  "checkMyKnowledge": "Check my knowledge",
+  "invalidYouTubeLink": "Error: Invalid YouTube link",
+  "noTasksInformation": "No tasks here yet",
+  "checkMyCode": "Check my code",
+  "contactsScreen": "Contacts",
+  "home": "Home",
+  "subscribeToUs": "Subscribe to all our social networks and YouTube!",
+  "youTube": "YouTube",
+  "telegram": "Telegram",
+  "instagram": "Instagram",
+  "linkedIn": "LinkedIn",
+  "tiktok": "TikTok",
+  "welcomeTo": "Welcome to ",
+  "condorCodeBrand": "Condor Code!",
+  "homeIntro": "You are on the Condor Code website — a platform created by students of individual mentor Oleh Savenko. Here you can learn Flutter and Dart, find lessons and homework with answers, and check your results.",
+  "featureLessonsTitle": "Flutter and Dart Lessons",
+  "featureLessonsDesc": "Structured materials for gradual learning of Dart and the Flutter framework.",
+  "featureHomeworkTitle": "Homework with Answers",
+  "featureHomeworkDesc": "Practical tasks for each lesson with the ability to view answers and self-check.",
+  "featureCheckTitle": "Result Verification",
+  "featureCheckDesc": "Convenient verification of your solutions and progress tracking.",
+  "startLearning": "Let's Start Learning!",
+  "youtubeCtaText": "Main video materials are on Oleh Savenko's YouTube channel",
+  "goToYouTubeChannel": "Go to YouTube channel",
+  "footerDescription": "Condor Code — a platform for learning Flutter and Dart from students of mentor Oleh Savenko.",
+  "copyright": "© {year} Condor Code. All rights reserved.",
+  "@copyright": {"placeholders": {"year": {"type": "int"}}},
+  "mentorName": "Oleh Savenko",
+  "youtubeBlockDesc": "Flutter and Dart video lessons, tutorials and code reviews — main content is here.",
+  "telegramChannel": "— channel",
+  "telegramGroup": "— group",
+  "telegramChannelDesc": "Blog, dev news, announcements of new videos and podcasts.",
+  "telegramGroupDesc": "Programmers group: we help each other with code and difficulties.",
+  "goTo": "Go",
+  "createNewLesson": "Create new lesson",
+  "viewLessons": "View lessons",
+  "lessonCreationComingSoon": "Lesson creation will be available soon.",
+  "addVideoPlaceholder": "Add video (mainVideo with thumbnail)",
+  "knowledgeBase": "Knowledge base",
+  "knowledgeBaseOpen": "Open knowledge base",
+  "knowledgeBaseNavDashboard": "Dashboard",
+  "knowledgeBaseNavRoadmap": "Roadmap",
+  "knowledgeBaseNavLibrary": "Library",
+  "knowledgeBaseNavSearch": "Search",
+  "knowledgeBaseUpgradePro": "Upgrade to Pro",
+  "knowledgeBaseSettings": "Settings",
+  "knowledgeBaseLogout": "Log out",
+  "knowledgeBaseSearchSoon": "Search is coming soon.",
+  "knowledgeBaseHeroTitlePrefix": "Your journey to ",
+  "knowledgeBaseHeroTitleHighlight": "Flutter mastery",
+  "knowledgeBaseHeroSubtitle": "Stay updated with the latest news and explore curated learning resources. A professional path for the modern developer.",
+  "knowledgeBaseTagPopular": "MOST POPULAR",
+  "knowledgeBaseTagInteractive": "INTERACTIVE",
+  "knowledgeBaseRoadmapCardTitle": "Interactive roadmap",
+  "knowledgeBaseRoadmapCardDesc": "Master architecture from Junior to Principal engineer with our visual progress tracker.",
+  "knowledgeBaseStartLearning": "Start learning",
+  "knowledgeBaseFlutterBasics": "Flutter basics",
+  "knowledgeBaseDartDeepDive": "Dart deep dive",
+  "knowledgeBaseLessonCount": "{count} lessons",
+  "@knowledgeBaseLessonCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "knowledgeBaseModuleCount": "{count} modules",
+  "@knowledgeBaseModuleCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "knowledgeBaseLatestUpdates": "Latest updates",
+  "knowledgeBaseViewAllActivity": "View all activity",
+  "knowledgeBaseLearningPillars": "Learning pillars",
+  "knowledgeBaseNewsCategoryArticle": "ARTICLE",
+  "knowledgeBaseNewsCategoryRoadmap": "ROADMAP",
+  "knowledgeBaseNewsCategoryAnnouncement": "ANNOUNCEMENT",
+  "knowledgeBaseRoadmapPlaceholder": "The interactive Flutter & Dart roadmap for beginners will appear here.",
+  "knowledgeBaseRoadmapGraphHint": "Milestones flow left to right; subtopics and lessons branch out.",
+  "courseLessons": "Lessons",
+  "courseActions": "Actions",
+  "knowledgeCheckTasks": "Tasks",
+  "knowledgeCheckActions": "Actions",
+  "knowledgeCheckTitle": "{courseName}. Knowledge check",
+  "@knowledgeCheckTitle": {
+    "placeholders": {
+      "courseName": {
+        "type": "String"
+      }
+    }
+  },
+  "checkAnswer": "Check answer",
+  "goBack": "Back",
+  "knowledgeBaseResourcesPlaceholder": "Structured articles, videos, and links for beginners will appear here.",
+  "knowledgeBasePillarBasicsTitle": "THE BASICS",
+  "knowledgeBasePillarBasicsItems": "Introduction to widgets\nState management 101\nNavigation & routing\nUser input & forms",
+  "knowledgeBasePillarAdvancedTitle": "ADVANCED LOGIC",
+  "knowledgeBasePillarAdvancedItems": "Isolates & threading\nMethod channels\nCustom painters\nPlatform integration",
+  "knowledgeBasePillarArchTitle": "ARCHITECTURE",
+  "knowledgeBasePillarArchItems": "Clean architecture\nMVVM patterns\nModularization\nDependency injection",
+  "knowledgeBasePillarProdTitle": "PRODUCTION",
+  "knowledgeBasePillarProdItems": "Unit & integration tests\nCI/CD pipelines\nApp store deployment\nPerformance profiling",
+  "onlyTestersTitle": "Staging access",
+  "onlyTestersBody": "This staging build is available only to accounts with tester or admin roles. Sign in with an authorized account or use the production app.",
+  "onlyTestersRequestAccessButton": "Request tester access",
+  "onlyTestersRequestPendingButton": "Request sent",
+  "onlyTestersRequestPendingHint": "Your request is pending. An administrator will review it soon.",
+  "onlyTestersRequestSent": "Request sent to administrators.",
+  "onlyTestersRequestAlreadyPending": "You already have a pending request.",
+  "stagingSignInTitle": "Sign in",
+  "stagingSignInSubtitle": "Use the tester or administrator account issued for this environment.",
+  "stagingSignInEmailLabel": "Email",
+  "stagingSignInPasswordLabel": "Password",
+  "stagingSignInButton": "Sign in",
+  "stagingSignInMissingCredentials": "Enter email and password",
+  "stagingSignInErrorWrongCredentials": "Wrong email or password.",
+  "stagingSignInErrorAccountNotFound": "No account exists with this email address.",
+  "stagingSignInErrorInvalidEmail": "Enter a valid email address.",
+  "stagingSignInErrorUserDisabled": "This account has been disabled.",
+  "stagingSignInErrorGeneric": "Sign-in failed. Please try again.",
+  "stagingSignUpSubtitle": "Create an account. Only tester and administrator roles can use this environment.",
+  "stagingSignUpConfirmPasswordLabel": "Confirm password",
+  "stagingSignUpButton": "Create account",
+  "stagingSignUpPasswordsMismatch": "Passwords do not match.",
+  "stagingSignUpErrorEmailInUse": "An account with this email already exists.",
+  "stagingSignUpErrorWeakPassword": "Password is too weak. Use at least 6 characters.",
+  "stagingSignUpErrorGeneric": "Could not create account. Please try again.",
+  "stagingSwitchToSignUp": "Don't have an account? Sign up",
+  "stagingSwitchToSignIn": "Already have an account? Sign in",
+  "stagingProfileTitle": "Account",
+  "stagingProfileSignOut": "Sign out",
+  "stagingProfileSignOutConfirmTitle": "Sign out",
+  "stagingProfileSignOutConfirm": "Are you sure you want to sign out?",
+  "stagingProfileCancel": "Cancel",
+  "stagingRoleAdmin": "Admin",
+  "stagingRoleTester": "Tester",
+  "stagingRoleUser": "User",
+  "stagingRoleDeveloper": "Developer",
+  "stagingRolePatron": "Patron",
+  "stagingRolePatronDeveloper": "Patron + Developer"
+}

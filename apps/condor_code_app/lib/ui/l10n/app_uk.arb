@@ -1,0 +1,219 @@
+{
+  "@@locale": "uk",
+  "courses": "Курси",
+  "lessonsAmount": "Уроків: {count}",
+  "@lessonsAmount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "informationWhereCoursesLocated": "Курс {courseName} зараз перебуває в розробці. \nПовідомте нас, якщо ви ним зацікавлені!",
+  "@informationWhereCoursesLocated": {
+    "placeholders": {
+      "courseName": {
+        "type": "String"
+      }
+    }
+  },
+  "informationWhereLessonsLocated": "Уроки {lessonName} зараз перебувають у розробці. \nПовідомте нас, якщо ви ними зацікавлені!",
+  "@informationWhereLessonsLocated": {
+    "placeholders": {
+      "lessonName": {
+        "type": "String"
+      }
+    }
+  },
+  "lessonsName": "Уроки {lessonsName}",
+  "@lessonsName": {
+    "placeholders": {
+      "lessonsName": {
+        "type": "String"
+      }
+    }
+  },
+  "canNotOpenUrl": "Ми не можемо відкрити {url}",
+  "@canNotOpenUrl": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "checkKnowledgeAppBar": "{coursesName}. Перевірка знань",
+  "@checkKnowledgeAppBar": {
+    "placeholders": {
+      "coursesName": {
+        "type": "String"
+      }
+    }
+  },
+  "informationWhereTasksLocated": "Завдання {coursesName} зараз перебувають у розробці. \nПовідомте нас, якщо ви ними зацікавлені!",
+  "@informationWhereTasksLocated": {
+    "placeholders": {
+      "coursesName": {
+        "type": "String"
+      }
+    }
+  },
+  "emptyCoursesList": "Курси наразі перебувають у розробці. \nПовідомте нас, якщо ви зацікавлені!",
+  "answer": "Відповідь",
+  "task": "Завдання",
+  "profile": "Профіль",
+  "registration": "Реєстрація",
+  "subscriptions": "підписок",
+  "subscribers": "підписників",
+  "addFriends": "Додати друзів",
+  "statistics": "Статистика",
+  "recommendedFriends": "Рекомендовані друзі",
+  "viewAll": "переглянути все",
+  "achievements": "Досягнення",
+  "letUsKnow": "Повідомте нас",
+  "noCoursesInformation": "Тут ще немає курсів",
+  "noLessonsInformation": "Тут ще немає уроків",
+  "watchOnYouTube": "Дивіться на YouTube",
+  "checkMyKnowledge": "Перевір мої знання",
+  "invalidYouTubeLink": "Помилка: Недійсне посилання на YouTube",
+  "noTasksInformation": "Тут ще немає завдань",
+  "checkMyCode": "Перевір мій код",
+  "contactsScreen": "Контакти",
+  "home": "Головна",
+  "subscribeToUs": "Підписуйся на всі наші соцмережі та YouTube!",
+  "youTube": "Ютуб",
+  "telegram": "Telegram",
+  "instagram": "Instagram",
+  "linkedIn": "LinkedIn",
+  "tiktok": "ТікТок",
+  "welcomeTo": "Друзі, всіх вітаємо на ",
+  "condorCodeBrand": "CondorCode!",
+  "homeIntro": "Цю платформу створили учні Олега Савенка - розробника-ментора з 7-річним стажем. Тут ви зможете легко навчитися програмувати будь-які застосунки, використовуючи Flutter та Dart! Ми з радістю допоможемо вам у цьому, а також надамо всі необхідні матеріали для навчання та практики:",
+  "featureLessonsTitle": "Уроки з Flutter та Dart",
+  "featureLessonsDesc": "Структуровані матеріали для поступового вивчення мови Dart та фреймворку Flutter.",
+  "featureHomeworkTitle": "Домашні завдання з відповідями",
+  "featureHomeworkDesc": "Практичні завдання до кожного уроку з можливістю перегляду відповідей та самоперевірки.",
+  "featureCheckTitle": "Перевірка результатів",
+  "featureCheckDesc": "Зручна перевірка своїх рішень та відстеження прогресу в навчанні.",
+  "startLearning": "Погнали Вчитися!",
+  "youtubeCtaText": "\"Подкаст з Нуля\" та інший необхідний контент для новачків — на YouTube-каналі \"Олег Савенко - «Мобільна розробка  від А до Я»\"",
+  "goToYouTubeChannel": "Перейти на YouTube-канал",
+  "footerDescription": "Condor Code — платформа для вивчення Flutter та Dart від учнів ментора Олега Савенка.",
+  "copyright": "© {year} Condor Code. Усі права захищені.",
+  "@copyright": {"placeholders": {"year": {"type": "int"}}},
+  "mentorName": "Олег Савенко",
+  "youtubeBlockDesc": "\"Подкаст з Нуля\", корисні відео та додаткові уроки — основний контент тут.",
+  "telegramChannel": "— канал",
+  "telegramGroup": "— група",
+  "telegramChannelDesc": "Блог, новини розробки, анонси нових відео та подкастів.",
+  "telegramGroupDesc": "Група програмістів: допомагаємо один одному з кодом та спілкуємося.",
+  "goTo": "Перейти",
+  "knowledgeBase": "База знань",
+  "knowledgeBaseOpen": "Відкрити базу знань",
+  "knowledgeBaseNavDashboard": "Головна",
+  "knowledgeBaseNavRoadmap": "Роадмап",
+  "knowledgeBaseNavLibrary": "Бібліотека",
+  "knowledgeBaseNavSearch": "Пошук",
+  "knowledgeBaseUpgradePro": "Оновити до Pro",
+  "knowledgeBaseSettings": "Налаштування",
+  "knowledgeBaseLogout": "Вийти",
+  "knowledgeBaseSearchSoon": "Пошук з’явиться незабаром.",
+  "knowledgeBaseHeroTitlePrefix": "Твій шлях до ",
+  "knowledgeBaseHeroTitleHighlight": "Flutter майстерності",
+  "knowledgeBaseHeroSubtitle": "Слідкуй за новинами та занурюйся в добіркові матеріали. Професійний маршрут для сучасного розробника.",
+  "knowledgeBaseTagPopular": "НАЙПОПУЛЯРНІШЕ",
+  "knowledgeBaseTagInteractive": "ІНТЕРАКТИВНО",
+  "knowledgeBaseRoadmapCardTitle": "Інтерактивний роадмап",
+  "knowledgeBaseRoadmapCardDesc": "Опануй архітектуру від Junior до Principal з візуальним трекером прогресу.",
+  "knowledgeBaseStartLearning": "Почати навчання",
+  "knowledgeBaseFlutterBasics": "Основи Flutter",
+  "knowledgeBaseDartDeepDive": "Dart глибше",
+  "knowledgeBaseLessonCount": "{count} уроків",
+  "@knowledgeBaseLessonCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "knowledgeBaseModuleCount": "{count} модулів",
+  "@knowledgeBaseModuleCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "knowledgeBaseLatestUpdates": "Останні оновлення",
+  "knowledgeBaseViewAllActivity": "Уся активність",
+  "knowledgeBaseLearningPillars": "Опори навчання",
+  "knowledgeBaseNewsCategoryArticle": "СТАТТЯ",
+  "knowledgeBaseNewsCategoryRoadmap": "ROADMAP",
+  "knowledgeBaseNewsCategoryAnnouncement": "АНОНС",
+  "knowledgeBaseRoadmapPlaceholder": "Тут з’явиться великий інтерактивний роадмап Flutter та Dart для новачків.",
+  "knowledgeBaseRoadmapGraphHint": "Віхи зліва направо; підтеми та уроки — вкладені гілки.",
+  "courseLessons": "Уроки",
+  "courseActions": "Дії",
+  "knowledgeCheckTasks": "Завдання",
+  "knowledgeCheckActions": "Дії",
+  "knowledgeCheckTitle": "{courseName}. Перевірка знань",
+  "@knowledgeCheckTitle": {
+    "placeholders": {
+      "courseName": {
+        "type": "String"
+      }
+    }
+  },
+  "checkAnswer": "Перевірити відповідь",
+  "goBack": "Назад",
+  "knowledgeBaseResourcesPlaceholder": "Тут будуть структуровані статті, відео та посилання для новачків.",
+  "knowledgeBasePillarBasicsTitle": "БАЗА",
+  "knowledgeBasePillarBasicsItems": "Вступ до віджетів\nКерування станом: основи\nНавігація та маршрутизація\nВведення даних і форми",
+  "knowledgeBasePillarAdvancedTitle": "СКЛАДНА ЛОГІКА",
+  "knowledgeBasePillarAdvancedItems": "Ізоляти та потоки\nMethod channels\nCustom painters\nІнтеграція з платформою",
+  "knowledgeBasePillarArchTitle": "АРХІТЕКТУРА",
+  "knowledgeBasePillarArchItems": "Чиста архітектура\nПатерни MVVM\nМодульність\nЗалежності (DI)",
+  "knowledgeBasePillarProdTitle": "ПРОДАКШН",
+  "knowledgeBasePillarProdItems": "Unit та інтеграційні тести\nCI/CD пайплайни\nПублікація в сторах\nПрофілювання продуктивності",
+  "addVideoPlaceholder": "Додай відео (mainVideo з thumbnail)",
+  "createNewLesson": "Створити новий урок",
+  "viewLessons": "Переглянути уроки",
+  "lessonCreationComingSoon": "Створення уроків буде доступне незабаром.",
+  "onlyTestersTitle": "Доступ до staging",
+  "onlyTestersBody": "Цю збірку staging можуть використовувати лише облікові записи з ролями тестувальника або адміністратора. Увійдіть уповноваженим акаунтом або скористайтеся продакшн-додатком.",
+  "onlyTestersRequestAccessButton": "Запросити доступ тестувальника",
+  "onlyTestersRequestPendingButton": "Запит надіслано",
+  "onlyTestersRequestPendingHint": "Ваш запит очікує розгляду. Адміністратор незабаром його перевірить.",
+  "onlyTestersRequestSent": "Запит надіслано адміністраторам.",
+  "onlyTestersRequestAlreadyPending": "У вас уже є активний запит.",
+  "stagingSignInTitle": "Вхід",
+  "stagingSignInSubtitle": "Увійдіть обліковим записом тестувальника або адміністратора, виданим для цього середовища.",
+  "stagingSignInEmailLabel": "Електронна пошта",
+  "stagingSignInPasswordLabel": "Пароль",
+  "stagingSignInButton": "Увійти",
+  "stagingSignInMissingCredentials": "Введіть електронну пошту та пароль",
+  "stagingSignInErrorWrongCredentials": "Невірна пошта або пароль.",
+  "stagingSignInErrorAccountNotFound": "Облікового запису з такою адресою не існує.",
+  "stagingSignInErrorInvalidEmail": "Введіть коректну адресу пошти.",
+  "stagingSignInErrorUserDisabled": "Цей обліковий запис вимкнено.",
+  "stagingSignInErrorGeneric": "Не вдалося увійти. Спробуйте ще раз.",
+  "stagingSignUpSubtitle": "Створіть обліковий запис. Цим середовищем можуть користуватися лише ролі тестувальника та адміністратора.",
+  "stagingSignUpConfirmPasswordLabel": "Підтвердіть пароль",
+  "stagingSignUpButton": "Створити обліковий запис",
+  "stagingSignUpPasswordsMismatch": "Паролі не збігаються.",
+  "stagingSignUpErrorEmailInUse": "Обліковий запис з такою поштою вже існує.",
+  "stagingSignUpErrorWeakPassword": "Пароль занадто слабкий. Використайте щонайменше 6 символів.",
+  "stagingSignUpErrorGeneric": "Не вдалося створити обліковий запис. Спробуйте ще раз.",
+  "stagingSwitchToSignUp": "Немає облікового запису? Зареєструватися",
+  "stagingSwitchToSignIn": "Вже є обліковий запис? Увійти",
+  "stagingProfileTitle": "Акаунт",
+  "stagingProfileSignOut": "Вийти",
+  "stagingProfileSignOutConfirmTitle": "Вийти з акаунту",
+  "stagingProfileSignOutConfirm": "Ви впевнені, що хочете вийти?",
+  "stagingProfileCancel": "Скасувати",
+  "stagingRoleAdmin": "Адмін",
+  "stagingRoleTester": "Тестер",
+  "stagingRoleUser": "Користувач",
+  "stagingRoleDeveloper": "Розробник",
+  "stagingRolePatron": "Патрон",
+  "stagingRolePatronDeveloper": "Патрон + Розробник"
+}

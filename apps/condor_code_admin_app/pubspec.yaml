@@ -1,0 +1,78 @@
+name: condorcode_admin
+description: "A new Flutter project."
+publish_to: 'none'
+resolution: workspace
+
+version: 1.0.0+1
+
+environment:
+  flutter: 3.35.0
+  sdk: 3.9.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+
+  # Data
+  json_annotation: ^4.9.0
+  get_it: ^9.2.1
+
+  # State Management
+  flutter_riverpod: ^3.1.0
+  freezed_annotation: ^3.0.0
+  freezed: ^3.0.4
+
+  # UI
+  flutter_cache_manager: ^3.4.1
+  flutter_animate: ^4.5.2
+  intl: ^0.20.2
+  intl_utils: ^2.8.10
+  flutter_gen: ^5.10.0
+  flutter_svg: ^2.1.0
+  vector_graphics: ^1.1.18
+  pinput: ^6.0.2
+  google_sign_in: ^6.3.0
+
+  data:
+    path: ../../packages/data
+
+  domain:
+    path: ../../packages/domain
+
+  ui_kit:
+    path: ../../packages/ui_kit
+
+  logger:
+    path: ../../packages/logger
+
+  firebase_core: any
+  firebase_auth: any
+  cloud_firestore: any
+  go_router: any
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+  flutter_gen_runner: ^5.10.0
+  injectable_generator: ^2.6.1
+  json_serializable: ^6.9.4
+  go_router_builder: ^4.1.0
+  build_runner: ^2.4.15
+
+flutter:
+
+  uses-material-design: true
+  generate: true
+
+flutter_intl:
+  enabled: true
+  main_locale: uk
+  arb_dir: lib/l10n
+  output_dir: lib/generated/l10n

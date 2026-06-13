@@ -1,0 +1,55 @@
+name: condor_code_workspace
+description: "CodorCode monorepo workspace"
+publish_to: "none"
+
+environment:
+  sdk: ^3.9.0
+  flutter: ">=3.35.0 <4.0.0"
+
+workspace:
+  - packages/data
+  - packages/domain
+  - packages/logger
+  - packages/ui_kit
+  - apps/condor_code_app
+  - apps/condor_code_admin_app
+
+dependencies:
+
+dev_dependencies:
+  melos: ^7.4.0
+
+melos:
+  scripts:
+    analyze:
+      run: dart run melos exec --concurrency 5 -- flutter analyze
+      description: "Execute static analysis to ensure code quality and identify linting issues."
+    fix:
+      run: dart run melos exec -- dart fix --apply
+      description: "Automatically resolve fixable linter warnings and deprecations."
+    format:
+      run: dart run melos exec -- dart format .
+      description: "Apply standard Dart formatting to all source files."
+    check-format:
+      run: dart run melos exec -- dart format --set-exit-if-changed .
+      description: "Verify code is formatted (CI check, exits with error if not)."
+    generate:
+      run: dart run melos exec --depends-on="build_runner" -- "flutter pub run build_runner clean && flutter pub run build_runner build --delete-conflicting-outputs"
+      description: "Full rebuild of generated files (clean + build). Prevents hand-edits from persisting."
+    check-generate:
+      run: |
+        dart run melos run generate
+        git diff --exit-code -- '**/*.g.dart' '**/*.freezed.dart' '**/*.gr.dart'
+      description: "Verify if generated files are up to date with the source code."
+    verify:
+      run: dart run melos run analyze && dart run melos run format
+      description: "Sequence analysis and formatting checks to verify workspace stability."
+    prepush:
+      run: dart run melos run generate && dart run melos run format && dart run melos run analyze
+      description: "Run before pushing: generate, format, and analyze. Mirrors CI checks."
+    clean:
+      run: dart run melos exec -- flutter clean
+      description: "Remove build directories and re-run melos bootstrap for a clean state."
+    test:
+      run: dart run melos exec -- "flutter test" --no-pub
+      description: "Run tests across all packages."
