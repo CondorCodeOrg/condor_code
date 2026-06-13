@@ -1,4 +1,26 @@
-# 📜 Commit Message Conventions
+# 📜 Git Conventions
+
+This document covers branch naming and commit message conventions for the CondorCode monorepo.
+
+---
+
+## 🌿 Branch Naming
+
+All branches must start with one of the following prefixes:
+
+`feature/` for new features or enhancements
+
+`fix/` for bug fixes
+
+### Examples
+
+`feature/add-user-authentication`
+
+`fix/login-crash-on-ios`
+
+---
+
+## 📝 Commit Message Conventions
 
 To maintain order and enable automation within our Flutter monorepo, we strictly follow the **Conventional Commits** specification. This allows **Melos** to automate versioning and changelog generation.
 
@@ -23,6 +45,18 @@ The **type** describes *what* was done:
 * **ci**: Changes to our CI configuration files and scripts (GitHub Actions, Melos).
 * **chore**: Routine tasks like updating dependencies or project metadata.
 * **build**: Changes that affect the build system or external dependencies.
+
+### Branch Naming Requirement
+
+All branches must start with `feature/` or `fix/`.
+
+Examples:
+
+`feature/add-user-authentication`
+
+`fix/login-crash-on-ios`
+
+When creating a branch, the commit type and branch prefix should align: use `feat` commits in `feature/` branches and `fix` commits in `fix/` branches.
 
 ---
 
