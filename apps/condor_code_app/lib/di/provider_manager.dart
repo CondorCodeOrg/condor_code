@@ -19,11 +19,6 @@ import 'package:condor_code/ui/screens/lesson_details/lesson_details_cubit/lesso
 import 'package:condor_code/ui/screens/lessons_list/lessons_list_cubit/lessons_list_cubit.dart';
 import 'package:condor_code/ui/screens/main/bloc/bottom_navigation_cubit.dart';
 import 'package:condor_code/ui/screens/main/bloc/snack_bar_cubit.dart';
-import 'package:condor_code/ui/screens/profile/bloc/profile_achievements/profile_achievements_bloc.dart';
-import 'package:condor_code/ui/screens/profile/bloc/profile_friends/profile_friends_bloc.dart';
-import 'package:condor_code/ui/screens/profile/bloc/profile_info/profile_info_bloc.dart';
-import 'package:condor_code/ui/screens/profile/bloc/profile_statistics/profile_statistics_bloc.dart';
-import 'package:condor_code/ui/screens/profile/providers/profile_screen_action_stream_provider.dart';
 import 'package:condor_code/ui/screens/staging/only_testers_cubit/only_testers_cubit.dart';
 import 'package:condor_code/ui/screens/staging/staging_auth_cubit/staging_auth_cubit.dart';
 import 'package:condor_code/ui/screens/task_answer/task_answer_cubit/task_answer_cubit.dart';
@@ -55,9 +50,6 @@ class ProviderManager {
     di.registerLazySingleton<LessonScreenEventsProvider>(
       () => LessonScreenEventsProvider(),
     );
-    di.registerLazySingleton<ProfileScreenEventsProvider>(
-      () => ProfileScreenEventsProvider(),
-    );
     di.registerLazySingleton<AnalyticsEventsProvider>(
       () => AnalyticsEventsProviderImpl(di()),
     );
@@ -78,24 +70,6 @@ class ProviderManager {
         lessonScreenEventsProvider: di<LessonScreenEventsProvider>(),
         snackBarEventsProvider: di<SnackBarEventsProvider>(),
       ),
-    );
-    di.registerFactory<ProfileAchievementsBloc>(
-      () => ProfileAchievementsBloc(
-        profileRepository: di<ProfileRepository>(),
-        streamProvider: di<ProfileScreenEventsProvider>(),
-      ),
-    );
-    di.registerFactory<ProfileInfoBloc>(
-      () => ProfileInfoBloc(
-        streamProvider: di<ProfileScreenEventsProvider>(),
-        profileRepository: di<ProfileRepository>(),
-      ),
-    );
-    di.registerFactory<ProfileStatisticsBloc>(
-      () => ProfileStatisticsBloc(di(), di()),
-    );
-    di.registerFactory<ProfileFriendsBloc>(
-      () => ProfileFriendsBloc(di(), di()),
     );
     di.registerFactory<ContactsCubit>(
       () => ContactsCubit(snackBarEventsProvider: di()),
