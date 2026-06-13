@@ -43,3 +43,9 @@ jobs:
 
       - name: Check generated code
         run: dart run melos run check-generate
+
+      - name: Build condor_code web
+        run: cd apps/condor_code_app && flutter build web -t lib/main.dart --dart-define=BUILD_TYPE=prod --dart-define=DATA_SOURCE=remote
+
+      - name: Build condor_code_admin web
+        run: cd apps/condor_code_admin_app && flutter build web -t lib/main.dart --dart-define=BUILD_TYPE=prod --dart-define=DATA_SOURCE=remote

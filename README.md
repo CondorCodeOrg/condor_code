@@ -50,8 +50,8 @@ We love contributors! Start here:
 
 Quick start for the impatient:
 ```bash
-git clone https://github.com/CondorCodeOrg/condor_code_monorepo.git
-cd condor_code_monorepo
+git clone https://github.com/CondorCodeOrg/condor_code.git
+cd condor_code
 # Then follow the Onboarding Guide for the rest
 ```
 

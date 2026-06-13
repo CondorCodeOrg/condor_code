@@ -13,7 +13,7 @@ This space contains every Condor Coder’s shared knowledge: architecture notes,
 
 If you are new to the project:
 
-1. Read [CONTRIBUTING.md](https://github.com/CondorCodeOrg/condor_code_monorepo/blob/main/CONTRIBUTING.md) for contribution rules, commit format, and branch strategy.
+1. Read [CONTRIBUTING.md](https://github.com/CondorCodeOrg/condor_code/blob/main/CONTRIBUTING.md) for contribution rules, commit format, and branch strategy.
 2. Follow the [Onboarding Guide](onboarding/onboarding_rule.md) for a step-by-step setup: clone, run the app, and open your first PR.
 3. Read [Working with the Monorepo](codebase/conventions/working-with-monorepo.md) to understand the workspace.
 4. Read [FVM](codebase/conventions/fvm.md) to set up Flutter Version Manager.

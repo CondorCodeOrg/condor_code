@@ -17,7 +17,7 @@ Our SDD docs are the single source of truth for:
 
 ## For Newcomers and Juniors
 
-Understanding the **condor_code_monorepo** is part of onboarding. Before contributing, read [Working with the Monorepo](../codebase/conventions/working-with-monorepo.md). It explains the workspace structure, Melos commands, code generation, and common pitfalls. This guide is required reading for all new team members.
+Understanding the **condor_code** is part of onboarding. Before contributing, read [Working with the Monorepo](../codebase/conventions/working-with-monorepo.md). It explains the workspace structure, Melos commands, code generation, and common pitfalls. This guide is required reading for all new team members.
 
 ## Technology Stack Used
 

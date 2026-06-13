@@ -73,8 +73,8 @@ Make sure you have:
 
 ```bash
 # If you haven't cloned yet:
-git clone https://github.com/CondorCodeOrg/condor_code_monorepo.git
-cd condor_code_monorepo
+git clone https://github.com/CondorCodeOrg/condor_code.git
+cd condor_code
 ```
 
 **Check:** You see folders `apps/`, `packages/`, `wiki/`, and files `pubspec.yaml`, `melos.yaml`.
@@ -221,7 +221,7 @@ Now that everything runs:
    This runs **generate → format → analyze**, exactly like CI.
 5. Push and open a Pull Request to `develop`.
 
-For full contribution rules (code of conduct, commit format, PR template), see [**CONTRIBUTING.md**](https://github.com/CondorCodeOrg/condor_code_monorepo/blob/main/CONTRIBUTING.md).
+For full contribution rules (code of conduct, commit format, PR template), see [**CONTRIBUTING.md**](https://github.com/CondorCodeOrg/condor_code/blob/main/CONTRIBUTING.md).
 
 ---
 
@@ -246,6 +246,6 @@ For full contribution rules (code of conduct, commit format, PR template), see [
 | How does the monorepo work? | [Working with the Monorepo](../codebase/conventions/working-with-monorepo.md) |
 | How do I set up FVM? | [FVM](../codebase/conventions/fvm.md) |
 | What does CI/CD do? | [CI/CD](../codebase/ci-cd.md) |
-| How do I contribute? | [CONTRIBUTING.md](https://github.com/CondorCodeOrg/condor_code_monorepo/blob/main/CONTRIBUTING.md) |
+| How do I contribute? | [CONTRIBUTING.md](https://github.com/CondorCodeOrg/condor_code/blob/main/CONTRIBUTING.md) |
 | How is the code organised? | [Architectural Conventions](../codebase/conventions/arch_conventions.md) |
 

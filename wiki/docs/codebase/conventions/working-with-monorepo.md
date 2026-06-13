@@ -5,10 +5,10 @@ title: Working with the Monorepo
 
 # Working with the Monorepo
 
-This guide helps newcomers understand how to work with the **condor_code_monorepo**. Read this
+This guide helps newcomers understand how to work with the **condor_code**. Read this
 before starting development.
 
-Our repository GitHub link: [condor_code_monorepo](https://github.com/CondorCodeOrg/condor_code_monorepo)
+Our repository GitHub link: [condor_code](https://github.com/CondorCodeOrg/condor_code)
 
 ## Workspace Structure
 
