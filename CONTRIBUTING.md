@@ -22,12 +22,12 @@ Thank you for your interest in contributing to CondorCode! This document outline
 1. Fork the repository on GitHub
 2. Clone your fork locally:
 ```bash
-git clone https://github.com/YOUR_USERNAME/condor_code_monorepo.git
+git clone https://github.com/YOUR_USERNAME/condor_code.git
 ```
 
 3. Add upstream remote:
 ```bash
-git remote add upstream https://github.com/CondorCodeOrg/condor_code_monorepo.git
+git remote add upstream https://github.com/CondorCodeOrg/condor_code.git
 ```
 
 ---
@@ -118,7 +118,7 @@ If it passes locally, CI will pass too. For a full explanation of each command, 
 
 ## 💬 Questions?
 
-- Open a [GitHub Discussion](https://github.com/CondorCodeOrg/condor_code_monorepo/discussions)
+- Open a [GitHub Discussion](https://github.com/CondorCodeOrg/condor_code/discussions)
 - Or ask in the team communication channel
 
 ---

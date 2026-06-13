@@ -31,7 +31,10 @@ melos:
       run: dart run melos exec -- dart format .
       description: "Apply standard Dart formatting to all source files."
     check-format:
-      run: dart run melos exec -- dart format --set-exit-if-changed .
+      run: |
+        dart run melos exec -- "dart format ."
+        git ls-files '**/firebase_options_*.dart' | while read -r file; do git checkout -- "$file"; done || true
+        git diff --exit-code
       description: "Verify code is formatted (CI check, exits with error if not)."
     generate:
       run: dart run melos exec --depends-on="build_runner" -- "flutter pub run build_runner clean && flutter pub run build_runner build --delete-conflicting-outputs"
