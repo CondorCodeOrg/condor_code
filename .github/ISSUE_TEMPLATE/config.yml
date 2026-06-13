@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: CondorCode Support
+    url: https://github.com/CondorCodeOrg/condor_code/discussions
+    about: Please ask and answer questions here.
+  - name: Documentation
+    url: https://github.com/CondorCodeOrg/condor_code/wiki
+    about: Check our wiki for documentation.
