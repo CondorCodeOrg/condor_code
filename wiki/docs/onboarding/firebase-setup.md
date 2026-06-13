@@ -115,6 +115,14 @@ For admin app use the same pattern inside `apps/condor_code_admin_app/lib/config
 
 > 💡 **Only have one Firebase project?**> Copy the same generated content into `firebase_options_dev.dart`, `firebase_options_stg.dart`, and `firebase_options_prod.dart`. The app picks the correct file at runtime based on `BUILD_TYPE`. If all three point to the same project, that is fine for local development.
 
+Use 
+```bash
+git update-index --skip-worktree apps/condor_code_app/lib/config/firebase/firebase_options_dev.dart
+git update-index --skip-worktree apps/condor_code_app/lib/config/firebase/firebase_options_prod.dart
+git update-index --skip-worktree apps/condor_code_app/lib/config/firebase/firebase_options_stg.dart
+```
+to prevent accidental commits of these files. Do the same for the admin app.
+
 After copying, you can delete the generated `lib/firebase_options.dart` to avoid confusion.
 ---
 

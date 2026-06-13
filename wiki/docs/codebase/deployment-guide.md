@@ -142,7 +142,7 @@ fvm flutter build web -t lib/main.dart --dart-define=BUILD_TYPE=staging --dart-d
 ```
 
 ```bash
-cd apps/condor_admin_code_app
+cd apps/condor_code_admin_app
 fvm flutter build web -t lib/main.dart --dart-define=BUILD_TYPE=staging --dart-define=DATA_SOURCE=remote
 ```
 
@@ -158,7 +158,7 @@ firebase deploy --only hosting:platform
 firebase deploy --only hosting:admin
 ```
 
-### 3. Verify
+### 4. Verify
 
 Open the Hosting URL printed in the deploy output (e.g. `https://YOUR_STAGING_PROJECT_ID.web.app`).
 
