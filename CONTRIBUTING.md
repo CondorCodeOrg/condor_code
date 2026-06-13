@@ -34,6 +34,8 @@ git remote add upstream https://github.com/CondorCodeOrg/condor_code.git
 
 ## 🌿 Branch Strategy
 
+All branches must start with either `feature/` or `fix/`.
+
 | Branch | Purpose |
 |--------|---------|
 | `main` | Production-ready code |
@@ -65,17 +67,11 @@ type(scope): description
 Types:
 - `feat` — New feature
 - `fix` — Bug fix
-- `docs` — Documentation changes
-- `style` — Code style changes (formatting, no logic change)
-- `refactor` — Code refactoring
-- `test` — Adding or updating tests
-- `chore` — Maintenance tasks
 
 Examples:
 ```
 feat(cc-app): add progress tracking for lessons
 fix(cc-admin): resolve course deletion bug
-docs: update setup instructions
 ```
 
 ---
