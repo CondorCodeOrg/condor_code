@@ -1,9 +1,8 @@
 import 'package:condor_code/ui/base/provider/events/base/events_stream_provider.dart';
 
-class LessonScreenEventsProvider
-    extends EventsStreamProvider<LessonScreenAction> {}
+class TestScreenEventsProvider extends EventsStreamProvider<TestScreenAction> {}
 
-enum LessonScreenAction {
+enum TestScreenAction {
   loaded,
   failedToLoad,
   rightAnswer,

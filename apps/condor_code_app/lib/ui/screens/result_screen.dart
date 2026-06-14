@@ -3,17 +3,22 @@ import 'package:ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
+import 'package:go_router/go_router.dart';
 
 class ResultScreen extends StatefulWidget {
   final int seconds;
   final int correctAnswer;
   final int inCorrectAnswer;
+  final String? courseId;
+  final String? lessonId;
 
   const ResultScreen({
     super.key,
     required this.seconds,
     required this.correctAnswer,
     required this.inCorrectAnswer,
+    this.courseId,
+    this.lessonId,
   });
 
   @override
@@ -30,6 +35,12 @@ class _ResultScreenState extends State<ResultScreen> {
   }
 
   @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final int sumAnswers = widget.inCorrectAnswer + widget.correctAnswer;
     return Scaffold(
@@ -40,7 +51,7 @@ class _ResultScreenState extends State<ResultScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Expanded(child: Lottie.asset('assets/animations/celebration.json')),
-            const Text('Perfect lesson!', style: AppTextStyles.body2),
+            const Text('Perfect test!', style: AppTextStyles.body2),
             const Text(
               'A round of applause for you!',
               style: AppTextStyles.body3,
@@ -56,7 +67,11 @@ class _ResultScreenState extends State<ResultScreen> {
               padding: const EdgeInsets.only(bottom: 20),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  if (widget.courseId != null && widget.lessonId != null) {
+                    context.go('/course/${widget.courseId}/${widget.lessonId}');
+                  } else {
+                    context.pop();
+                  }
                 },
                 style: AppButtonStyles.mainButtonStyle,
                 child: const Text('GET POINTS', style: AppTextStyles.body2),
@@ -69,8 +84,12 @@ class _ResultScreenState extends State<ResultScreen> {
   }
 
   Future<void> playCelebrationSound() async {
-    const String audioPath = 'audio/wow.mp3';
-    await player.play(AssetSource(audioPath));
+    try {
+      const String audioPath = 'audio/wow.mp3';
+      await player.play(AssetSource(audioPath));
+    } catch (e) {
+      debugPrint('Failed to play celebration sound: $e');
+    }
   }
 }
 

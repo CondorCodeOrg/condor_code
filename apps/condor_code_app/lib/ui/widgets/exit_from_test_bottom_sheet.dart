@@ -1,9 +1,10 @@
 import 'package:ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:go_router/go_router.dart';
 
-class ExitFromlessonBottomSheet extends StatelessWidget {
-  const ExitFromlessonBottomSheet({super.key});
+class ExitFromTestBottomSheet extends StatelessWidget {
+  const ExitFromTestBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) => Column(
@@ -18,7 +19,7 @@ class ExitFromlessonBottomSheet extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.only(left: 10, top: 20, bottom: 18),
                 child: Text(
-                  'If you leave you will lose all the points you earned during the lesson!',
+                  'If you leave you will lose all the points you earned during the test!',
                   style: AppTextStyles.caption1,
                 ),
               ),
@@ -34,7 +35,7 @@ class ExitFromlessonBottomSheet extends StatelessWidget {
                 style: AppButtonStyles.smallButtonStyle,
                 onPressed: () {
                   Navigator.pop(context);
-                  Navigator.pop(context);
+                  context.pop();
                 },
                 child: const Text(
                   'EXIT',

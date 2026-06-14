@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:ui_kit/ui_kit.dart';
 
@@ -25,7 +26,7 @@ class HeartInformationScreen extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 14),
             child: ElevatedButton(
               onPressed: () {
-                Navigator.pop(context);
+                context.pop();
               },
               style: AppButtonStyles.mainButtonStyle,
               child: const Text('MOVE ON', style: AppTextStyles.button),

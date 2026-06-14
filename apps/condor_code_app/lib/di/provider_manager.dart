@@ -12,9 +12,10 @@ import 'package:condor_code/ui/screens/courses/courses_cubit/courses_cubit.dart'
 import 'package:condor_code/ui/screens/knowledge_base/knowledge_base_cubit/knowledge_base_home_cubit.dart';
 import 'package:condor_code/ui/screens/knowledge_base/roadmap/cubit/knowledge_base_roadmap_cubit.dart';
 import 'package:condor_code/ui/screens/knowledge_check/knowledge_check_cubit/knowledge_check_cubit.dart';
-import 'package:condor_code/ui/screens/lesson/bloc/lesson_cubit.dart';
-import 'package:condor_code/ui/screens/lesson/bloc/questions/questions_bloc.dart';
-import 'package:condor_code/ui/screens/lesson/provider/lesson_screen_events_provider.dart';
+import 'package:condor_code/ui/screens/test/bloc/test_cubit.dart';
+import 'package:condor_code/ui/screens/test/bloc/questions/questions_bloc.dart';
+import 'package:condor_code/ui/screens/test/provider/test_screen_events_provider.dart';
+import 'package:condor_code/ui/screens/test_selection/test_selection_cubit.dart';
 import 'package:condor_code/ui/screens/lesson_details/lesson_details_cubit/lesson_details_cubit.dart';
 import 'package:condor_code/ui/screens/lessons_list/lessons_list_cubit/lessons_list_cubit.dart';
 import 'package:condor_code/ui/screens/main/bloc/bottom_navigation_cubit.dart';
@@ -47,8 +48,8 @@ class ProviderManager {
     di.registerLazySingleton<SnackBarEventsProvider>(
       () => SnackBarEventsProvider(),
     );
-    di.registerLazySingleton<LessonScreenEventsProvider>(
-      () => LessonScreenEventsProvider(),
+    di.registerLazySingleton<TestScreenEventsProvider>(
+      () => TestScreenEventsProvider(),
     );
     di.registerLazySingleton<AnalyticsEventsProvider>(
       () => AnalyticsEventsProviderImpl(di()),
@@ -61,14 +62,22 @@ class ProviderManager {
       (lessonId, _) => QuestionsBloc(
         lessonId: lessonId,
         questionRepository: di<QuestionRepository>(),
-        lessonScreenEventsProvider: di<LessonScreenEventsProvider>(),
+        testScreenEventsProvider: di<TestScreenEventsProvider>(),
         snackBarEventsProvider: di<SnackBarEventsProvider>(),
       ),
     );
-    di.registerFactory<LessonCubit>(
-      () => LessonCubit(
-        lessonScreenEventsProvider: di<LessonScreenEventsProvider>(),
+    di.registerFactory<TestCubit>(
+      () => TestCubit(
+        testScreenEventsProvider: di<TestScreenEventsProvider>(),
         snackBarEventsProvider: di<SnackBarEventsProvider>(),
+      ),
+    );
+    di.registerFactoryParam<TestSelectionCubit, String, dynamic>(
+      (lessonId, _) => TestSelectionCubit(
+        questionRepository: di<QuestionRepository>(),
+        lessonsRepository: di<LessonsRepository>(),
+        snackBarEventsProvider: di<SnackBarEventsProvider>(),
+        lessonId: lessonId,
       ),
     );
     di.registerFactory<ContactsCubit>(

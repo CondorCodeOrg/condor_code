@@ -99,6 +99,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get checkMyKnowledge => 'Check my knowledge';
 
   @override
+  String get takeTests => 'Take Tests';
+
+  @override
+  String get startTest => 'Start Test';
+
+  @override
   String get invalidYouTubeLink => 'Error: Invalid YouTube link';
 
   @override

@@ -74,6 +74,8 @@
   "noLessonsInformation": "No lessons here yet",
   "watchOnYouTube": "Watch on YouTube",
   "checkMyKnowledge": "Check my knowledge",
+  "takeTests": "Take Tests",
+  "startTest": "Start Test",
   "invalidYouTubeLink": "Error: Invalid YouTube link",
   "noTasksInformation": "No tasks here yet",
   "checkMyCode": "Check my code",

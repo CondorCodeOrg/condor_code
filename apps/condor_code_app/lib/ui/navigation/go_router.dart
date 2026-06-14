@@ -27,6 +27,12 @@ import 'package:domain/domain.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:condor_code/ui/screens/test_selection/test_selection_screen.dart';
+import 'package:condor_code/ui/screens/test_selection/test_selection_cubit.dart';
+import 'package:condor_code/ui/screens/test/test_screen.dart';
+import 'package:condor_code/ui/screens/result_screen.dart';
+import 'package:condor_code/ui/screens/heart_information_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -302,6 +308,50 @@ GoRouter getRouter(AppConfig appConfig) => GoRouter(
         final answer = state.extra as Answer;
         return TaskAnswerScreen(answer: answer);
       },
+    ),
+    GoRoute(
+      path: RouteConstants.tests, // /course/:courseId/:lessonId/tests
+      builder: (context, state) {
+        final courseId = state.pathParameters['courseId']!;
+        final lessonId = state.pathParameters['lessonId']!;
+        return BlocProvider(
+          create: (_) => di<TestSelectionCubit>(param1: lessonId),
+          child: TestSelectionScreen(courseId: courseId, lessonId: lessonId),
+        );
+      },
+      routes: [
+        GoRoute(
+          path: ':testId', // nested: /course/:courseId/:lessonId/tests/:testId
+          builder: (context, state) {
+            final courseId = state.pathParameters['courseId'] ?? '';
+            final testId = state.pathParameters['testId']!;
+            return TestScreen(lessonId: testId, courseId: courseId);
+          },
+          routes: [
+            GoRoute(
+              path:
+                  'result', // nested: /course/:courseId/:lessonId/tests/:testId/result
+              builder: (context, state) {
+                final courseId = state.pathParameters['courseId'] ?? '';
+                final lessonId = state.pathParameters['lessonId'] ?? '';
+                final extra = state.extra as Map<String, dynamic>;
+                return ResultScreen(
+                  seconds: extra['seconds'] as int,
+                  correctAnswer: extra['correctAnswer'] as int,
+                  inCorrectAnswer: extra['inCorrectAnswer'] as int,
+                  courseId: courseId,
+                  lessonId: lessonId,
+                );
+              },
+            ),
+            GoRoute(
+              path:
+                  'hearts', // nested: /course/:courseId/:lessonId/tests/:testId/hearts
+              builder: (context, state) => const HeartInformationScreen(),
+            ),
+          ],
+        ),
+      ],
     ),
   ],
 );

@@ -248,6 +248,18 @@ abstract class AppLocalizations {
   /// **'Check my knowledge'**
   String get checkMyKnowledge;
 
+  /// No description provided for @takeTests.
+  ///
+  /// In en, this message translates to:
+  /// **'Take Tests'**
+  String get takeTests;
+
+  /// No description provided for @startTest.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Test'**
+  String get startTest;
+
   /// No description provided for @invalidYouTubeLink.
   ///
   /// In en, this message translates to:

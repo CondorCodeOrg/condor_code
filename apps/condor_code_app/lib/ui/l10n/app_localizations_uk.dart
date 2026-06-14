@@ -99,6 +99,12 @@ class AppLocalizationsUk extends AppLocalizations {
   String get checkMyKnowledge => 'Перевір мої знання';
 
   @override
+  String get takeTests => 'Пройти тести';
+
+  @override
+  String get startTest => 'Почати тест';
+
+  @override
   String get invalidYouTubeLink => 'Помилка: Недійсне посилання на YouTube';
 
   @override

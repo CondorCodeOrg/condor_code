@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:condor_code/ui/screens/lesson/utils/enum/timer_action.dart';
+import 'package:condor_code/ui/screens/test/utils/enum/timer_action.dart';
 
 class TimerController {
   int seconds = 0;

@@ -1,9 +1,9 @@
-part of 'lesson_screen.dart';
+part of 'test_screen.dart';
 
-class _LessonHeader extends StatelessWidget {
+class _TestHeader extends StatelessWidget {
   final VoidCallback onBackBottomPressed;
 
-  const _LessonHeader({required this.onBackBottomPressed});
+  const _TestHeader({required this.onBackBottomPressed});
 
   @override
   Widget build(BuildContext context) => Padding(
@@ -27,7 +27,7 @@ class _LessonHeader extends StatelessWidget {
             child: BlocSelector<QuestionsBloc, QuestionsState, double>(
               selector: (QuestionsState state) => state.completePercentage,
               builder: (context, value) => LayoutBuilder(
-                builder: (context, constraints) => LessonProgressBar(
+                builder: (context, constraints) => TestProgressBar(
                   width: constraints.maxWidth,
                   height: 20,
                   progress: value,
