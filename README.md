@@ -1,6 +1,8 @@
 # CondorCode
 
-An open-source, gamified learning platform for developers.
+An open-source, gamified learning platform for developers made with Dart and Flutter:
+
+https://condorcodestaging.web.app/
 
 ## 🎯 What is CondorCode?
 
