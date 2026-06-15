@@ -2,7 +2,7 @@
 
 An open-source, gamified learning platform for developers made with Dart and Flutter:
 
-https://condorcodestaging.web.app/
+https://condorcode.web.app
 
 ## 🎯 What is CondorCode?
 
