@@ -23,6 +23,8 @@ class CourseCubit extends BaseCubit<CourseState> {
   final TasksRepository _tasksRepository;
   final String _courseId;
   final String? initialLessonId;
+  final Map<String, Lesson> _lessonDetailsCache = {};
+  final Map<String, bool> _tasksExistCache = {};
 
   Future<void> _loadLessons() async {
     emit(state.copyWith(isLessonsLoading: true));
@@ -54,12 +56,7 @@ class CourseCubit extends BaseCubit<CourseState> {
         await processDataResult(
           _tasksRepository.getTasks(lesson.id),
           onSuccess: (tasks) {
-            di<Analytics>().logEvent(AnalyticsEventName.selectLesson, {
-              AnalyticsPropertyName.courseId: _courseId,
-              AnalyticsPropertyName.lessonId: lessonId,
-              AnalyticsPropertyName.lessonTitle: lesson.title,
-            });
-
+            _logSelectLessonAnalytics(lesson, lessonId);
             emit(
               state.copyWith(
                 selectedLesson: lesson,
@@ -71,5 +68,12 @@ class CourseCubit extends BaseCubit<CourseState> {
         );
       },
     );
+  }
+  void _logSelectLessonAnalytics(Lesson lesson, String lessonId) {
+    di<Analytics>().logEvent(AnalyticsEventName.selectLesson, {
+      AnalyticsPropertyName.courseId: _courseId,
+      AnalyticsPropertyName.lessonId: lessonId,
+      AnalyticsPropertyName.lessonTitle: lesson.title,
+    });
   }
 }
