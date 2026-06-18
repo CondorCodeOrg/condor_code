@@ -30,12 +30,16 @@ class CourseCubit extends BaseCubit<CourseState> {
     emit(state.copyWith(isLessonsLoading: true));
     await processDataResult(
       _lessonsRepository.getLessonsItems(_courseId),
-      onSuccess: (lessons) {
+      onSuccess: (lessons) async {
         emit(state.copyWith(lessons: lessons, isLessonsLoading: false));
         if (lessons.isNotEmpty) {
           final targetId = _resolveInitialLesson(lessons);
-          selectLesson(targetId);
+          await selectLesson(targetId);
         }
+      },
+      onError: (error) {
+        emit(state.copyWith(isLessonsLoading: false));
+        showErrorSnackBar(error.message);
       },
     );
   }
@@ -61,6 +65,7 @@ class CourseCubit extends BaseCubit<CourseState> {
           isLessonDetailsLoading: false,
         ),
       );
+      _refreshLessonInBackground(lessonId);
       return;
     }
 
@@ -83,10 +88,42 @@ class CourseCubit extends BaseCubit<CourseState> {
               ),
             );
           },
+          onError: (error) {
+            emit(state.copyWith(isLessonDetailsLoading: false));
+            showErrorSnackBar(error.message);
+          },
+        );
+      },
+      onError: (error) {
+        emit(state.copyWith(isLessonDetailsLoading: false));
+        showErrorSnackBar(error.message);
+      },
+    );
+  }
+
+  Future<void> _refreshLessonInBackground(String lessonId) async {
+    await processDataResult(
+      _lessonsRepository.getLesson(lessonId),
+      onSuccess: (lesson) async {
+        await processDataResult(
+          _tasksRepository.getTasks(lesson.id),
+          onSuccess: (tasks) {
+            _lessonDetailsCache[lessonId] = lesson;
+            _tasksExistCache[lessonId] = tasks.isNotEmpty;
+            if (state.selectedLesson?.id == lessonId) {
+              emit(
+                state.copyWith(
+                  selectedLesson: lesson,
+                  isTasksExist: tasks.isNotEmpty,
+                ),
+              );
+            }
+          },
         );
       },
     );
   }
+
   void _logSelectLessonAnalytics(Lesson lesson, String lessonId) {
     di<Analytics>().logEvent(AnalyticsEventName.selectLesson, {
       AnalyticsPropertyName.courseId: _courseId,
