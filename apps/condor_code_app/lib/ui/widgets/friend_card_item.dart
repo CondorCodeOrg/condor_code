@@ -9,13 +9,13 @@ class FriendCardItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.all(6),
+    padding: EdgeInsets.all(6),
     child: GestureDetector(
       child: Container(
         width: 136,
         decoration: BoxDecoration(
-          color: AppColors.grey600,
-          border: Border.all(color: AppColors.neon, width: 1),
+          color: context.colors.surface,
+          border: Border.all(color: context.colors.accent, width: 1),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Padding(
@@ -27,9 +27,9 @@ class FriendCardItem extends StatelessWidget {
                 right: -14,
                 child: IconButton(
                   onPressed: () {},
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.highlight_remove,
-                    color: AppColors.white,
+                    color: context.colors.textPrimary,
                   ),
                 ),
               ),
@@ -68,12 +68,12 @@ class FriendCardItem extends StatelessWidget {
                   SizedBox(
                     height: 30,
                     child: ElevatedButton(
-                      style: AppButtonStyles.mainButtonStyle,
+                      style: AppButtonStyles.mainButtonStyle(context),
                       onPressed: () {},
-                      child: const Text(
+                      child: Text(
                         'subscribe',
                         style: TextStyle(
-                          color: Colors.black,
+                          color: context.colors.textPrimary,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

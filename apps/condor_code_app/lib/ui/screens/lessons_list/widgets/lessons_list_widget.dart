@@ -52,8 +52,8 @@ class LessonsListWidget extends StatelessWidget {
     return Skeleton(
       name: CondorHollowSkeletonIds.lessonsListFullScreen,
       loading: isLoading,
-      color: AppColors.grey600.withValues(alpha: 0.42),
-      highlightColor: AppColors.neon.withValues(alpha: 0.14),
+      color: context.colors.surface.withValues(alpha: 0.42),
+      highlightColor: context.colors.accent.withValues(alpha: 0.14),
       child: content,
     );
   }

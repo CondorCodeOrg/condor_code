@@ -19,8 +19,8 @@ class _AchievementCardItemState extends State<AchievementCardItem> {
   Widget build(BuildContext context) => GestureDetector(
     child: Container(
       decoration: BoxDecoration(
-        color: AppColors.neon,
-        border: Border.all(color: AppColors.grey200, width: 2),
+        color: context.colors.accent,
+        border: Border.all(color: context.colors.textSecondary, width: 2),
         borderRadius: BorderRadius.circular(14),
       ),
       child: Center(

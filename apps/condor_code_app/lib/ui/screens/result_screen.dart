@@ -33,7 +33,7 @@ class _ResultScreenState extends State<ResultScreen> {
   Widget build(BuildContext context) {
     final int sumAnswers = widget.inCorrectAnswer + widget.correctAnswer;
     return Scaffold(
-      backgroundColor: AppColors.grey800,
+      backgroundColor: context.colors.scaffoldBackground,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(
@@ -58,7 +58,7 @@ class _ResultScreenState extends State<ResultScreen> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                style: AppButtonStyles.mainButtonStyle,
+                style: AppButtonStyles.mainButtonStyle(context),
                 child: const Text('GET POINTS', style: AppTextStyles.body2),
               ),
             ),

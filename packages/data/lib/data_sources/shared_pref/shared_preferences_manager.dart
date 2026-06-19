@@ -15,4 +15,8 @@ abstract class SharedPreferencesManager {
 
   /// Staging-only: clear saved credentials on explicit sign-out.
   Future<void> clearStagingCredentials();
+
+  Future<void> saveThemeMode(String mode);
+
+  Future<String?> getThemeMode();
 }

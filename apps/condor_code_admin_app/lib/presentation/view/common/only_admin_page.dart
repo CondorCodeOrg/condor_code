@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:condorcode_admin/utilities/context_extensions.dart';
+import 'package:ui_kit/ui_kit.dart';
 
 class OnlyAdminPage extends ConsumerStatefulWidget {
   const OnlyAdminPage({super.key});
@@ -15,7 +16,7 @@ class _OnlyAdminPageState extends ConsumerState<OnlyAdminPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.colors.scaffoldBackground,
       body: Center(
         child: Container(
           constraints: const BoxConstraints(maxWidth: 400),
@@ -33,8 +34,8 @@ class _OnlyAdminPageState extends ConsumerState<OnlyAdminPage> {
                   ref.read(authProvider.notifier).logout();
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.lightGreenAccent,
-                  foregroundColor: Colors.white,
+                  backgroundColor: context.colors.accent,
+                  foregroundColor: context.colors.accentForeground,
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),

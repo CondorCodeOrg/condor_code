@@ -27,7 +27,7 @@ class LessonsListScreen extends StatelessWidget {
               topPadding: 20,
               text: localization.lessonsName(course.name),
             ),
-            backgroundColor: AppColors.grey800,
+            backgroundColor: context.colors.scaffoldBackground,
             body: SafeArea(
               child: Padding(
                 padding: EdgeInsets.only(top: isDesktop ? 36 : 24),

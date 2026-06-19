@@ -85,7 +85,7 @@ class _CourseLessonsListState extends State<CourseLessonsList> {
             child: Text(
               '${index + 1}',
               style: AppTextStyles.body2.copyWith(
-                color: isSelected ? AppColors.neon : AppColors.grey200,
+                color: isSelected ? context.colors.accent : context.colors.textSecondary,
                 fontWeight: FontWeight.w700,
               ),
             ),

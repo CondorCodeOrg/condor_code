@@ -11,9 +11,8 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ui_kit/styles/buttons/app_button_styles.dart';
-import 'package:ui_kit/styles/colors/app_colors.dart';
 import 'package:ui_kit/widgets/markdown.dart';
+import 'package:ui_kit/ui_kit.dart';
 
 class TaskDetailsScreen extends StatelessWidget {
   final String taskId;
@@ -28,14 +27,14 @@ class TaskDetailsScreen extends StatelessWidget {
         builder: (context, state) {
           if (state is TaskDetailsLoaded) {
             return Scaffold(
-              backgroundColor: AppColors.grey800,
+              backgroundColor: context.colors.scaffoldBackground,
               appBar: TopNavigationBar(text: state.task.title, topPadding: 20),
               bottomNavigationBar: _CheckButton(task: state.task),
               body: SafeArea(child: _MainContent(task: state.task)),
             );
           }
-          return const Scaffold(
-            backgroundColor: AppColors.grey800,
+          return Scaffold(
+            backgroundColor: context.colors.scaffoldBackground,
             body: SafeArea(child: HomeworkTasksSkeleton(isBottomButton: true)),
           );
         },
@@ -86,7 +85,7 @@ class _CheckButton extends StatelessWidget {
           onPressed: () {
             context.push(RouteConstants.taskAnswerScreen, extra: task.answer);
           },
-          style: AppButtonStyles.mainButtonStyle,
+          style: AppButtonStyles.mainButtonStyle(context),
           child: Text(localization.checkMyCode),
         ),
       ),

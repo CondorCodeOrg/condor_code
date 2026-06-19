@@ -36,12 +36,12 @@ class _NavButtonState extends State<NavButton> {
       child: GestureDetector(
         onTap: () => context.go(widget.route),
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 150),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          duration: Duration(milliseconds: 150),
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Text(
             widget.title,
             style: AppTextStyles.body1.copyWith(
-              color: highlight ? AppColors.white : AppColors.grey200,
+              color: highlight ? context.colors.textPrimary : context.colors.textSecondary,
             ),
           ),
         ),

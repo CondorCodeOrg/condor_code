@@ -5,6 +5,7 @@ class SharedPreferencesManagerImpl implements SharedPreferencesManager {
   static const _avatarKey = 'userAvatarFilePath';
   static const _stagingEmailKey = 'stagingEmail';
   static const _stagingPasswordKey = 'stagingPassword';
+  static const _themeModeKey = 'themeMode';
 
   @override
   Future<void> saveUserAvatarFilePath(String path) async {
@@ -43,5 +44,17 @@ class SharedPreferencesManagerImpl implements SharedPreferencesManager {
     final prefs = SharedPreferencesAsync();
     await prefs.remove(_stagingEmailKey);
     await prefs.remove(_stagingPasswordKey);
+  }
+
+  @override
+  Future<void> saveThemeMode(String mode) async {
+    final prefs = SharedPreferencesAsync();
+    await prefs.setString(_themeModeKey, mode);
+  }
+
+  @override
+  Future<String?> getThemeMode() async {
+    final prefs = SharedPreferencesAsync();
+    return prefs.getString(_themeModeKey);
   }
 }

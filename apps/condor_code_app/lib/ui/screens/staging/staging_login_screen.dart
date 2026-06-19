@@ -36,19 +36,19 @@ class _StagingLoginScreenState extends State<StagingLoginScreen> {
     final radius = BorderRadius.circular(12);
     return InputDecoration(
       labelText: label,
-      labelStyle: AppTextStyles.body2.copyWith(color: AppColors.grey200),
+      labelStyle: AppTextStyles.body2.copyWith(color: context.colors.textSecondary),
       enabledBorder: OutlineInputBorder(
         borderRadius: radius,
         borderSide: BorderSide(
-          color: AppColors.grey400.withValues(alpha: 0.45),
+          color: context.colors.border.withValues(alpha: 0.45),
         ),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: radius,
-        borderSide: const BorderSide(color: AppColors.neon),
+        borderSide: BorderSide(color: context.colors.accent),
       ),
       filled: true,
-      fillColor: AppColors.grey600.withValues(alpha: 0.35),
+      fillColor: context.colors.surface.withValues(alpha: 0.35),
     );
   }
 
@@ -61,12 +61,12 @@ class _StagingLoginScreenState extends State<StagingLoginScreen> {
     return TextField(
       controller: controller,
       obscureText: obscure,
-      style: AppTextStyles.body1.copyWith(color: AppColors.white),
+      style: AppTextStyles.body1.copyWith(color: context.colors.textPrimary),
       decoration: _fieldDecoration(label).copyWith(
         suffixIcon: IconButton(
           icon: Icon(
             obscure ? Icons.visibility_outlined : Icons.visibility_off_outlined,
-            color: AppColors.grey200,
+            color: context.colors.textSecondary,
           ),
           onPressed: onToggleVisibility,
         ),
@@ -91,7 +91,7 @@ class _StagingLoginScreenState extends State<StagingLoginScreen> {
     return BlocProvider.value(
       value: di<StagingAuthCubit>(),
       child: Scaffold(
-        backgroundColor: AppColors.grey800,
+        backgroundColor: context.colors.scaffoldBackground,
         body: SafeArea(
           child: SnackBarProducerWidget(
             child: Column(
@@ -139,17 +139,17 @@ class _StagingLoginScreenState extends State<StagingLoginScreen> {
                                   subtitle,
                                   textAlign: TextAlign.center,
                                   style: AppTextStyles.body1.copyWith(
-                                    color: AppColors.grey200,
+                                    color: context.colors.textSecondary,
                                     height: 1.45,
                                   ),
                                 ),
-                                const SizedBox(height: 28),
+                                SizedBox(height: 28),
                                 TextField(
                                   controller: _emailController,
                                   keyboardType: TextInputType.emailAddress,
                                   autocorrect: false,
                                   style: AppTextStyles.body1.copyWith(
-                                    color: AppColors.white,
+                                    color: context.colors.textPrimary,
                                   ),
                                   decoration: _fieldDecoration(
                                     localization.stagingSignInEmailLabel,
@@ -185,14 +185,14 @@ class _StagingLoginScreenState extends State<StagingLoginScreen> {
                                     onPressed: state.isSubmitting
                                         ? null
                                         : () => _submit(cubit, state),
-                                    style: AppButtonStyles.mainButtonStyle,
+                                    style: AppButtonStyles.mainButtonStyle(context),
                                     child: state.isSubmitting
-                                        ? const SizedBox(
+                                        ? SizedBox(
                                             height: 22,
                                             width: 22,
                                             child: CircularProgressIndicator(
                                               strokeWidth: 2,
-                                              color: AppColors.white,
+                                              color: context.colors.textPrimary,
                                             ),
                                           )
                                         : Text(primaryLabel),
@@ -208,7 +208,7 @@ class _StagingLoginScreenState extends State<StagingLoginScreen> {
                                   child: Text(
                                     switchLabel,
                                     style: AppTextStyles.body2.copyWith(
-                                      color: AppColors.neon,
+                                      color: context.colors.accent,
                                     ),
                                   ),
                                 ),

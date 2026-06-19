@@ -8,7 +8,7 @@ class HeartInformationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: AppColors.grey800,
+    backgroundColor: context.colors.scaffoldBackground,
     body: SafeArea(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -27,7 +27,7 @@ class HeartInformationScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
               },
-              style: AppButtonStyles.mainButtonStyle,
+              style: AppButtonStyles.mainButtonStyle(context),
               child: const Text('MOVE ON', style: AppTextStyles.button),
             ),
           ),

@@ -50,36 +50,36 @@ class SidePanel extends StatelessWidget {
 
   double get currentWidth => collapsed ? collapsedWidth : expandedWidth;
 
-  static final _defaultDecoration = BoxDecoration(
-    color: AppColors.grey600.withValues(alpha: 0.42),
+  BoxDecoration _defaultDecoration(BuildContext context) => BoxDecoration(
+    color: context.colors.surface.withValues(alpha: 0.42),
     borderRadius: BorderRadius.circular(16),
-    border: Border.all(color: AppColors.grey400.withValues(alpha: 0.55)),
+    border: Border.all(color: context.colors.border.withValues(alpha: 0.55)),
   );
 
-  Widget _buildLoadingSkeleton() {
+  Widget _buildLoadingSkeleton(BuildContext context) {
     if (loadingSkeletonName != null) {
       return Padding(
-        padding: const EdgeInsets.all(12),
+        padding: EdgeInsets.all(12),
         child: Skeleton(
           name: loadingSkeletonName,
           loading: true,
-          color: AppColors.grey600.withValues(alpha: 0.35),
-          highlightColor: AppColors.neon.withValues(alpha: 0.10),
-          child: const SizedBox.shrink(),
+          color: context.colors.surface.withValues(alpha: 0.35),
+          highlightColor: context.colors.accent.withValues(alpha: 0.10),
+          child: SizedBox.shrink(),
         ),
       );
     }
-    return const Center(
+    return Center(
       child: Padding(
         padding: EdgeInsets.all(24),
-        child: CircularProgressIndicator(color: AppColors.neon),
+        child: CircularProgressIndicator(color: context.colors.accent),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final body = isLoading ? _buildLoadingSkeleton() : child;
+    final body = isLoading ? _buildLoadingSkeleton(context) : child;
 
     Widget content = Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -88,14 +88,14 @@ class SidePanel extends StatelessWidget {
         if (header != null && !collapsed) ...[
           header!,
           if (showHeaderDivider)
-            const Divider(color: AppColors.grey600, height: 1),
+            Divider(color: context.colors.surface, height: 1),
         ],
         if (compact) body else Expanded(child: body),
       ],
     );
 
     content = Container(
-      decoration: decoration ?? _defaultDecoration,
+      decoration: decoration ?? _defaultDecoration(context),
       child: content,
     );
 
@@ -119,24 +119,24 @@ class SidePanelHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 14, 16, 10),
+      padding: EdgeInsets.fromLTRB(16, 14, 16, 10),
       child: Row(
         children: [
           Container(
             width: 30,
             height: 30,
             decoration: BoxDecoration(
-              color: AppColors.neon.withValues(alpha: 0.15),
+              color: context.colors.accent.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Icon(icon, color: AppColors.neon, size: 18),
+            child: Icon(icon, color: context.colors.accent, size: 18),
           ),
-          const SizedBox(width: 10),
+          SizedBox(width: 10),
           Expanded(
             child: Text(
               title,
               style: AppTextStyles.body1.copyWith(
-                color: AppColors.white,
+                color: context.colors.textPrimary,
                 fontWeight: FontWeight.w700,
               ),
             ),

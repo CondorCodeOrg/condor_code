@@ -14,24 +14,24 @@ class CustomTabBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(4),
+      padding: EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: AppColors.grey600,
+        color: context.colors.surface,
         borderRadius: BorderRadius.circular(40),
-        border: Border.all(color: AppColors.grey400, width: 0.6),
+        border: Border.all(color: context.colors.border, width: 0.6),
       ),
       child: TabBar(
         controller: tabController,
         indicator: BoxDecoration(
           color: Colors.transparent,
           borderRadius: BorderRadius.circular(40),
-          border: Border.all(color: AppColors.neonBlur, width: 1.5),
+          border: Border.all(color: context.colors.accent, width: 1.5),
         ),
         overlayColor: WidgetStateProperty.all(Colors.transparent),
         splashFactory: NoSplash.splashFactory,
         indicatorSize: TabBarIndicatorSize.tab,
-        labelColor: AppColors.neonBlur,
-        unselectedLabelColor: AppColors.lightGrey,
+        labelColor: context.colors.accent,
+        unselectedLabelColor: context.colors.textSecondary,
         labelStyle: AppTextStyles.backgroundHint,
         unselectedLabelStyle: AppTextStyles.backgroundHint,
         dividerColor: Colors.transparent,

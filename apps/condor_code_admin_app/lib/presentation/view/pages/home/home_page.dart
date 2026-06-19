@@ -6,6 +6,7 @@ import 'package:condorcode_admin/presentation/view/pages/home/sections/profile_s
 import 'package:condorcode_admin/presentation/view/pages/home/widgets/side_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ui_kit/ui_kit.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -24,7 +25,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.colors.scaffoldBackground,
       body: SafeArea(
         child: Row(
           children: [

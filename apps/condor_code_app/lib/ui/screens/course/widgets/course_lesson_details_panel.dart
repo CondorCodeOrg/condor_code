@@ -27,9 +27,9 @@ class CourseLessonDetailsPanel extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.grey600.withValues(alpha: 0.42),
+        color: context.colors.surface.withValues(alpha: 0.42),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.grey400.withValues(alpha: 0.55)),
+        border: Border.all(color: context.colors.border.withValues(alpha: 0.55)),
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
@@ -39,16 +39,16 @@ class CourseLessonDetailsPanel extends StatelessWidget {
                       name:
                           CondorHollowSkeletonIds.lessonDetailPanelMiddleScreen,
                       loading: true,
-                      color: AppColors.grey600.withValues(alpha: 0.42),
-                      highlightColor: AppColors.neon.withValues(alpha: 0.12),
-                      child: const SizedBox.shrink(),
+                      color: context.colors.surface.withValues(alpha: 0.42),
+                      highlightColor: context.colors.accent.withValues(alpha: 0.12),
+                      child: SizedBox.shrink(),
                     )
                   : Skeleton(
                       name: CondorHollowSkeletonIds
                           .lessonTasksDetailPanelFullScreen,
                       loading: true,
-                      color: AppColors.grey600.withValues(alpha: 0.42),
-                      highlightColor: AppColors.neon.withValues(alpha: 0.12),
+                      color: context.colors.surface.withValues(alpha: 0.42),
+                      highlightColor: context.colors.accent.withValues(alpha: 0.12),
                       child: const SizedBox.shrink(),
                     )
             : _LessonContent(lesson: lesson!, shrinkWrap: shrinkWrap),
@@ -87,7 +87,7 @@ class _LessonContent extends StatelessWidget {
       mainAxisSize: shrinkWrap ? MainAxisSize.min : MainAxisSize.max,
       children: [
         _LessonHeader(lesson: lesson),
-        const Divider(color: AppColors.grey600, height: 1),
+        Divider(color: context.colors.surface, height: 1),
         if (shrinkWrap)
           body
         else
@@ -105,29 +105,29 @@ class _LessonHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 14, 16, 10),
+      padding: EdgeInsets.fromLTRB(16, 14, 16, 10),
       child: Row(
         children: [
           Expanded(
             child: Text(
               lesson.title,
               style: AppTextStyles.body1.copyWith(
-                color: AppColors.white,
+                color: context.colors.textPrimary,
                 fontWeight: FontWeight.w700,
               ),
             ),
           ),
           if (lesson.topic.isNotEmpty)
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
               decoration: BoxDecoration(
-                color: AppColors.neon.withValues(alpha: 0.15),
+                color: context.colors.accent.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
                 lesson.topic,
                 style: AppTextStyles.caption2.copyWith(
-                  color: AppColors.neon,
+                  color: context.colors.accent,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -156,10 +156,10 @@ class _WatchOnYouTubeLink extends StatelessWidget {
               await launchUrl(url, mode: LaunchMode.externalApplication);
             }
           },
-          icon: const Icon(Icons.open_in_new, size: 16, color: AppColors.neon),
+          icon: Icon(Icons.open_in_new, size: 16, color: context.colors.accent),
           label: Text(
             localization.watchOnYouTube,
-            style: AppTextStyles.body2.copyWith(color: AppColors.neon),
+            style: AppTextStyles.body2.copyWith(color: context.colors.accent),
           ),
         ),
       ),

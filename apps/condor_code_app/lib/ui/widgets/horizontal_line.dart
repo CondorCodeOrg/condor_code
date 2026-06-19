@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ui_kit/ui_kit.dart';
 
 class HorizontalLine extends StatelessWidget {
   const HorizontalLine({super.key, required this.title});
@@ -12,7 +13,7 @@ class HorizontalLine extends StatelessWidget {
       Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Colors.black,
+          color: context.colors.border,
         ),
         margin: const EdgeInsets.only(top: 50, bottom: 50),
         width: 30,
@@ -26,7 +27,7 @@ class HorizontalLine extends StatelessWidget {
       Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Colors.black,
+          color: context.colors.border,
         ),
         margin: const EdgeInsets.only(top: 50, bottom: 50),
         width: 30,

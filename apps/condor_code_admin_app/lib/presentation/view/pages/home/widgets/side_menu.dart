@@ -1,6 +1,8 @@
 import 'package:condorcode_admin/presentation/enums/admin_section.dart';
+import 'package:condorcode_admin/presentation/view/common/widgets/admin_theme_toggle_button.dart';
 import 'package:condorcode_admin/utilities/context_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:ui_kit/ui_kit.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({super.key, required this.selected, required this.onSelected});
@@ -12,9 +14,9 @@ class SideMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 240,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        border: Border(right: BorderSide(color: Colors.black12)),
+      decoration: BoxDecoration(
+        color: context.colors.scaffoldBackground,
+        border: Border(right: BorderSide(color: context.colors.border)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -24,16 +26,17 @@ class SideMenu extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.admin_panel_settings,
-                  color: Colors.lightGreenAccent,
+                  color: context.colors.accent,
                 ),
                 const SizedBox(width: 8),
                 Text(
                   context.strings.adminLabel,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
+                    color: context.colors.textPrimary,
                   ),
                 ),
               ],
@@ -58,6 +61,12 @@ class SideMenu extends StatelessWidget {
             selected: selected == AdminSection.profile,
             onTap: () => onSelected(AdminSection.profile),
           ),
+          const Spacer(),
+          const Align(
+            alignment: Alignment.centerRight,
+            child: AdminThemeToggleButton(),
+          ),
+          const SizedBox(height: 16),
         ],
       ),
     );
@@ -79,9 +88,10 @@ class _SideMenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final labelColor = selected ? Colors.black87 : Colors.grey;
+    final labelColor =
+        selected ? context.colors.textPrimary : context.colors.textSecondary;
     final bgColor = selected
-        ? Colors.lightGreenAccent.withAlpha(50)
+        ? context.colors.accent.withAlpha(50)
         : Colors.transparent;
 
     return InkWell(
@@ -93,7 +103,7 @@ class _SideMenuItem extends StatelessWidget {
           color: bgColor,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: selected ? Colors.lightGreenAccent : Colors.transparent,
+            color: selected ? context.colors.accent : Colors.transparent,
           ),
         ),
         child: Row(

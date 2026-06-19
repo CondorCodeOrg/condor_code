@@ -18,12 +18,12 @@ class TaskImageItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.all(6),
+    padding: EdgeInsets.all(6),
     child: GestureDetector(
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: AppColors.grey400, width: 1),
+          border: Border.all(color: context.colors.border, width: 1),
           borderRadius: BorderRadius.circular(12),
         ),
         child: switch (imageType) {

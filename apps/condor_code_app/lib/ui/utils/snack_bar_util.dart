@@ -8,26 +8,26 @@ class SnackBarUtil {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         behavior: SnackBarBehavior.floating,
-        duration: const Duration(seconds: 4),
+        duration: Duration(seconds: 4),
         backgroundColor: Colors.transparent,
         elevation: 0,
         content: Container(
           height: 44,
           decoration: BoxDecoration(
-            color: AppColors.grey400,
+            color: context.colors.border,
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: AppColors.grey200, width: 0.6),
+            border: Border.all(color: context.colors.textSecondary, width: 0.6),
           ),
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Row(
             children: [
               getIcon(event),
-              const SizedBox(width: 14),
+              SizedBox(width: 14),
               Expanded(
                 child: Text(
                   event.message,
-                  style: AppTextStyles.body3.copyWith(color: AppColors.white),
+                  style: AppTextStyles.body3.copyWith(color: context.colors.textPrimary),
                 ),
               ),
             ],

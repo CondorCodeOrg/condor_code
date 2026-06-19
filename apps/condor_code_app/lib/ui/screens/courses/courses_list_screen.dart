@@ -64,12 +64,12 @@ class _CoursesListScreenState extends State<CoursesListScreen>
                         horizontal: isDesktop ? 40 : 22,
                         vertical: isDesktop ? 32 : 22,
                       ),
-                      child: const Column(
+                      child: Column(
                         children: [Expanded(child: _CoursesScreen())],
                       ),
                     ),
                   ),
-                  const Divider(height: 0.6, color: AppColors.grey600),
+                  Divider(height: 0.6, color: context.colors.surface),
                 ],
               ),
             ),

@@ -42,10 +42,10 @@ class SidebarMenuTile extends StatelessWidget {
     final border = isSelected
         ? BorderDirectional(
             start: selectionBorderSide == SidebarMenuSelectionBorderSide.start
-                ? const BorderSide(color: AppColors.neon, width: 3)
+                ? BorderSide(color: context.colors.accent, width: 3)
                 : BorderSide.none,
             end: selectionBorderSide == SidebarMenuSelectionBorderSide.end
-                ? const BorderSide(color: AppColors.neon, width: 3)
+                ? BorderSide(color: context.colors.accent, width: 3)
                 : BorderSide.none,
           )
         : null;
@@ -61,7 +61,7 @@ class SidebarMenuTile extends StatelessWidget {
             padding: contentPadding,
             decoration: BoxDecoration(
               color: isSelected
-                  ? AppColors.grey600.withValues(alpha: 0.85)
+                  ? context.colors.surface.withValues(alpha: 0.85)
                   : Colors.transparent,
               borderRadius: BorderRadius.circular(10),
               border: border,
@@ -79,20 +79,20 @@ class SidebarMenuTile extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.body2.copyWith(
-                          color: AppColors.white,
+                          color: context.colors.textPrimary,
                           fontWeight: isSelected
                               ? FontWeight.w600
                               : titleFontWeightUnselected,
                         ),
                       ),
                       if (hasSubtitle) ...[
-                        const SizedBox(height: 2),
+                        SizedBox(height: 2),
                         Text(
                           subtitleText,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.caption1.copyWith(
-                            color: AppColors.lightGrey,
+                            color: context.colors.textSecondary,
                           ),
                         ),
                       ],
@@ -127,14 +127,14 @@ class SidebarMenuNumberBadge extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: isSelected
-            ? AppColors.neon.withValues(alpha: 0.2)
-            : AppColors.grey400.withValues(alpha: 0.3),
+            ? context.colors.accent.withValues(alpha: 0.2)
+            : context.colors.border.withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
         '$index',
         style: AppTextStyles.caption1.copyWith(
-          color: isSelected ? AppColors.neon : AppColors.lightGrey,
+          color: isSelected ? context.colors.accent : context.colors.textSecondary,
           fontWeight: FontWeight.w700,
         ),
       ),
@@ -180,27 +180,27 @@ class CollapsedSidebarMenuTile extends StatelessWidget {
   final double? squareExtent;
   final EdgeInsetsGeometry contentPadding;
 
-  BoxDecoration _decoration() {
+  BoxDecoration _decoration(BuildContext context) {
     switch (variant) {
       case CollapsedSidebarMenuVariant.lessonIndex:
         return BoxDecoration(
           color: isSelected
-              ? AppColors.neon.withValues(alpha: 0.2)
+              ? context.colors.accent.withValues(alpha: 0.2)
               : Colors.transparent,
           borderRadius: BorderRadius.circular(10),
           border: isSelected
-              ? Border.all(color: AppColors.neon, width: 2)
+              ? Border.all(color: context.colors.accent, width: 2)
               : null,
         );
       case CollapsedSidebarMenuVariant.rail:
         return BoxDecoration(
           color: isSelected
-              ? AppColors.grey600.withValues(alpha: 0.85)
+              ? context.colors.surface.withValues(alpha: 0.85)
               : Colors.transparent,
           borderRadius: BorderRadius.circular(10),
           border: isSelected
-              ? const BorderDirectional(
-                  end: BorderSide(color: AppColors.neon, width: 3),
+              ? BorderDirectional(
+                  end: BorderSide(color: context.colors.accent, width: 3),
                 )
               : null,
         );
@@ -219,7 +219,7 @@ class CollapsedSidebarMenuTile extends StatelessWidget {
           height: squareExtent,
           padding: contentPadding,
           alignment: squareExtent != null ? Alignment.center : null,
-          decoration: _decoration(),
+          decoration: _decoration(context),
           child: squareExtent != null ? child : Center(child: child),
         ),
       ),

@@ -17,11 +17,11 @@ class StatisticCardItem extends StatefulWidget {
 class _ShopCardItemState extends State<StatisticCardItem> {
   @override
   Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.all(8),
+    padding: EdgeInsets.all(8),
     child: Container(
       decoration: BoxDecoration(
-        color: AppColors.neon,
-        border: Border.all(color: AppColors.grey200, width: 2),
+        color: context.colors.accent,
+        border: Border.all(color: context.colors.textSecondary, width: 2),
         borderRadius: BorderRadius.circular(14),
       ),
       child: Column(

@@ -39,15 +39,15 @@ class WebGridItemState extends State<WebGridItem> {
             child: GestureDetector(
               onTap: widget.onTap,
               child: AnimatedContainer(
-                duration: const Duration(milliseconds: 150),
-                padding: const EdgeInsets.all(20),
+                duration: Duration(milliseconds: 150),
+                padding: EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
-                    color: isHovered ? AppColors.neonBlur : AppColors.grey400,
+                    color: isHovered ? context.colors.accent : context.colors.border,
                     width: 0.8,
                   ),
-                  color: isHovered ? AppColors.grey600 : Colors.transparent,
+                  color: isHovered ? context.colors.surface : Colors.transparent,
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -67,19 +67,19 @@ class WebGridItemState extends State<WebGridItem> {
                               ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
                     Text(
                       widget.name,
                       textAlign: TextAlign.center,
                       style: AppTextStyles.body1.copyWith(
-                        color: AppColors.white,
+                        color: context.colors.textPrimary,
                       ),
                     ),
-                    const SizedBox(height: 6),
+                    SizedBox(height: 6),
                     Text(
                       widget.description,
                       style: AppTextStyles.body2.copyWith(
-                        color: AppColors.lightGrey,
+                        color: context.colors.textSecondary,
                       ),
                     ),
                   ],
@@ -101,7 +101,7 @@ class _CustomSkeleton extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.grey400, width: 0.8),
+        border: Border.all(color: context.colors.border, width: 0.8),
         color: Colors.transparent,
       ),
       child:
@@ -117,19 +117,19 @@ class _CustomSkeleton extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
               Text(
                 '              ',
                 textAlign: TextAlign.center,
-                style: AppTextStyles.body1.copyWith(color: AppColors.white),
+                style: AppTextStyles.body1.copyWith(color: context.colors.textPrimary),
               ),
-              const SizedBox(height: 6),
+              SizedBox(height: 6),
               Padding(
-                padding: const EdgeInsets.only(bottom: 10),
+                padding: EdgeInsets.only(bottom: 10),
                 child: Text(
                   '                               ',
                   style: AppTextStyles.body2.copyWith(
-                    color: AppColors.lightGrey,
+                    color: context.colors.textSecondary,
                   ),
                 ),
               ),
@@ -138,8 +138,8 @@ class _CustomSkeleton extends StatelessWidget {
             context: context,
             redact: true,
             configuration: RedactedConfiguration(
-              animationDuration: const Duration(milliseconds: 1500),
-              redactedColor: AppColors.grey200,
+              animationDuration: Duration(milliseconds: 1500),
+              redactedColor: context.colors.textSecondary,
             ),
           ),
     );
@@ -150,9 +150,9 @@ class _ImagePlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.grey400.withValues(alpha: 0.2),
+      color: context.colors.border.withValues(alpha: 0.2),
       alignment: Alignment.center,
-      child: Icon(Icons.image_outlined, size: 28, color: Colors.grey.shade500),
+      child: Icon(Icons.image_outlined, size: 28, color: context.colors.textSecondary),
     );
   }
 }

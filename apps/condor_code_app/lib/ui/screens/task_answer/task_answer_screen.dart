@@ -24,7 +24,7 @@ class TaskAnswerScreen extends StatelessWidget {
         builder: (context, state) {
           if (state is TaskAnswerLoaded) {
             return Scaffold(
-              backgroundColor: AppColors.grey800,
+              backgroundColor: context.colors.scaffoldBackground,
               appBar: TopNavigationBar(
                 text: state.answer.title,
                 topPadding: 20,
@@ -32,8 +32,8 @@ class TaskAnswerScreen extends StatelessWidget {
               body: SafeArea(child: _MainContent(answer: state.answer)),
             );
           }
-          return const Scaffold(
-            backgroundColor: AppColors.grey800,
+          return Scaffold(
+            backgroundColor: context.colors.scaffoldBackground,
             body: SafeArea(child: HomeworkTasksSkeleton()),
           );
         },

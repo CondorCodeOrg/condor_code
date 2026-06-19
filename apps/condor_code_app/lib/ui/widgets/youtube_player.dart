@@ -172,7 +172,7 @@ class _YouTubePlayerWidgetState extends State<YouTubePlayerWidget>
     _attachPlaybackListener(c);
   }
 
-  Widget _buildVideoSurface(YoutubePlayerController controller) {
+  Widget _buildVideoSurface(BuildContext context, YoutubePlayerController controller) {
     if (!kIsWeb) {
       return YoutubePlayer(controller: controller);
     }
@@ -209,12 +209,12 @@ class _YouTubePlayerWidgetState extends State<YouTubePlayerWidget>
             ),
           ),
           Material(
-            color: Colors.black38,
+          color: context.colors.scaffoldBackground.withValues(alpha: 0.38),
             shape: const CircleBorder(),
             clipBehavior: Clip.antiAlias,
             child: IconButton(
               iconSize: 56,
-              color: Colors.white,
+              color: context.colors.textPrimary,
               onPressed: () => controller.playVideo(),
               icon: const Icon(Icons.play_arrow),
             ),
@@ -238,9 +238,9 @@ class _YouTubePlayerWidgetState extends State<YouTubePlayerWidget>
       );
     }
     return Container(
-      constraints: const BoxConstraints(minWidth: 300),
+      constraints: BoxConstraints(minWidth: 300),
       decoration: BoxDecoration(
-        border: Border.all(color: AppColors.grey400, width: 0.6),
+        border: Border.all(color: context.colors.border, width: 0.6),
         borderRadius: BorderRadius.circular(12),
       ),
       child: ClipRRect(
@@ -249,7 +249,7 @@ class _YouTubePlayerWidgetState extends State<YouTubePlayerWidget>
           aspectRatio: 18 / 9,
           child: controller == null
               ? const SizedBox.shrink()
-              : _buildVideoSurface(controller),
+              : _buildVideoSurface(context, controller),
         ),
       ),
     );

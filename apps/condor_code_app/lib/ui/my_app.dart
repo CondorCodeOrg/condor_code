@@ -3,12 +3,14 @@ import 'package:condor_code/di/provider_manager.dart';
 import 'package:condor_code/ui/analytics/analytics.dart';
 import 'package:condor_code/ui/l10n/app_localizations.dart';
 import 'package:condor_code/ui/navigation/go_router.dart';
+import 'package:condor_code/ui/theme/theme_cubit.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:ui_kit/ui_kit.dart'
-    show AppColors, fadeOnlyPageTransitionsTheme;
+import 'package:go_router/go_router.dart';
+import 'package:ui_kit/ui_kit.dart';
 
 class CondorCodeApp extends StatefulWidget {
   final AppConfig config;
@@ -20,9 +22,12 @@ class CondorCodeApp extends StatefulWidget {
 }
 
 class _CondorCodeAppState extends State<CondorCodeApp> {
+  late final GoRouter _router;
+
   @override
   void initState() {
     super.initState();
+    _router = getRouter(widget.config);
 
     switch (widget.config.buildType) {
       case BuildType.dev:
@@ -38,24 +43,28 @@ class _CondorCodeAppState extends State<CondorCodeApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      locale: const Locale('uk'),
-      supportedLocales: const [Locale('uk')],
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: AppColors.neon,
-          brightness: Brightness.dark,
-        ),
-        pageTransitionsTheme: fadeOnlyPageTransitionsTheme(),
+    return BlocProvider.value(
+      value: di<ThemeCubit>(),
+      child: BlocBuilder<ThemeCubit, ThemeMode>(
+        builder: (context, themeMode) {
+          return MaterialApp.router(
+            locale: const Locale('uk'),
+            supportedLocales: const [Locale('uk')],
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            theme: buildCondorTheme(Brightness.light),
+            darkTheme: buildCondorTheme(Brightness.dark),
+            themeMode: themeMode,
+            themeAnimationDuration: const Duration(milliseconds: 300),
+            themeAnimationCurve: Curves.easeInOut,
+            routerConfig: _router,
+          );
+        },
       ),
-      routerConfig: getRouter(widget.config),
     );
   }
 

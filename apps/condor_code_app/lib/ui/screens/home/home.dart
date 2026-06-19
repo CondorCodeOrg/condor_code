@@ -93,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       backgroundColor: Colors.transparent,
       body: Stack(
         children: [
-          _buildBackground(),
+          _buildBackground(context),
           CustomScrollView(
             slivers: [
               SliverToBoxAdapter(
@@ -123,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           //   child: Text(
                           //     localization.knowledgeBaseOpen,
                           //     style: AppTextStyles.body2.copyWith(
-                          //       color: AppColors.neon,
+                          //       color: context.colors.accent,
                           //       fontWeight: FontWeight.w600,
                           //     ),
                           //   ),
@@ -147,10 +147,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildBackground() {
+  Widget _buildBackground(BuildContext context) {
     return Positioned.fill(
       child: CustomPaint(
-        painter: _WavyBackgroundPainter(),
+        painter: _WavyBackgroundPainter(
+          waveColor: context.colors.surface.withValues(alpha: 0.12),
+        ),
         size: Size.infinite,
       ),
     );
@@ -172,7 +174,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               child: RichText(
                 text: TextSpan(
                   style: AppTextStyles.h1.copyWith(
-                    color: AppColors.white,
+                    color: context.colors.textPrimary,
                     fontSize: 32,
                     height: 1.3,
                     fontWeight: FontWeight.w700,
@@ -181,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     TextSpan(text: localization.welcomeTo),
                     TextSpan(
                       text: localization.condorCodeBrand,
-                      style: const TextStyle(color: AppColors.neon),
+                      style: TextStyle(color: context.colors.accent),
                     ),
                   ],
                 ),
@@ -204,7 +206,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             child: Text(
               localization.homeIntro,
               style: AppTextStyles.body1.copyWith(
-                color: AppColors.white,
+                color: context.colors.textPrimary,
                 height: 1.6,
               ),
             ),
@@ -277,12 +279,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        AppColors.grey600,
-                        AppColors.grey400.withValues(alpha: 0.6),
+                        context.colors.surface,
+                        context.colors.border.withValues(alpha: 0.6),
                       ],
                     ),
                     border: Border.all(
-                      color: AppColors.grey400.withValues(alpha: 0.5),
+                      color: context.colors.border.withValues(alpha: 0.5),
                       width: 1,
                     ),
                   ),
@@ -310,7 +312,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 shape: BoxShape.circle,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: AppColors.neon.withValues(
+                                    color: context.colors.accent.withValues(
                                       alpha: 0.22,
                                     ),
                                     blurRadius: 50,
@@ -362,14 +364,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 context.go(RouteConstants.courses);
               },
               child: AnimatedScale(
-                duration: const Duration(milliseconds: 180),
+                duration: Duration(milliseconds: 180),
                 scale: _isLearnHovered ? 1.03 : 1.0,
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(14),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.neon.withValues(alpha: 0.20 * pulse),
+                        color: context.colors.accent.withValues(alpha: 0.20 * pulse),
                         blurRadius: 28,
                         spreadRadius: 1,
                       ),
@@ -387,10 +389,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [
-                          AppColors.neon.withValues(
+                          context.colors.accent.withValues(
                             alpha: _isLearnHovered ? 0.95 : 0.88,
                           ),
-                          AppColors.neonBlur.withValues(
+                          context.colors.accent.withValues(
                             alpha: _isLearnHovered ? 0.95 : 0.86,
                           ),
                         ],
@@ -399,7 +401,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     child: Text(
                       localization.startLearning,
                       style: AppTextStyles.button.copyWith(
-                        color: AppColors.darkGrey800,
+                        color: context.colors.textPrimary,
                         fontSize: 17,
                         fontWeight: FontWeight.w700,
                       ),
@@ -426,20 +428,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               child: Column(
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(
+                    padding: EdgeInsets.symmetric(
                       horizontal: 18,
                       vertical: 16,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.grey600.withValues(alpha: 0.55),
+                      color: context.colors.surface.withValues(alpha: 0.55),
                       borderRadius: BorderRadius.circular(14),
                       border: Border.all(
-                        color: AppColors.neon.withValues(alpha: 0.35),
+                        color: context.colors.accent.withValues(alpha: 0.35),
                         width: 0.9,
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: AppColors.neon.withValues(alpha: 0.08),
+                          color: context.colors.accent.withValues(alpha: 0.08),
                           blurRadius: 22,
                           spreadRadius: 1,
                         ),
@@ -450,24 +452,24 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          margin: const EdgeInsets.only(top: 2),
-                          padding: const EdgeInsets.all(7),
+                          margin: EdgeInsets.only(top: 2),
+                          padding: EdgeInsets.all(7),
                           decoration: BoxDecoration(
-                            color: AppColors.neon.withValues(alpha: 0.22),
+                            color: context.colors.accent.withValues(alpha: 0.22),
                             shape: BoxShape.circle,
                           ),
-                          child: const Icon(
+                          child: Icon(
                             Icons.campaign_rounded,
-                            color: AppColors.neon,
+                            color: context.colors.accent,
                             size: 18,
                           ),
                         ),
-                        const SizedBox(width: 12),
+                        SizedBox(width: 12),
                         Flexible(
                           child: Text(
                             localization.youtubeCtaText,
                             style: AppTextStyles.body2.copyWith(
-                              color: AppColors.white,
+                              color: context.colors.textPrimary,
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                               height: 1.45,
@@ -481,7 +483,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   const SizedBox(height: 16),
                   ElevatedButton.icon(
                     onPressed: _openYouTube,
-                    style: AppButtonStyles.mainButtonStyle.copyWith(
+                    style: AppButtonStyles.mainButtonStyle(context).copyWith(
                       padding: WidgetStateProperty.all(
                         const EdgeInsets.symmetric(
                           horizontal: 28,
@@ -489,9 +491,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         ),
                       ),
                     ),
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.play_circle_filled,
-                      color: AppColors.darkGrey800,
+                      color: context.colors.textPrimary,
                       size: 24,
                     ),
                     label: Text(localization.goToYouTubeChannel),
@@ -512,26 +514,26 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         return Opacity(
           opacity: _animFooter.value,
           child: Padding(
-            padding: const EdgeInsets.only(top: 16),
+            padding: EdgeInsets.only(top: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                   height: 1,
-                  color: AppColors.grey400.withValues(alpha: 0.5),
+                  color: context.colors.border.withValues(alpha: 0.5),
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20),
                 Text(
                   localization.footerDescription,
                   style: AppTextStyles.caption1.copyWith(
-                    color: AppColors.grey200,
+                    color: context.colors.textSecondary,
                   ),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 Text(
                   localization.copyright(DateTime.now().year),
                   style: AppTextStyles.caption2.copyWith(
-                    color: AppColors.grey200,
+                    color: context.colors.textSecondary,
                   ),
                 ),
               ],
@@ -553,12 +555,12 @@ class _FeatureCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.grey800.withValues(alpha: 0.8),
+        color: context.colors.scaffoldBackground.withValues(alpha: 0.8),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: AppColors.grey400.withValues(alpha: 0.4),
+          color: context.colors.border.withValues(alpha: 0.4),
           width: 0.8,
         ),
       ),
@@ -568,13 +570,13 @@ class _FeatureCard extends StatelessWidget {
           Container(
             width: 32,
             height: 32,
-            decoration: const BoxDecoration(
-              color: AppColors.grey600,
+            decoration: BoxDecoration(
+              color: context.colors.surface,
               shape: BoxShape.circle,
             ),
-            child: const Icon(
+            child: Icon(
               Icons.check_rounded,
-              color: AppColors.neon,
+              color: context.colors.accent,
               size: 20,
             ),
           ),
@@ -586,15 +588,15 @@ class _FeatureCard extends StatelessWidget {
                 Text(
                   title,
                   style: AppTextStyles.body2.copyWith(
-                    color: AppColors.neon,
+                    color: context.colors.accent,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                const SizedBox(height: 6),
+                SizedBox(height: 6),
                 Text(
                   description,
                   style: AppTextStyles.body3.copyWith(
-                    color: AppColors.lightGrey,
+                    color: context.colors.textSecondary,
                     height: 1.5,
                   ),
                 ),
@@ -609,10 +611,14 @@ class _FeatureCard extends StatelessWidget {
 
 /// Subtle wavy lines in the background.
 class _WavyBackgroundPainter extends CustomPainter {
+  const _WavyBackgroundPainter({required this.waveColor});
+
+  final Color waveColor;
+
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = AppColors.grey600.withValues(alpha: 0.12)
+      ..color = waveColor
       ..strokeWidth = 1
       ..style = PaintingStyle.stroke;
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ui_kit/ui_kit.dart';
 
 class CustomPopup extends StatelessWidget {
   const CustomPopup({super.key, required this.showPopup});
@@ -34,14 +35,14 @@ class CustomPopup extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: showHeartImages(),
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(top: 10, bottom: 10),
               child: Text(
                 'Ваш запас жизней полон',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
-                  color: Colors.white,
+                  color: context.colors.textPrimary,
                 ),
               ),
             ),
@@ -76,14 +77,14 @@ class TaskButton extends StatelessWidget {
             ],
           ),
         ),
-        child: const Row(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               children: [
                 Padding(
                   padding: EdgeInsets.only(right: 10),
-                  child: Icon(Icons.abc, color: Colors.white),
+                  child: Icon(Icons.abc, color: context.colors.textPrimary),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,7 +94,7 @@ class TaskButton extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 17,
-                        color: Colors.white,
+                        color: context.colors.textPrimary,
                       ),
                     ),
                     Text(
@@ -101,7 +102,7 @@ class TaskButton extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 17,
-                        color: Colors.white,
+                        color: context.colors.textPrimary,
                       ),
                     ),
                   ],
@@ -116,7 +117,7 @@ class TaskButton extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 17,
-                    color: Colors.white,
+                    color: context.colors.textPrimary,
                   ),
                 ),
                 Text(
@@ -124,7 +125,7 @@ class TaskButton extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 17,
-                    color: Colors.white,
+                    color: context.colors.textPrimary,
                   ),
                 ),
               ],
