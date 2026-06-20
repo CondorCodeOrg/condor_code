@@ -25,6 +25,7 @@ class CourseCubit extends BaseCubit<CourseState> {
   final String? initialLessonId;
   final Map<String, Lesson> _lessonDetailsCache = {};
   final Map<String, bool> _tasksExistCache = {};
+  String? _activeLessonRequestId;
 
   Future<void> _loadLessons() async {
     emit(state.copyWith(isLessonsLoading: true));
@@ -53,6 +54,7 @@ class CourseCubit extends BaseCubit<CourseState> {
   }
 
   Future<void> selectLesson(String lessonId) async {
+    _activeLessonRequestId = lessonId;
     if (_lessonDetailsCache.containsKey(lessonId)) {
       final cachedLesson = _lessonDetailsCache[lessonId]!;
       final cachedTasksExist = _tasksExistCache[lessonId] ?? false;
@@ -79,6 +81,8 @@ class CourseCubit extends BaseCubit<CourseState> {
             _logSelectLessonAnalytics(lesson, lessonId);
             _lessonDetailsCache[lessonId] = lesson;
             _tasksExistCache[lessonId] = tasks.isNotEmpty;
+
+            if (_activeLessonRequestId != lessonId) return;
 
             emit(
               state.copyWith(
