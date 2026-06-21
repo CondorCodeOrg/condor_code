@@ -1,0 +1,45 @@
+name: PR Welcome Comment
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post welcome comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `👋 Thanks for your PR, @${{ github.actor }}!
+
+            ⏰ **Review Schedule**
+            We review PRs on **Friday–Sunday** (Europe/Kiev timezone).
+            - Initial review: during the next review window after submission
+            - Follow-up reviews: next window after you address feedback
+            - You can update anytime — reviews only happen in the scheduled window
+
+            🤖 **AI Code Review**
+            Your PR will also be reviewed by **Alfred** — the personal AI agent of Oleh Savenko (@savavskoy).
+
+            - Alfred's review is for **code quality improvement** and **additional insights**
+            - It helps catch things that might be missed
+            - **You don't need to fix everything Alfred suggests**
+            - Only address feedback from **code owners** (human maintainers)
+
+            Consider Alfred's comments as helpful suggestions, not requirements.
+
+            📋 **Before we start**
+            - Ensure all PR template checkboxes are completed
+            - Check that \`melos run prepush\` passes
+            - Make sure your PR title follows Conventional Commits format
+
+            See [CONTRIBUTING.md](../../blob/develop/CONTRIBUTING.md) for full details.
+
+            _Condor Coder_ 🦅`
+            })

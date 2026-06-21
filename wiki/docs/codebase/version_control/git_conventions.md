@@ -114,6 +114,34 @@ The **scope** describes *where* the change happened. Use the following designate
 
 ---
 
+## 🔀 Pull Request Titles
+
+PR titles follow the same **Conventional Commits** format as commit messages:
+
+```
+type(scope): description
+```
+
+### Rules
+- Use the same **types** and **scopes** as defined above
+- Keep it concise but descriptive
+- Use lowercase, no period at the end
+- Write in imperative mood
+
+### Examples
+
+> `feat(cc-app): add lesson completion tracking`
+> `fix(ui-kit): resolve button overflow on small screens`
+> `docs(repo): update onboarding instructions`
+
+### Why this matters
+
+- Squash merge uses the PR title as the final commit message
+- Enables automatic changelog generation
+- Makes PR history searchable and consistent
+
+---
+
 ## 💡 Why we do this
 
 By following these rules, **Melos** can:
@@ -125,5 +153,3 @@ By following these rules, **Melos** can:
 ---
 
 Everything is set, Sir. Your team now has no excuses for messy logs.
-
-**Would you like me to help you set up a `commitlint` configuration to automatically enforce these rules during every git commit?**
