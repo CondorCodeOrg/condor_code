@@ -44,6 +44,7 @@ dependencies:
   flutter_svg: ^2.2.0
   graphview: ^1.5.1
   redacted: ^1.0.13
+  device_info_plus: ^10.1.0
 
   # utils
   freezed_annotation: 3.1.0

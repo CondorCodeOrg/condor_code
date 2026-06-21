@@ -26,7 +26,11 @@ import 'package:condor_code/ui/screens/task_details/task_details_cubit/task_deta
 import 'package:condor_code/ui/screens/tasks_list/tasks_list_cubit/tasks_list_cubit.dart';
 import 'package:data/data.dart' as data;
 import 'package:domain/domain.dart';
+import 'package:domain/repository/feedback_repository.dart';
 import 'package:get_it/get_it.dart';
+import 'package:data/data_sources/remote/feedback_remote_data_source.dart';
+import 'package:data/repository/feedback_repository_impl.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 final di = GetIt.instance;
 
@@ -52,6 +56,22 @@ class ProviderManager {
     );
     di.registerLazySingleton<AnalyticsEventsProvider>(
       () => AnalyticsEventsProviderImpl(di()),
+    );
+
+    if (!di.isRegistered<FirebaseFirestore>()) {
+      di.registerLazySingleton<FirebaseFirestore>(
+        () => FirebaseFirestore.instance,
+      );
+    }
+
+    // Register Feedback Remote Data Source
+    di.registerLazySingleton<FeedbackRemoteDataSource>(
+      () => FeedbackRemoteDataSource(di<FirebaseFirestore>()),
+    );
+
+    // Register Feedback Repository
+    di.registerLazySingleton<FeedbackRepository>(
+      () => FeedbackRepositoryImpl(di<FeedbackRemoteDataSource>()),
     );
   }
 
