@@ -82,6 +82,38 @@ The `admin_app` uses **Riverpod** for state management instead of Bloc/Cubit. Fo
 - Repositories are injected into state managers, not into UI components.
 - This enforces unidirectional data flow and keeps UI code testable and presentation-focused.
 
+### Repository Access in State Management
+
+**Bloc/Cubit (condor_code_app) and Riverpod (admin_app) must never access data sources directly.**
+
+- Always use repositories as the single source of truth for data access
+- Repositories abstract the underlying data source (Firebase, mock, cache)
+- This allows swapping implementations without changing business logic
+- Enables consistent error handling and data transformation across the app
+
+**Example:**
+```dart
+// ✅ CORRECT: Cubit uses repository
+class CourseCubit extends Cubit<CourseState> {
+  final LessonsRepository _lessonsRepository;  // Injected
+  
+  Future<void> loadLessons() async {
+    final result = await _lessonsRepository.getLessonsItems(courseId);
+    // ...
+  }
+}
+
+// ❌ WRONG: Direct data source access
+class CourseCubit extends Cubit<CourseState> {
+  final FirebaseFirestore _firestore;  // Don't do this
+  
+  Future<void> loadLessons() async {
+    final snapshot = await _firestore.collection('lessons').get();
+    // ...
+  }
+}
+```
+
 ### State Management per App
 
 | App | State Management |
