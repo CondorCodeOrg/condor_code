@@ -25,14 +25,14 @@ class KnowledgeBaseHomeScreen extends StatelessWidget {
 class _KnowledgeBaseHomeBody extends StatelessWidget {
   const _KnowledgeBaseHomeBody();
 
-  static const double _wideUpdatesWidth = 300;
-  static const double _wideBreakpoint = 960;
+  static double _wideUpdatesWidth = 300;
+  static double _wideBreakpoint = 960;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return ColoredBox(
-      color: AppColors.grey800,
+      color: context.colors.scaffoldBackground,
       child: LayoutBuilder(
         builder: (context, constraints) {
           final wide = constraints.maxWidth >= _wideBreakpoint;
@@ -88,7 +88,7 @@ class _HeroBlock extends StatelessWidget {
         RichText(
           text: TextSpan(
             style: AppTextStyles.h1.copyWith(
-              color: AppColors.white,
+              color: context.colors.textPrimary,
               fontSize: 32,
               height: 1.2,
               fontWeight: FontWeight.w800,
@@ -97,16 +97,16 @@ class _HeroBlock extends StatelessWidget {
               TextSpan(text: l10n.knowledgeBaseHeroTitlePrefix),
               TextSpan(
                 text: l10n.knowledgeBaseHeroTitleHighlight,
-                style: const TextStyle(color: AppColors.neon),
+                style: TextStyle(color: context.colors.accent),
               ),
             ],
           ),
         ),
-        const SizedBox(height: 14),
+        SizedBox(height: 14),
         Text(
           l10n.knowledgeBaseHeroSubtitle,
           style: AppTextStyles.body1.copyWith(
-            color: AppColors.grey200,
+            color: context.colors.textSecondary,
             height: 1.55,
           ),
         ),
@@ -130,15 +130,19 @@ class _InteractiveRoadmapCard extends StatelessWidget {
         child: Ink(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            color: AppColors.grey600.withValues(alpha: 0.65),
-            border: Border.all(color: AppColors.neon.withValues(alpha: 0.35)),
+            color: context.colors.surface.withValues(alpha: 0.65),
+            border: Border.all(color: context.colors.accent.withValues(alpha: 0.35)),
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(16),
             child: Stack(
               children: [
                 Positioned.fill(
-                  child: CustomPaint(painter: _CircuitGridPainter()),
+                  child: CustomPaint(
+                    painter: _CircuitGridPainter(
+                      gridColor: context.colors.accent.withValues(alpha: 0.1),
+                    ),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(22),
@@ -151,39 +155,39 @@ class _InteractiveRoadmapCard extends StatelessWidget {
                         children: [
                           _TagPill(
                             text: l10n.knowledgeBaseTagPopular,
-                            foreground: AppColors.darkGrey800,
-                            background: AppColors.neon,
+                            foreground: context.colors.textPrimary,
+                            background: context.colors.accent,
                           ),
                           _TagPill(
                             text: l10n.knowledgeBaseTagInteractive,
-                            foreground: AppColors.white,
-                            background: AppColors.grey400,
+                            foreground: context.colors.textPrimary,
+                            background: context.colors.border,
                           ),
                         ],
                       ),
-                      const SizedBox(height: 18),
+                      SizedBox(height: 18),
                       Text(
                         l10n.knowledgeBaseRoadmapCardTitle,
                         style: AppTextStyles.h2.copyWith(
-                          color: AppColors.white,
+                          color: context.colors.textPrimary,
                           fontWeight: FontWeight.w800,
                         ),
                       ),
-                      const SizedBox(height: 10),
+                      SizedBox(height: 10),
                       Text(
                         l10n.knowledgeBaseRoadmapCardDesc,
                         style: AppTextStyles.body2.copyWith(
-                          color: AppColors.grey200,
+                          color: context.colors.textSecondary,
                           height: 1.45,
                         ),
                       ),
-                      const SizedBox(height: 18),
+                      SizedBox(height: 18),
                       Row(
                         children: [
                           Text(
                             '${l10n.knowledgeBaseStartLearning} →',
                             style: AppTextStyles.body2.copyWith(
-                              color: AppColors.neon,
+                              color: context.colors.accent,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
@@ -233,10 +237,14 @@ class _TagPill extends StatelessWidget {
 }
 
 class _CircuitGridPainter extends CustomPainter {
+  const _CircuitGridPainter({required this.gridColor});
+
+  final Color gridColor;
+
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = AppColors.neon.withValues(alpha: 0.1)
+      ..color = gridColor
       ..strokeWidth = 1;
     const step = 22.0;
     for (var x = 0.0; x < size.width; x += step) {
@@ -313,22 +321,22 @@ class _SmallCategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppColors.grey600.withValues(alpha: 0.55),
+      color: context.colors.surface.withValues(alpha: 0.55),
       borderRadius: BorderRadius.circular(14),
       child: InkWell(
         borderRadius: BorderRadius.circular(14),
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.all(18),
+          padding: EdgeInsets.all(18),
           child: Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(12),
+                padding: EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: AppColors.neon.withValues(alpha: 0.18),
+                  color: context.colors.accent.withValues(alpha: 0.18),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Icon(icon, color: AppColors.neon, size: 26),
+                child: Icon(icon, color: context.colors.accent, size: 26),
               ),
               const SizedBox(width: 14),
               Expanded(
@@ -338,21 +346,21 @@ class _SmallCategoryCard extends StatelessWidget {
                     Text(
                       title,
                       style: AppTextStyles.body2.copyWith(
-                        color: AppColors.white,
+                        color: context.colors.textPrimary,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4),
                     Text(
                       subtitle,
                       style: AppTextStyles.caption1.copyWith(
-                        color: AppColors.grey200,
+                        color: context.colors.textSecondary,
                       ),
                     ),
                   ],
                 ),
               ),
-              const Icon(Icons.chevron_right_rounded, color: AppColors.neon),
+              Icon(Icons.chevron_right_rounded, color: context.colors.accent),
             ],
           ),
         ),
@@ -374,7 +382,7 @@ class _LearningPillarsBlock extends StatelessWidget {
         Text(
           l10n.knowledgeBaseLearningPillars,
           style: AppTextStyles.h2.copyWith(
-            color: AppColors.white,
+            color: context.colors.textPrimary,
             fontWeight: FontWeight.w800,
           ),
         ),
@@ -389,7 +397,7 @@ class _LearningPillarsBlock extends StatelessWidget {
                 : 1;
             final pillars = [
               (
-                AppColors.neon,
+                context.colors.accent,
                 l10n.knowledgeBasePillarBasicsTitle,
                 l10n.knowledgeBasePillarBasicsItems,
               ),
@@ -399,12 +407,12 @@ class _LearningPillarsBlock extends StatelessWidget {
                 l10n.knowledgeBasePillarAdvancedItems,
               ),
               (
-                const Color(0xFFFF9F43),
+                Color(0xFFFF9F43),
                 l10n.knowledgeBasePillarArchTitle,
                 l10n.knowledgeBasePillarArchItems,
               ),
               (
-                AppColors.alertRed,
+                context.colors.alert,
                 l10n.knowledgeBasePillarProdTitle,
                 l10n.knowledgeBasePillarProdItems,
               ),
@@ -450,9 +458,9 @@ class _PillarCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.grey600.withValues(alpha: 0.45),
+        color: context.colors.surface.withValues(alpha: 0.45),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.grey400.withValues(alpha: 0.4)),
+        border: Border.all(color: context.colors.border.withValues(alpha: 0.4)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -467,24 +475,24 @@ class _PillarCard extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(14, 14, 14, 16),
+            padding: EdgeInsets.fromLTRB(14, 14, 14, 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
                   style: AppTextStyles.caption1.copyWith(
-                    color: AppColors.white,
+                    color: context.colors.textPrimary,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 0.5,
                   ),
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: 12),
                 for (final line in bodyLines) ...[
                   Text(
                     '· $line',
                     style: AppTextStyles.caption2.copyWith(
-                      color: AppColors.grey200,
+                      color: context.colors.textSecondary,
                       height: 1.45,
                     ),
                   ),
@@ -507,28 +515,28 @@ class _LatestUpdatesPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(18),
+      padding: EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: AppColors.grey600.withValues(alpha: 0.5),
+        color: context.colors.surface.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.grey400.withValues(alpha: 0.45)),
+        border: Border.all(color: context.colors.border.withValues(alpha: 0.45)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.history_rounded,
-                color: AppColors.neon,
+                color: context.colors.accent,
                 size: 22,
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               Expanded(
                 child: Text(
                   l10n.knowledgeBaseLatestUpdates,
                   style: AppTextStyles.body2.copyWith(
-                    color: AppColors.white,
+                    color: context.colors.textPrimary,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
@@ -540,12 +548,12 @@ class _LatestUpdatesPanel extends StatelessWidget {
             builder: (context, state) {
               if (state.isLoading && state.news.isEmpty) {
                 return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 24),
+                  padding: EdgeInsets.symmetric(vertical: 24),
                   child: Skeleton(
                     name: CondorHollowSkeletonIds.knowledgeBaseNews,
                     loading: true,
-                    color: AppColors.grey600.withValues(alpha: 0.4),
-                    highlightColor: AppColors.neon.withValues(alpha: 0.12),
+                    color: context.colors.surface.withValues(alpha: 0.4),
+                    highlightColor: context.colors.accent.withValues(alpha: 0.12),
                     child: const SizedBox.shrink(),
                   ),
                 );
@@ -568,8 +576,8 @@ class _LatestUpdatesPanel extends StatelessWidget {
                 child: OutlinedButton(
                   onPressed: () {},
                   style: OutlinedButton.styleFrom(
-                    foregroundColor: AppColors.neon,
-                    side: const BorderSide(color: AppColors.neon),
+                    foregroundColor: context.colors.accent,
+                    side: BorderSide(color: context.colors.accent),
                     padding: const EdgeInsets.symmetric(vertical: 12),
                   ),
                   child: Text(l10n.knowledgeBaseViewAllActivity),
@@ -582,18 +590,18 @@ class _LatestUpdatesPanel extends StatelessWidget {
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    const SizedBox.expand(
+                    SizedBox.expand(
                       child: CircularProgressIndicator(
                         value: 0.74,
                         strokeWidth: 4,
-                        backgroundColor: AppColors.grey400,
-                        color: AppColors.neon,
+                        backgroundColor: context.colors.border,
+                        color: context.colors.accent,
                       ),
                     ),
                     Text(
                       '74%',
                       style: AppTextStyles.caption2.copyWith(
-                        color: AppColors.white,
+                        color: context.colors.textPrimary,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -602,11 +610,11 @@ class _LatestUpdatesPanel extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {},
-                icon: const Icon(Icons.chevron_left, color: AppColors.grey200),
+                icon: Icon(Icons.chevron_left, color: context.colors.textSecondary),
               ),
               IconButton(
                 onPressed: () {},
-                icon: const Icon(Icons.chevron_right, color: AppColors.grey200),
+                icon: Icon(Icons.chevron_right, color: context.colors.textSecondary),
               ),
             ],
           ),
@@ -627,15 +635,15 @@ class _NewsTile extends StatelessWidget {
     final (label, color) = switch (item.category) {
       KnowledgeBaseNewsCategory.article => (
         l10n.knowledgeBaseNewsCategoryArticle,
-        AppColors.neon,
+        context.colors.accent,
       ),
       KnowledgeBaseNewsCategory.roadmap => (
         l10n.knowledgeBaseNewsCategoryRoadmap,
-        const Color(0xFFE8D44D),
+        Color(0xFFE8D44D),
       ),
       KnowledgeBaseNewsCategory.announcement => (
         l10n.knowledgeBaseNewsCategoryAnnouncement,
-        AppColors.alertRed,
+        context.colors.alert,
       ),
     };
 
@@ -659,28 +667,28 @@ class _NewsTile extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 10),
+            SizedBox(width: 10),
             Text(
               item.relativeTimeLabel,
-              style: AppTextStyles.caption2.copyWith(color: AppColors.grey200),
+              style: AppTextStyles.caption2.copyWith(color: context.colors.textSecondary),
             ),
           ],
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8),
         Text(
           item.title,
           style: AppTextStyles.body2.copyWith(
-            color: AppColors.white,
+            color: context.colors.textPrimary,
             fontWeight: FontWeight.w700,
           ),
         ),
-        const SizedBox(height: 4),
+        SizedBox(height: 4),
         Text(
           item.snippet,
           maxLines: 3,
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.caption1.copyWith(
-            color: AppColors.grey200,
+            color: context.colors.textSecondary,
             height: 1.4,
           ),
         ),

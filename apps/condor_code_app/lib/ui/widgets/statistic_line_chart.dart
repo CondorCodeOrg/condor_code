@@ -1,20 +1,19 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:ui_kit/ui_kit.dart';
 
 // TODO: Add later.
 class StatisticlineChart extends StatelessWidget {
   const StatisticlineChart({
     super.key,
-    Color? line1Color,
-    Color? line2Color,
-    Color? betweenColor,
-  }) : line1Color = line1Color ?? Colors.yellow,
-       line2Color = line2Color ?? Colors.black,
-       betweenColor = betweenColor ?? Colors.greenAccent;
+    this.line1Color,
+    this.line2Color,
+    this.betweenColor,
+  });
 
-  final Color line1Color;
-  final Color line2Color;
-  final Color betweenColor;
+  final Color? line1Color;
+  final Color? line2Color;
+  final Color? betweenColor;
 
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
     const style = TextStyle(fontSize: 10, fontWeight: FontWeight.bold);
@@ -62,7 +61,12 @@ class StatisticlineChart extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) => SizedBox(
+  Widget build(BuildContext context) {
+    final effectiveLine1Color = line1Color ?? Colors.yellow;
+    final effectiveLine2Color = line2Color ?? context.colors.textPrimary;
+    final effectiveBetweenColor = betweenColor ?? Colors.greenAccent;
+
+    return SizedBox(
     height: 200,
     width: 500,
     child: AspectRatio(
@@ -90,7 +94,7 @@ class StatisticlineChart extends StatelessWidget {
                 ],
                 isCurved: true,
                 barWidth: 2,
-                color: line1Color,
+                color: effectiveLine1Color,
                 dotData: const FlDotData(show: false),
               ),
               LineChartBarData(
@@ -110,12 +114,12 @@ class StatisticlineChart extends StatelessWidget {
                 ],
                 isCurved: false,
                 barWidth: 2,
-                color: line2Color,
+                color: effectiveLine2Color,
                 dotData: const FlDotData(show: false),
               ),
             ],
             betweenBarsData: [
-              BetweenBarsData(fromIndex: 0, toIndex: 1, color: betweenColor),
+              BetweenBarsData(fromIndex: 0, toIndex: 1, color: effectiveBetweenColor),
             ],
             minY: 0,
             borderData: FlBorderData(show: false),
@@ -154,4 +158,5 @@ class StatisticlineChart extends StatelessWidget {
       ),
     ),
   );
+  }
 }

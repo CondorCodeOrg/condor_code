@@ -4,6 +4,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ui_kit/ui_kit.dart';
 
 class _CourseMismatch implements Exception {}
 
@@ -60,26 +61,26 @@ class LessonDetailPage extends ConsumerWidget {
   final String courseId;
   final String lessonId;
 
-  static final _cardDecoration = BoxDecoration(
-    color: Colors.white,
+  static BoxDecoration _cardDecoration(BuildContext context) => BoxDecoration(
+    color: context.colors.popupSurface,
     borderRadius: const BorderRadius.all(Radius.circular(16)),
-    border: Border.all(color: Colors.black12),
+    border: Border.all(color: context.colors.border),
     boxShadow: const [
       BoxShadow(color: Color(0x0D000000), blurRadius: 12, offset: Offset(0, 4)),
     ],
   );
 
-  static const _valueStyle = TextStyle(
+  static TextStyle _valueStyle(BuildContext context) => TextStyle(
     fontSize: 15,
     height: 1.45,
-    color: Colors.black87,
+    color: context.colors.textPrimary,
     decoration: TextDecoration.none,
   );
 
   static TextStyle _labelStyle(BuildContext context) => TextStyle(
     fontWeight: FontWeight.w600,
     fontSize: 13,
-    color: Colors.grey.shade700,
+    color: context.colors.textSecondary,
     decoration: TextDecoration.none,
   );
 
@@ -89,12 +90,12 @@ class LessonDetailPage extends ConsumerWidget {
     final async = ref.watch(_lessonDetailBundleProvider(key));
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.colors.scaffoldBackground,
       body: SafeArea(
         child: Material(
-          color: Colors.white,
+          color: context.colors.scaffoldBackground,
           child: DefaultTextStyle.merge(
-            style: _valueStyle,
+            style: _valueStyle(context),
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(24),
               child: Align(
@@ -108,18 +109,18 @@ class LessonDetailPage extends ConsumerWidget {
                         children: [
                           IconButton(
                             onPressed: () => context.pop(),
-                            icon: const Icon(
+                            icon: Icon(
                               Icons.arrow_back,
-                              color: Colors.black87,
+                              color: context.colors.textPrimary,
                             ),
                           ),
                           Expanded(
                             child: Text(
                               context.strings.lessonDetailsTitle,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 28,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.black87,
+                                color: context.colors.textPrimary,
                                 decoration: TextDecoration.none,
                               ),
                             ),
@@ -131,9 +132,9 @@ class LessonDetailPage extends ConsumerWidget {
                         skipLoadingOnReload: true,
                         data: (bundle) => _LessonDetailContent(
                           bundle: bundle,
-                          cardDecoration: _cardDecoration,
+                          cardDecoration: _cardDecoration(context),
                           labelStyle: _labelStyle(context),
-                          valueStyle: _valueStyle,
+                          valueStyle: _valueStyle(context),
                         ),
                         loading: () => const Padding(
                           padding: EdgeInsets.symmetric(vertical: 48),
@@ -146,7 +147,7 @@ class LessonDetailPage extends ConsumerWidget {
                                 ? context.strings.lessonDetailCourseMismatch
                                 : context.strings.lessonDetailLoadError,
                             style: TextStyle(
-                              color: Colors.red.shade800,
+                              color: context.colors.alert,
                               fontSize: 15,
                               decoration: TextDecoration.none,
                             ),
@@ -288,10 +289,10 @@ class _TasksSection extends StatelessWidget {
       children: [
         Text(
           context.strings.taskSectionTitle,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: Colors.black87,
+            color: context.colors.textPrimary,
             decoration: TextDecoration.none,
           ),
         ),
@@ -299,7 +300,7 @@ class _TasksSection extends StatelessWidget {
         if (tasks.isEmpty)
           Text(
             context.strings.lessonDetailNoTasks,
-            style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
+            style: TextStyle(color: context.colors.textSecondary, fontSize: 14),
           )
         else
           ...List.generate(tasks.length, (i) {
@@ -336,7 +337,7 @@ class _TaskCard extends StatelessWidget {
     final a = task.answer;
 
     return Material(
-      color: Colors.grey.shade50,
+      color: context.colors.surface,
       borderRadius: BorderRadius.circular(12),
       child: Padding(
         padding: const EdgeInsets.all(14),
@@ -345,10 +346,10 @@ class _TaskCard extends StatelessWidget {
           children: [
             Text(
               '${context.strings.taskSectionTitle} ${index + 1}',
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 15,
-                color: Colors.black87,
+                color: context.colors.textPrimary,
                 decoration: TextDecoration.none,
               ),
             ),
@@ -378,10 +379,10 @@ class _TaskCard extends StatelessWidget {
             const SizedBox(height: 12),
             Text(
               context.strings.answerBlockTitle,
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 14,
-                color: Colors.black87,
+                color: context.colors.textPrimary,
                 decoration: TextDecoration.none,
               ),
             ),
@@ -433,10 +434,10 @@ class _QuestionsSection extends StatelessWidget {
       children: [
         Text(
           context.strings.questionSectionTitle,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: Colors.black87,
+            color: context.colors.textPrimary,
             decoration: TextDecoration.none,
           ),
         ),
@@ -444,7 +445,7 @@ class _QuestionsSection extends StatelessWidget {
         if (questions.isEmpty)
           Text(
             context.strings.lessonDetailNoQuestions,
-            style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
+            style: TextStyle(color: context.colors.textSecondary, fontSize: 14),
           )
         else
           ...List.generate(questions.length, (i) {
@@ -481,7 +482,7 @@ class _QuestionCard extends StatelessWidget {
     final img = question.imageUrl?.trim() ?? '';
 
     return Material(
-      color: Colors.grey.shade50,
+      color: context.colors.surface,
       borderRadius: BorderRadius.circular(12),
       child: Padding(
         padding: const EdgeInsets.all(14),
@@ -490,10 +491,10 @@ class _QuestionCard extends StatelessWidget {
           children: [
             Text(
               '${context.strings.questionSectionTitle} ${index + 1}',
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 15,
-                color: Colors.black87,
+                color: context.colors.textPrimary,
                 decoration: TextDecoration.none,
               ),
             ),

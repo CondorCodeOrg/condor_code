@@ -3,6 +3,7 @@ import 'package:condorcode_admin/di/provider_manager.dart';
 import 'package:condorcode_admin/presentation/logic/auth/login_email_notifier/login_with_email_notifier.dart';
 import 'package:condorcode_admin/presentation/logic/auth/social_auth_notifier/social_auth_notifier.dart';
 import 'package:condorcode_admin/presentation/router/router.dart';
+import 'package:condorcode_admin/presentation/view/common/widgets/admin_theme_toggle_button.dart';
 import 'package:condorcode_admin/presentation/view/common/widgets/text_field.dart';
 import 'package:condorcode_admin/utilities/context_extensions.dart';
 import 'package:flutter/material.dart';
@@ -51,37 +52,40 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     final notifier = ref.read(loginWithEmailProvider.notifier);
 
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Column(
+      backgroundColor: context.colors.scaffoldBackground,
+      body: Stack(
         children: [
-          Container(
-            width: double.infinity,
-            color: AppColors.darkGrey800,
-            child: AppLogo(label: _getLogoLabel()),
-          ),
-          Center(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(24.0),
-              child: Container(
-                constraints: const BoxConstraints(maxWidth: 400),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const Icon(
-                      Icons.admin_panel_settings,
-                      size: 64,
-                      color: Colors.lightGreenAccent,
-                    ),
-                    const SizedBox(height: 24),
-                    Text(
-                      context.strings.enterDataToAccessAdmin,
-                      style: const TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
+          Column(
+            children: [
+              Container(
+                width: double.infinity,
+                color: context.colors.surface,
+                child: AppLogo(label: _getLogoLabel()),
+              ),
+              Expanded(
+                child: Center(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.all(24.0),
+                    child: Container(
+                      constraints: const BoxConstraints(maxWidth: 400),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Icon(
+                            Icons.admin_panel_settings,
+                            size: 64,
+                            color: context.colors.accent,
+                          ),
+                          const SizedBox(height: 24),
+                          Text(
+                            context.strings.enterDataToAccessAdmin,
+                            style: TextStyle(
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold,
+                              color: context.colors.textPrimary,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
                     const SizedBox(height: 32),
                     CustomTextField(
                       controller: _emailController,
@@ -114,8 +118,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               }
                             },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.lightGreenAccent,
-                        foregroundColor: Colors.white,
+                        backgroundColor: context.colors.accent,
+                        foregroundColor: context.colors.accentForeground,
                         padding: const EdgeInsets.symmetric(vertical: 20),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -150,8 +154,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Text(
                             context.strings.or,
-                            style: const TextStyle(
-                              color: Colors.grey,
+                            style: TextStyle(
+                              color: context.colors.textSecondary,
                               fontSize: 12,
                             ),
                           ),
@@ -181,7 +185,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        side: const BorderSide(color: Colors.black12),
+                        side: BorderSide(color: context.colors.border),
                       ),
                     ),
                     const SizedBox(height: 24),
@@ -201,6 +205,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 ),
               ),
             ),
+          ),
+          ),
+        ],
+      ),
+          const Positioned(
+            top: 8,
+            right: 8,
+            child: AdminThemeToggleButton(),
           ),
         ],
       ),

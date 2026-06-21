@@ -7,15 +7,14 @@ class _LessonHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.all(10),
+    padding: EdgeInsets.all(10),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Padding(
-          padding: const EdgeInsets.only(right: 10),
+          padding: EdgeInsets.only(right: 10),
           child: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new_outlined, size: 34),
-            color: AppColors.white,
+            icon: Icon(Icons.arrow_back_ios_new_outlined, size: 34, color: context.colors.textPrimary),
             onPressed: () {
               onBackBottomPressed();
             },
@@ -31,7 +30,7 @@ class _LessonHeader extends StatelessWidget {
                   width: constraints.maxWidth,
                   height: 20,
                   progress: value,
-                  color: AppColors.grey800,
+                  color: context.colors.scaffoldBackground,
                 ),
               ),
             ),

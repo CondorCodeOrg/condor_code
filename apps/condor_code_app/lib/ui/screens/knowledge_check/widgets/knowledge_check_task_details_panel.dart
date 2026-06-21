@@ -53,9 +53,9 @@ class _KnowledgeCheckTaskDetailsPanelState
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.grey600.withValues(alpha: 0.42),
+        color: context.colors.surface.withValues(alpha: 0.42),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.grey400.withValues(alpha: 0.55)),
+        border: Border.all(color: context.colors.border.withValues(alpha: 0.55)),
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
@@ -64,8 +64,8 @@ class _KnowledgeCheckTaskDetailsPanelState
                 name:
                     CondorHollowSkeletonIds.lessonAnswersDetailPanelFullScreen,
                 loading: true,
-                color: AppColors.grey600.withValues(alpha: 0.42),
-                highlightColor: AppColors.neon.withValues(alpha: 0.12),
+                color: context.colors.surface.withValues(alpha: 0.42),
+                highlightColor: context.colors.accent.withValues(alpha: 0.12),
                 child: const SizedBox.shrink(),
               )
             : _TaskContent(
@@ -160,7 +160,7 @@ class _TaskContent extends StatelessWidget {
       mainAxisSize: shrinkWrap ? MainAxisSize.min : MainAxisSize.max,
       children: [
         _TaskHeader(task: task),
-        const Divider(color: AppColors.grey600, height: 1),
+        Divider(color: context.colors.surface, height: 1),
         if (shrinkWrap) body else Expanded(child: body),
       ],
     );
@@ -175,11 +175,11 @@ class _TaskHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 14, 16, 10),
+      padding: EdgeInsets.fromLTRB(16, 14, 16, 10),
       child: Text(
         task.title,
         style: AppTextStyles.body1.copyWith(
-          color: AppColors.white,
+          color: context.colors.textPrimary,
           fontWeight: FontWeight.w700,
         ),
       ),

@@ -10,6 +10,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:ui_kit/ui_kit.dart';
 import 'package:ui_kit/widgets/condor_code_network_image_view.dart';
 
 class ContentSection extends ConsumerStatefulWidget {
@@ -203,10 +204,10 @@ class _CoursesGrid extends StatelessWidget {
             Expanded(
               child: Text(
                 context.strings.coursesTitle,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+                  color: context.colors.textPrimary,
                 ),
               ),
             ),
@@ -217,16 +218,16 @@ class _CoursesGrid extends StatelessWidget {
             ),
             ElevatedButton.icon(
               onPressed: onCreateCourse,
-              icon: const Icon(Icons.add, color: Colors.black),
+              icon: Icon(Icons.add, color: context.colors.accentForeground),
               label: Text(
                 context.strings.createCourse,
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.w600,
-                ).copyWith(color: Colors.black),
+                ).copyWith(color: context.colors.accentForeground),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.lightGreenAccent,
-                foregroundColor: Colors.white,
+                backgroundColor: context.colors.accent,
+                foregroundColor: context.colors.accentForeground,
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16,
                   vertical: 14,
@@ -242,23 +243,23 @@ class _CoursesGrid extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           context.strings.coursesSubtitle,
-          style: const TextStyle(color: Colors.grey),
+          style: TextStyle(color: context.colors.textSecondary),
         ),
         const SizedBox(height: 16),
         if (errorMessage != null) ...[
           Material(
-            color: Colors.red.shade50,
+            color: context.colors.alert.withValues(alpha: 0.12),
             borderRadius: BorderRadius.circular(12),
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: Row(
                 children: [
-                  Icon(Icons.error_outline, color: Colors.red.shade700),
+                  Icon(Icons.error_outline, color: context.colors.alert),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(
                       errorMessage!,
-                      style: TextStyle(color: Colors.red.shade900),
+                      style: TextStyle(color: context.colors.alert),
                     ),
                   ),
                   TextButton(
@@ -281,7 +282,7 @@ class _CoursesGrid extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 32),
             child: Text(
               context.strings.coursesEmptyState(context.strings.createCourse),
-              style: const TextStyle(color: Colors.grey),
+              style: TextStyle(color: context.colors.textSecondary),
               textAlign: TextAlign.center,
             ),
           )
@@ -339,9 +340,9 @@ class _CourseCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: context.colors.popupSurface,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: Colors.black12),
+          border: Border.all(color: context.colors.border),
           boxShadow: const [
             BoxShadow(
               color: Color(0x0D000000),
@@ -361,11 +362,11 @@ class _CourseCard extends StatelessWidget {
                   url: imageUrl,
                   fit: BoxFit.cover,
                   whenEmpty: ColoredBox(
-                    color: Colors.grey.shade100,
+                    color: context.colors.surface,
                     child: Icon(
                       Icons.school_outlined,
                       size: 40,
-                      color: Colors.grey.shade400,
+                      color: context.colors.textSecondary,
                     ),
                   ),
                 ),
@@ -383,8 +384,8 @@ class _CourseCard extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Text(
                 context.strings.openCourse,
-                style: const TextStyle(
-                  color: Colors.black87,
+                style: TextStyle(
+                  color: context.colors.textPrimary,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -454,14 +455,14 @@ class _RemoteImagePending extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = compact ? 22.0 : 28.0;
     return ColoredBox(
-      color: Colors.grey.shade100,
+      color: context.colors.surface,
       child: Center(
         child: SizedBox(
           width: size,
           height: size,
           child: CircularProgressIndicator(
             strokeWidth: 2,
-            color: Colors.grey.shade500,
+            color: context.colors.textSecondary,
           ),
         ),
       ),
@@ -477,11 +478,11 @@ class _RemoteImageError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color: Colors.grey.shade100,
+      color: context.colors.surface,
       child: Icon(
         Icons.broken_image_outlined,
         size: compact ? 28 : 40,
-        color: Colors.grey.shade400,
+        color: context.colors.textSecondary,
       ),
     );
   }
@@ -750,10 +751,10 @@ class _CourseDetailsState extends ConsumerState<_CourseDetails> {
             Expanded(
               child: Text(
                 widget.course.name,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+                  color: context.colors.textPrimary,
                 ),
               ),
             ),
@@ -778,16 +779,16 @@ class _CourseDetailsState extends ConsumerState<_CourseDetails> {
             const SizedBox(width: 8),
             ElevatedButton.icon(
               onPressed: _isDeletingCourse ? null : widget.onCreateLesson,
-              icon: const Icon(Icons.add, color: Colors.black),
+              icon: Icon(Icons.add, color: context.colors.accentForeground),
               label: Text(
                 context.strings.createLesson,
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.w600,
-                ).copyWith(color: Colors.black),
+                ).copyWith(color: context.colors.accentForeground),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.lightGreenAccent,
-                foregroundColor: Colors.white,
+                backgroundColor: context.colors.accent,
+                foregroundColor: context.colors.accentForeground,
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16,
                   vertical: 14,
@@ -809,7 +810,7 @@ class _CourseDetailsState extends ConsumerState<_CourseDetails> {
             Expanded(
               child: Text(
                 imageUrl.isEmpty ? context.strings.noImageAdded : imageUrl,
-                style: const TextStyle(color: Colors.grey),
+                style: TextStyle(color: context.colors.textSecondary),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -822,10 +823,10 @@ class _CourseDetailsState extends ConsumerState<_CourseDetails> {
             Expanded(
               child: Text(
                 context.strings.lessonsTitle,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+                  color: context.colors.textPrimary,
                 ),
               ),
             ),
@@ -846,7 +847,7 @@ class _CourseDetailsState extends ConsumerState<_CourseDetails> {
             if (lessons.isEmpty) {
               return Text(
                 context.strings.courseLessonsEmpty,
-                style: const TextStyle(color: Colors.grey),
+                style: TextStyle(color: context.colors.textSecondary),
               );
             }
             return Column(
@@ -859,7 +860,7 @@ class _CourseDetailsState extends ConsumerState<_CourseDetails> {
                   ),
                 Text(
                   context.strings.lessonReorderHint,
-                  style: TextStyle(color: Colors.grey.shade600, fontSize: 13),
+                  style: TextStyle(color: context.colors.textSecondary, fontSize: 13),
                 ),
                 const SizedBox(height: 12),
                 ReorderableListView(
@@ -890,7 +891,7 @@ class _CourseDetailsState extends ConsumerState<_CourseDetails> {
                                   ),
                                   child: Icon(
                                     Icons.drag_handle,
-                                    color: Colors.grey.shade600,
+                                    color: context.colors.textSecondary,
                                   ),
                                 ),
                               ),
@@ -927,12 +928,12 @@ class _CourseDetailsState extends ConsumerState<_CourseDetails> {
             children: [
               Text(
                 context.strings.courseLessonsLoadError,
-                style: TextStyle(color: Colors.red.shade800),
+                style: TextStyle(color: context.colors.alert),
               ),
               const SizedBox(height: 8),
               Text(
                 '$e',
-                style: const TextStyle(color: Colors.grey, fontSize: 12),
+                style: TextStyle(color: context.colors.textSecondary, fontSize: 12),
               ),
               const SizedBox(height: 12),
               TextButton.icon(
@@ -965,17 +966,17 @@ class _CourseImageThumb extends StatelessWidget {
         child: _CourseRemoteImage(
           url: url,
           fit: BoxFit.cover,
-          whenEmpty: _placeholder(),
+          whenEmpty: _placeholder(context),
           compactProgress: true,
         ),
       ),
     );
   }
 
-  Widget _placeholder() => Container(
-    color: Colors.grey.shade100,
+  Widget _placeholder(BuildContext context) => Container(
+    color: context.colors.surface,
     alignment: Alignment.center,
-    child: Icon(Icons.image_outlined, color: Colors.grey.shade500),
+    child: Icon(Icons.image_outlined, color: context.colors.textSecondary),
   );
 }
 
@@ -997,7 +998,7 @@ class _CourseLessonTile extends StatelessWidget {
     final topic = lesson.topic.trim();
 
     return Material(
-      color: Colors.grey.shade50,
+      color: context.colors.surface,
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
         onTap: onEdit,
@@ -1013,10 +1014,10 @@ class _CourseLessonTile extends StatelessWidget {
                   Expanded(
                     child: Text(
                       lesson.title.isEmpty ? '—' : lesson.title,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 16,
-                        color: Colors.black87,
+                        color: context.colors.textPrimary,
                       ),
                     ),
                   ),
@@ -1026,7 +1027,7 @@ class _CourseLessonTile extends StatelessWidget {
                       child: Icon(
                         Icons.ondemand_video_outlined,
                         size: 20,
-                        color: Colors.grey.shade700,
+                        color: context.colors.textSecondary,
                       ),
                     ),
                   IconButton(
@@ -1051,7 +1052,7 @@ class _CourseLessonTile extends StatelessWidget {
                 const SizedBox(height: 6),
                 Text(
                   context.strings.lessonCardTopic(topic),
-                  style: TextStyle(color: Colors.grey.shade700, fontSize: 14),
+                  style: TextStyle(color: context.colors.textSecondary, fontSize: 14),
                 ),
               ],
               if (lesson.description.trim().isNotEmpty) ...[
@@ -1060,7 +1061,7 @@ class _CourseLessonTile extends StatelessWidget {
                   lesson.description,
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(color: Colors.black54, fontSize: 13),
+                  style: TextStyle(color: context.colors.textSecondary, fontSize: 13),
                 ),
               ],
             ],

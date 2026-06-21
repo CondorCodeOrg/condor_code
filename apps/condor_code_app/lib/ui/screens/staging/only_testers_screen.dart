@@ -16,18 +16,18 @@ class OnlyTestersScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => di<OnlyTestersCubit>(),
-      child: const _OnlyTestersBody(),
+      child: _OnlyTestersBody(),
     );
   }
 }
 
 class _OnlyTestersBody extends StatelessWidget {
-  const _OnlyTestersBody();
+  _OnlyTestersBody();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.grey800,
+      backgroundColor: context.colors.scaffoldBackground,
       body: SafeArea(
         child: SnackBarProducerWidget(
           child: Column(
@@ -52,45 +52,45 @@ class _OnlyTestersBody extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              const SizedBox(height: 24),
+                              SizedBox(height: 24),
                               Align(
                                 alignment: Alignment.center,
                                 child: Container(
-                                  padding: const EdgeInsets.all(20),
+                                  padding: EdgeInsets.all(20),
                                   decoration: BoxDecoration(
-                                    color: AppColors.neon.withValues(
+                                    color: context.colors.accent.withValues(
                                       alpha: 0.12,
                                     ),
                                     borderRadius: BorderRadius.circular(16),
                                     border: Border.all(
-                                      color: AppColors.neon.withValues(
+                                      color: context.colors.accent.withValues(
                                         alpha: 0.35,
                                       ),
                                     ),
                                   ),
-                                  child: const Icon(
+                                  child: Icon(
                                     Icons.lock_outline_rounded,
-                                    color: AppColors.neon,
+                                    color: context.colors.accent,
                                     size: 48,
                                   ),
                                 ),
                               ),
-                              const SizedBox(height: 28),
+                              SizedBox(height: 28),
                               Text(
                                 localization.onlyTestersBody,
                                 textAlign: TextAlign.center,
                                 style: AppTextStyles.body1.copyWith(
-                                  color: AppColors.grey200,
+                                  color: context.colors.textSecondary,
                                   height: 1.45,
                                 ),
                               ),
                               if (state.hasPendingRequest) ...[
-                                const SizedBox(height: 16),
+                                SizedBox(height: 16),
                                 Text(
                                   localization.onlyTestersRequestPendingHint,
                                   textAlign: TextAlign.center,
                                   style: AppTextStyles.body2.copyWith(
-                                    color: AppColors.neon,
+                                    color: context.colors.accent,
                                   ),
                                 ),
                               ],
@@ -106,14 +106,14 @@ class _OnlyTestersBody extends StatelessWidget {
                                       : () => context
                                             .read<OnlyTestersCubit>()
                                             .requestTesterAccess(),
-                                  style: AppButtonStyles.mainButtonStyle,
+                                  style: AppButtonStyles.mainButtonStyle(context),
                                   child: state.isSubmitting
-                                      ? const SizedBox(
+                                      ? SizedBox(
                                           height: 22,
                                           width: 22,
                                           child: CircularProgressIndicator(
                                             strokeWidth: 2,
-                                            color: AppColors.white,
+                                            color: context.colors.textPrimary,
                                           ),
                                         )
                                       : Text(
@@ -135,9 +135,9 @@ class _OnlyTestersBody extends StatelessWidget {
                                           await di<AuthRepository>().logout();
                                         },
                                   style: OutlinedButton.styleFrom(
-                                    foregroundColor: AppColors.white,
-                                    side: const BorderSide(
-                                      color: AppColors.grey400,
+                                    foregroundColor: context.colors.textPrimary,
+                                    side: BorderSide(
+                                      color: context.colors.border,
                                     ),
                                     padding: const EdgeInsets.symmetric(
                                       vertical: 16,

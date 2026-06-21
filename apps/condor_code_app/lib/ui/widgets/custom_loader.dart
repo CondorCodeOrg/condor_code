@@ -16,8 +16,8 @@ class CustomLoader extends StatelessWidget {
             child: Skeleton(
               name: CondorHollowSkeletonIds.customLoader,
               loading: true,
-              color: Colors.grey.shade700,
-              highlightColor: Colors.orangeAccent.withValues(alpha: 0.35),
+              color: context.colors.surface,
+              highlightColor: context.colors.accent.withValues(alpha: 0.35),
               child: const SizedBox.shrink(),
             ),
           ),

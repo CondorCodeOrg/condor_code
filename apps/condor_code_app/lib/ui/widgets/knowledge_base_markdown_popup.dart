@@ -31,41 +31,41 @@ class KnowledgeBaseMarkdownPopup extends StatelessWidget {
     final maxWidth = width > 920 ? 760.0 : width - 32;
     return Dialog(
       backgroundColor: Colors.transparent,
-      insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+      insetPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
       child: ConstrainedBox(
         constraints: BoxConstraints(maxWidth: maxWidth, maxHeight: 680),
         child: Container(
           decoration: BoxDecoration(
-            color: AppColors.grey800,
+            color: context.colors.scaffoldBackground,
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: AppColors.grey400.withValues(alpha: 0.6)),
+            border: Border.all(color: context.colors.border.withValues(alpha: 0.6)),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(16, 14, 10, 8),
+                padding: EdgeInsets.fromLTRB(16, 14, 10, 8),
                 child: Row(
                   children: [
                     Expanded(
                       child: Text(
                         title,
                         style: AppTextStyles.body1.copyWith(
-                          color: AppColors.white,
+                          color: context.colors.textPrimary,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
                     ),
                     IconButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      icon: const Icon(Icons.close_rounded),
-                      color: AppColors.grey200,
+                      icon: Icon(Icons.close_rounded),
+                      color: context.colors.textSecondary,
                       tooltip: 'Close',
                     ),
                   ],
                 ),
               ),
-              const Divider(color: AppColors.grey600, height: 1),
+              Divider(color: context.colors.surface, height: 1),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),

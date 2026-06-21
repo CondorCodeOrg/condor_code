@@ -10,13 +10,13 @@ class KnowledgeBaseResourcesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return ColoredBox(
-      color: AppColors.darkGrey800,
+      color: context.colors.textPrimary,
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: EdgeInsets.all(24),
           child: Text(
             l10n.knowledgeBaseResourcesPlaceholder,
-            style: AppTextStyles.body1.copyWith(color: AppColors.grey200),
+            style: AppTextStyles.body1.copyWith(color: context.colors.textSecondary),
             textAlign: TextAlign.center,
           ),
         ),

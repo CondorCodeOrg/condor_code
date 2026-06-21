@@ -5,6 +5,7 @@ import 'package:condorcode_admin/utilities/context_extensions.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ui_kit/ui_kit.dart';
 
 class CreateCourseSection extends ConsumerStatefulWidget {
   const CreateCourseSection({
@@ -71,10 +72,10 @@ class _CreateCourseSectionState extends ConsumerState<CreateCourseSection> {
             Expanded(
               child: Text(
                 context.strings.createCourseTitle,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+                  color: context.colors.textPrimary,
                 ),
               ),
             ),
@@ -83,7 +84,7 @@ class _CreateCourseSectionState extends ConsumerState<CreateCourseSection> {
         const SizedBox(height: 8),
         Text(
           context.strings.createCourseHint,
-          style: const TextStyle(color: Colors.grey),
+          style: TextStyle(color: context.colors.textSecondary),
         ),
         const SizedBox(height: 16),
         SectionCard(
@@ -107,14 +108,14 @@ class _CreateCourseSectionState extends ConsumerState<CreateCourseSection> {
                 const SizedBox(height: 8),
                 Text(
                   state.commonErrorMessage ?? '',
-                  style: const TextStyle(color: Colors.redAccent),
+                  style: TextStyle(color: context.colors.alert),
                 ),
               ],
               if (state.successMessage?.isNotEmpty == true) ...[
                 const SizedBox(height: 8),
                 Text(
                   state.successMessage ?? '',
-                  style: const TextStyle(color: Colors.green),
+                  style: TextStyle(color: context.colors.accent),
                 ),
               ],
               const SizedBox(height: 16),
@@ -131,8 +132,8 @@ class _CreateCourseSectionState extends ConsumerState<CreateCourseSection> {
                           }
                         },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.lightGreenAccent,
-                    foregroundColor: Colors.black,
+                    backgroundColor: context.colors.accent,
+                    foregroundColor: context.colors.accentForeground,
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),

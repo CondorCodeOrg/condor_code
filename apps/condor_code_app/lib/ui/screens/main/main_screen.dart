@@ -7,6 +7,7 @@ import 'package:condor_code/ui/navigation/route_constants.dart';
 import 'package:condor_code/ui/screens/staging/staging_auth_cubit/staging_auth_cubit.dart';
 import 'package:condor_code/ui/screens/staging/staging_auth_cubit/staging_auth_state.dart';
 import 'package:condor_code/ui/widgets/app_drawer.dart';
+import 'package:condor_code/ui/widgets/app_theme_toggle_button.dart';
 import 'package:condor_code/ui/widgets/nav_button.dart';
 import 'package:condor_code/ui/widgets/snack_bar/snack_bar_producer_widget.dart';
 import 'package:domain/domain.dart';
@@ -41,13 +42,16 @@ class _MainScreenState extends State<MainScreen> {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      backgroundColor: AppColors.grey800,
+      backgroundColor: context.colors.scaffoldBackground,
       drawer: isDesktop ? null : const AppDrawer(),
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('packages/ui_kit/assets/images/bg & pattern.png'),
+            image: const AssetImage(
+              'packages/ui_kit/assets/images/bg & pattern.png',
+            ),
             fit: BoxFit.cover,
+            opacity: context.colors.patternOpacity,
           ),
         ),
         child: Column(
@@ -69,9 +73,9 @@ class _MainScreenState extends State<MainScreen> {
                           builder: (context) => Padding(
                             padding: const EdgeInsets.only(left: 18, top: 12),
                             child: IconButton(
-                              icon: const Icon(
+                              icon: Icon(
                                 Icons.menu,
-                                color: AppColors.white,
+                                color: context.colors.textPrimary,
                               ),
                               onPressed: () =>
                                   Scaffold.of(context).openDrawer(),
@@ -160,12 +164,23 @@ class _TopNavigationBar extends StatelessWidget {
             BlocBuilder<StagingAuthCubit, StagingAuthState>(
               builder: (context, state) {
                 final user = state.user;
-                if (user == null) return const SizedBox.shrink();
-                return _ProfilePopupMenu(user: user);
+                return Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const AppThemeToggleButton(),
+                    if (user != null) _ProfilePopupMenu(user: user),
+                  ],
+                );
               },
             )
           else
-            SizedBox(width: MediaQuery.of(context).size.width * 0.136),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const AppThemeToggleButton(),
+                SizedBox(width: MediaQuery.of(context).size.width * 0.136),
+              ],
+            ),
         ],
       ),
     );
@@ -190,12 +205,15 @@ class _ProfilePopupMenu extends StatelessWidget {
     return PopupMenuButton<VoidCallback>(
       tooltip: l10n.stagingProfileTitle,
       offset: const Offset(0, 40),
-      color: AppColors.grey600,
+      color: context.colors.popupSurface,
       surfaceTintColor: Colors.transparent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 12),
-        child: Icon(Icons.person_outline, color: AppColors.white),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: Icon(
+          Icons.person_outline,
+          color: context.colors.textPrimary,
+        ),
       ),
       itemBuilder: (context) => [
         PopupMenuItem<VoidCallback>(
@@ -205,7 +223,9 @@ class _ProfilePopupMenu extends StatelessWidget {
             children: [
               Text(
                 user.email,
-                style: AppTextStyles.body2.copyWith(color: AppColors.white),
+                style: AppTextStyles.body2.copyWith(
+                  color: context.colors.textPrimary,
+                ),
               ),
               const SizedBox(height: 2),
               _RoleLabelText(role: user.role),
@@ -226,7 +246,7 @@ class _ProfilePopupMenu extends StatelessWidget {
           },
           child: Text(
             l10n.stagingProfileSignOut,
-            style: AppTextStyles.body2.copyWith(color: AppColors.neon),
+            style: AppTextStyles.body2.copyWith(color: context.colors.accent),
           ),
         ),
       ],
@@ -243,30 +263,32 @@ class _LogoutConfirmationDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: AppColors.grey600,
+      backgroundColor: context.colors.popupSurface,
       surfaceTintColor: Colors.transparent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       title: Text(
         l10n.stagingProfileSignOutConfirmTitle,
-        style: AppTextStyles.h2.copyWith(color: AppColors.white),
+        style: AppTextStyles.h2.copyWith(color: context.colors.textPrimary),
       ),
       content: Text(
         l10n.stagingProfileSignOutConfirm,
-        style: AppTextStyles.body1.copyWith(color: AppColors.grey200),
+        style: AppTextStyles.body1.copyWith(color: context.colors.textSecondary),
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
           child: Text(
             l10n.stagingProfileCancel,
-            style: AppTextStyles.body2.copyWith(color: AppColors.grey200),
+            style: AppTextStyles.body2.copyWith(
+              color: context.colors.textSecondary,
+            ),
           ),
         ),
         TextButton(
           onPressed: () => Navigator.of(context).pop(true),
           child: Text(
             l10n.stagingProfileSignOut,
-            style: AppTextStyles.body2.copyWith(color: AppColors.neon),
+            style: AppTextStyles.body2.copyWith(color: context.colors.accent),
           ),
         ),
       ],
@@ -289,7 +311,7 @@ class _RoleLabelText extends StatelessWidget {
       UserRole.developer => l10n.stagingRoleDeveloper,
       UserRole.patron => l10n.stagingRolePatron,
       UserRole.patronDeveloper => l10n.stagingRolePatronDeveloper,
-    }, style: AppTextStyles.caption1.copyWith(color: AppColors.grey200));
+    }, style: AppTextStyles.caption1.copyWith(color: context.colors.textSecondary));
   }
 }
 

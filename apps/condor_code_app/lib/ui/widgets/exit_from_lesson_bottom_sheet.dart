@@ -10,7 +10,7 @@ class ExitFromlessonBottomSheet extends StatelessWidget {
     children: [
       Expanded(
         child: Container(
-          color: AppColors.grey800,
+          color: context.colors.scaffoldBackground,
           height: 200,
           child: Column(
             children: <Widget>[
@@ -23,7 +23,7 @@ class ExitFromlessonBottomSheet extends StatelessWidget {
                 ),
               ),
               ElevatedButton(
-                style: AppButtonStyles.mainButtonStyle,
+                style: AppButtonStyles.mainButtonStyle(context),
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -31,15 +31,15 @@ class ExitFromlessonBottomSheet extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               ElevatedButton(
-                style: AppButtonStyles.smallButtonStyle,
+                style: AppButtonStyles.smallButtonStyle(context),
                 onPressed: () {
                   Navigator.pop(context);
                   Navigator.pop(context);
                 },
-                child: const Text(
+                child: Text(
                   'EXIT',
                   style: TextStyle(
-                    color: AppColors.alertRed,
+                    color: context.colors.alert,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),

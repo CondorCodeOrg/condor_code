@@ -70,7 +70,7 @@ class _LessonScreenState extends State<LessonScreen> {
         }
       },
       child: Scaffold(
-        backgroundColor: AppColors.grey800,
+        backgroundColor: context.colors.scaffoldBackground,
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: BlocConsumer<LessonCubit, LessonState>(
@@ -119,12 +119,12 @@ class _LessonScreenState extends State<LessonScreen> {
               if (state is LessonLoading) {
                 return Center(
                   child: Padding(
-                    padding: const EdgeInsets.all(32),
+                    padding: EdgeInsets.all(32),
                     child: Skeleton(
                       name: CondorHollowSkeletonIds.lessonScreen,
                       loading: true,
-                      color: AppColors.grey600.withValues(alpha: 0.45),
-                      highlightColor: AppColors.neon.withValues(alpha: 0.1),
+                      color: context.colors.surface.withValues(alpha: 0.45),
+                      highlightColor: context.colors.accent.withValues(alpha: 0.1),
                       child: const SizedBox.shrink(),
                     ),
                   ),
@@ -161,7 +161,7 @@ class _LessonScreenState extends State<LessonScreen> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 16),
                     child: ElevatedButton(
-                      style: AppButtonStyles.mainButtonStyle,
+                      style: AppButtonStyles.mainButtonStyle(context),
                       onPressed: () {
                         BlocProvider.of<QuestionsBloc>(
                           context,

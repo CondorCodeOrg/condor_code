@@ -26,7 +26,7 @@ class LessonDetailsScreen extends StatelessWidget {
       child: BlocBuilder<LessonDetailsCubit, LessonDetailsState>(
         builder: (context, state) {
           return Scaffold(
-            backgroundColor: AppColors.grey800,
+            backgroundColor: context.colors.scaffoldBackground,
             body: SafeArea(child: _MainContent(state: state)),
           );
         },
@@ -56,7 +56,7 @@ class _CheckButton extends StatelessWidget {
             });
             context.push(RouteConstants.tasksListScreen);
           },
-          style: AppButtonStyles.mainButtonStyle,
+          style: AppButtonStyles.mainButtonStyle(context),
           child: Text(localization.checkMyKnowledge),
         ),
       ),
@@ -72,10 +72,10 @@ class _DescriptionText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 18, right: 24, left: 24),
+      padding: EdgeInsets.only(bottom: 18, right: 24, left: 24),
       child: Text(
         description,
-        style: AppTextStyles.body3.copyWith(color: AppColors.lightGrey),
+        style: AppTextStyles.body3.copyWith(color: context.colors.textSecondary),
       ),
     );
   }
@@ -100,7 +100,7 @@ class _WatchOnYouTubeTextButton extends StatelessWidget {
       },
       child: Text(
         localization.watchOnYouTube,
-        style: AppTextStyles.body2.copyWith(color: AppColors.neon),
+        style: AppTextStyles.body2.copyWith(color: context.colors.accent),
       ),
     );
   }
@@ -207,7 +207,7 @@ class _MainContent extends StatelessWidget {
             TopNavigationBar(text: state.lesson.title),
             Text(
               state.lesson.topic,
-              style: AppTextStyles.h2.copyWith(color: AppColors.neon),
+              style: AppTextStyles.h2.copyWith(color: context.colors.accent),
             ),
             _YouTubePlayer(youtubeUrl: state.lesson.youtubeUrl),
             state.lesson.isYouTubeLesson

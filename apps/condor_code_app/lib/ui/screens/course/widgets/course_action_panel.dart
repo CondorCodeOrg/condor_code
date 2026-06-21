@@ -44,9 +44,9 @@ class CourseActionPanel extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.grey600.withValues(alpha: 0.42),
+        color: context.colors.surface.withValues(alpha: 0.42),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.grey400.withValues(alpha: 0.55)),
+        border: Border.all(color: context.colors.border.withValues(alpha: 0.55)),
       ),
       child: Padding(
         padding: const EdgeInsets.only(bottom: 16),
@@ -113,8 +113,8 @@ class _CheckKnowledgeButton extends StatelessWidget {
       child: ElevatedButton.icon(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.neon,
-          foregroundColor: AppColors.darkGrey800,
+          backgroundColor: context.colors.accent,
+          foregroundColor: context.colors.textPrimary,
           padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
