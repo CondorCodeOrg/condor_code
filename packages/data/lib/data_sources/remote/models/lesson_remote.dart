@@ -13,6 +13,7 @@ class LessonRemote {
   final bool isYouTubeLesson;
   @JsonKey(defaultValue: 0)
   final int sortOrder;
+  final String? summary;
 
   LessonRemote({
     required this.id,
@@ -23,6 +24,7 @@ class LessonRemote {
     required this.description,
     required this.isYouTubeLesson,
     this.sortOrder = 0,
+    this.summary,
   });
 
   LessonRemote copyWith({
@@ -34,6 +36,7 @@ class LessonRemote {
     String? courseId,
     bool? isYouTubeLesson,
     int? sortOrder,
+    String? summary,
   }) {
     return LessonRemote(
       id: id ?? this.id,
@@ -44,6 +47,7 @@ class LessonRemote {
       courseId: courseId ?? this.courseId,
       isYouTubeLesson: isYouTubeLesson ?? this.isYouTubeLesson,
       sortOrder: sortOrder ?? this.sortOrder,
+      summary: summary ?? this.summary,
     );
   }
 

@@ -27,6 +27,8 @@ import 'package:domain/domain.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:condor_code/ui/screens/lesson_summary/lesson_summary_screen.dart';
+
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -183,6 +185,22 @@ GoRouter getRouter(AppConfig appConfig) => GoRouter(
                     courseName: courseName,
                     initialTaskId: taskId.isEmpty ? null : taskId,
                   ),
+                );
+              },
+            ),
+            GoRoute(
+              path: RouteConstants.lessonSummary,
+              pageBuilder: (context, state) {
+                final lesson = state.extra as Lesson?;
+                if (lesson == null) {
+                  return _fadeTransitionPage(
+                    state: state,
+                    child: EmptyCourseScreen(courseName: 'Dart/Flutter'),
+                  );
+                }
+                return _fadeTransitionPage(
+                  state: state,
+                  child: LessonSummaryScreen(lesson: lesson),
                 );
               },
             ),

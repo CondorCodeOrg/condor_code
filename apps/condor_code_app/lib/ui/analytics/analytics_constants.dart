@@ -50,6 +50,8 @@ class AnalyticsButtonId {
 
   static const String homeLearnMore = 'home_learn_more';
   static const String checkKnowledge = 'check_knowledge';
+  static const String summary = 'summary';
+
 }
 
 /// Well-known route destinations used with [AnalyticsEventName.navClick].

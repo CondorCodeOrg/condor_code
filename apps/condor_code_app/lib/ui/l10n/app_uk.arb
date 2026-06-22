@@ -74,6 +74,8 @@
   "noLessonsInformation": "Тут ще немає уроків",
   "watchOnYouTube": "Дивіться на YouTube",
   "checkMyKnowledge": "Перевір мої знання",
+  "summary": "Конспект",
+  "noSummaryAvailable": "Конспект ще не додано",
   "invalidYouTubeLink": "Помилка: Недійсне посилання на YouTube",
   "noTasksInformation": "Тут ще немає завдань",
   "checkMyCode": "Перевір мій код",
