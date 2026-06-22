@@ -12,6 +12,7 @@ extension LessonMapper on Lesson {
       isYouTubeLesson: isYouTubeLesson,
       courseId: courseId,
       sortOrder: sortOrder,
+      summary: summary,
     );
   }
 }
@@ -27,6 +28,7 @@ extension LessonRemoteMapper on LessonRemote {
       isYouTubeLesson: isYouTubeLesson,
       courseId: courseId,
       sortOrder: sortOrder,
+      summary: summary,
     );
   }
 }

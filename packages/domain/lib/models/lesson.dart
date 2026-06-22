@@ -6,6 +6,7 @@ class Lesson {
   final String youtubeUrl;
   final String courseId;
   final bool isYouTubeLesson;
+  final String? summary;
 
   /// Display order within the course (0-based, persisted in Firestore).
   final int sortOrder;
@@ -19,6 +20,7 @@ class Lesson {
     required this.topic,
     required this.description,
     this.sortOrder = 0,
+    this.summary,
   });
 
   Lesson copyWith({
@@ -30,6 +32,7 @@ class Lesson {
     bool? isYouTubeLesson,
     String? courseId,
     int? sortOrder,
+    String? summary,
   }) {
     return Lesson(
       id: id ?? this.id,
@@ -40,6 +43,7 @@ class Lesson {
       isYouTubeLesson: isYouTubeLesson ?? this.isYouTubeLesson,
       courseId: courseId ?? this.courseId,
       sortOrder: sortOrder ?? this.sortOrder,
+      summary: summary ?? this.summary,
     );
   }
 }

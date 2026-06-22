@@ -1,4 +1,6 @@
 import 'package:condor_code/di/provider_manager.dart';
+import 'package:condor_code/ui/analytics/analytics.dart';
+import 'package:condor_code/ui/analytics/analytics_constants.dart';
 import 'package:condor_code/ui/base/provider/events/snack_bar_events_provider.dart';
 import 'package:condor_code/ui/navigation/route_constants.dart';
 import 'package:condor_code/ui/utils/localization.dart';
@@ -15,6 +17,7 @@ class CourseActionPanel extends StatelessWidget {
     required this.isTasksExist,
     required this.courseId,
     required this.courseName,
+    this.lesson,
     this.expanded = false,
   });
 
@@ -22,6 +25,9 @@ class CourseActionPanel extends StatelessWidget {
   final bool isTasksExist;
   final String courseId;
   final String courseName;
+
+  /// Full lesson object, required to navigate to the Summary screen.
+  final Lesson? lesson;
 
   /// When true, renders a tall card with header + button (wide layout column).
   /// When false, renders just the button (medium/narrow bottom bar).
@@ -38,8 +44,18 @@ class CourseActionPanel extends StatelessWidget {
           )
         : null;
 
+    final onSummaryPressed =
+        lesson != null ? () => _openSummary(context, lesson!) : null;
+
     if (!expanded) {
-      return _CheckKnowledgeButton(onPressed: onPressed);
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _CheckKnowledgeButton(onPressed: onPressed),
+          const SizedBox(height: 8),
+          _SummaryButton(onPressed: onSummaryPressed),
+        ],
+      );
     }
 
     return Container(
@@ -59,13 +75,28 @@ class CourseActionPanel extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: _CheckKnowledgeButton(onPressed: onPressed),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _CheckKnowledgeButton(onPressed: onPressed),
+                  const SizedBox(height: 8),
+                  _SummaryButton(onPressed: onSummaryPressed),
+                ],
+              ),
             ),
             const Spacer(),
           ],
         ),
       ),
     );
+  }
+
+  void _openSummary(BuildContext context, Lesson lesson) {
+    di<Analytics>().logEvent(AnalyticsEventName.buttonClick, {
+      AnalyticsPropertyName.buttonId: AnalyticsButtonId.summary,
+      AnalyticsPropertyName.lessonId: lesson.id,
+    });
+    context.push(RouteConstants.lessonSummary, extra: lesson);
   }
 
   Future<void> _openKnowledgeCheckForLesson(
@@ -123,6 +154,35 @@ class _CheckKnowledgeButton extends StatelessWidget {
         icon: const Icon(Icons.quiz_outlined, size: 20),
         label: Text(
           localization.checkMyKnowledge,
+          style: AppTextStyles.body2.copyWith(fontWeight: FontWeight.w700),
+        ),
+      ),
+    );
+  }
+}
+
+class _SummaryButton extends StatelessWidget {
+  const _SummaryButton({required this.onPressed});
+
+  final VoidCallback? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: OutlinedButton.icon(
+        onPressed: onPressed,
+        style: OutlinedButton.styleFrom(
+          foregroundColor: AppColors.neon,
+          side: BorderSide(color: AppColors.neon),
+          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+        icon: const Icon(Icons.menu_book_outlined, size: 20),
+        label: Text(
+          localization.summary,
           style: AppTextStyles.body2.copyWith(fontWeight: FontWeight.w700),
         ),
       ),
