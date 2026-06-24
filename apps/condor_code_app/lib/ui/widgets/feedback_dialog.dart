@@ -71,7 +71,7 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(AppLocalizations.of(context).feedbackError),
+            content: Text(AppLocalizations.of(context)?.feedbackError),
             backgroundColor: Colors.red,
           ),
         );
