@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:ui_kit/ui_kit.dart';
 import 'package:domain/models/feedback_model.dart';
-import 'package:domain/repository/feedback_repository.dart';
-import 'package:condor_code/di/provider_manager.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:condor_code/ui/l10n/app_localizations.dart';
 import 'dart:io';
+import 'package:condor_code/ui/screens/feedback/feedback_cubit.dart';
 
 class FeedbackDialog extends StatefulWidget {
   const FeedbackDialog({super.key});
@@ -58,35 +58,20 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
         deviceInfo: await _getDeviceInfo(),
       );
 
-      // Get repository from DI
-      final repository = di<FeedbackRepository>();
-      final success = await repository.submitFeedback(feedback);
+      final cubit = context.read<FeedbackCubit>();
 
-      // Track analytics event
-      await FirebaseAnalytics.instance.logEvent(
-        name: 'feedback_submitted',
-        parameters: {
-          'success': success,
-          'has_email': (_showEmailField && _emailController.text.isNotEmpty),
-          'is_authenticated': user != null,
-          'message_length': _messageController.text.length,
-        },
-      );
+      await cubit.submitFeedback(feedback);
+
+      final success = cubit.state.success;
 
       if (!mounted) return;
 
       if (success) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Дякуємо за ваш відгук! 🙏'),
-            backgroundColor: Colors.green,
-          ),
-        );
         Navigator.pop(context);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Помилка при надсиланні. Спробуйте ще раз.'),
+          SnackBar(
+            content: Text(AppLocalizations.of(context).feedbackError),
             backgroundColor: Colors.red,
           ),
         );
@@ -94,7 +79,10 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Помилка: $e'), backgroundColor: Colors.red),
+          SnackBar(
+            content: Text('${AppLocalizations.of(context).feedbackError}: $e'),
+            backgroundColor: Colors.red,
+          ),
         );
       }
     } finally {
@@ -112,11 +100,6 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
     if (Platform.isWindows) return 'windows';
     return 'unknown';
   }
-
-  // Future<String?> _getDeviceInfo() async {
-  //   // TODO: Implement with device_info_plus package
-  //   return null;
-  // }
 
   Future<String?> _getDeviceInfo() async {
     try {

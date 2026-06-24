@@ -31,6 +31,7 @@ import 'package:get_it/get_it.dart';
 import 'package:data/data_sources/remote/feedback_remote_data_source.dart';
 import 'package:data/repository/feedback_repository_impl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:condor_code/ui/screens/feedback/feedback_cubit.dart';
 
 final di = GetIt.instance;
 
@@ -77,6 +78,9 @@ class ProviderManager {
 
   void _registerBlocs(GetIt di) {
     di.registerFactory<BottomNavigationCubit>(() => BottomNavigationCubit());
+    di.registerFactory<FeedbackCubit>(
+      () => FeedbackCubit(di<FeedbackRepository>()),
+    );
     di.registerFactoryParam<QuestionsBloc, String, dynamic>(
       (lessonId, _) => QuestionsBloc(
         lessonId: lessonId,
