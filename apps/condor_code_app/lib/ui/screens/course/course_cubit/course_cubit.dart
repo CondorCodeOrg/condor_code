@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:condor_code/di/provider_manager.dart';
 import 'package:condor_code/ui/analytics/analytics.dart';
@@ -120,7 +122,14 @@ class CourseCubit extends BaseCubit<CourseState> {
               );
             }
           },
-          onError: (error) => debugPrint('Background tasks refresh failed: ${error.message}'),
+          onError: (error) {
+            if (kDebugMode) {
+              log(
+                'Background tasks refresh failed: ${error.message}',
+                name: 'CourseCubit',
+              );
+            }
+          },
         );
       },
     );
