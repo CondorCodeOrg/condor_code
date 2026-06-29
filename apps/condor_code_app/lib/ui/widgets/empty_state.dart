@@ -6,6 +6,7 @@ import 'package:condor_code/ui/utils/localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ui_kit/ui_kit.dart';
 
 class EmptyStateWidget extends StatelessWidget {
@@ -24,11 +25,17 @@ class EmptyStateWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       spacing: 16,
       children: [
-        Image.asset(
-          imgUrl,
-          height: MediaQuery.of(context).size.height / 3,
-          width: MediaQuery.of(context).size.width / 3,
-        ),
+        imgUrl.endsWith('.svg')
+            ? SvgPicture.asset(
+                imgUrl,
+                height: MediaQuery.of(context).size.height / 3,
+                width: MediaQuery.of(context).size.width / 3,
+              )
+            : Image.asset(
+                imgUrl,
+                height: MediaQuery.of(context).size.height / 3,
+                width: MediaQuery.of(context).size.width / 3,
+              ),
         Padding(
           padding: const EdgeInsets.only(top: 16),
           child: Text(

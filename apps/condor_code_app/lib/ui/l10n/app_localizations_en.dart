@@ -502,4 +502,53 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stagingRolePatronDeveloper => 'Patron + Developer';
+
+  @override
+  String get resultPerfectLesson => 'Perfect lesson!';
+
+  @override
+  String get resultPerfectTest => 'Perfect test!';
+
+  @override
+  String get resultApplause => 'A round of applause for you!';
+
+  @override
+  String get resultTotalPoints => 'TOTAL POINTS';
+
+  @override
+  String get resultInstantly => 'INSTANTLY';
+
+  @override
+  String get resultAmazing => 'AMAZING';
+
+  @override
+  String get resultGetPoints => 'GET POINTS';
+
+  @override
+  String get testMoveOn => 'MOVE ON';
+
+  @override
+  String get testGenericError => 'Sorry, an error occurred.';
+
+  @override
+  String testSelectionTitle(String lessonName) {
+    return 'Tests for $lessonName';
+  }
+
+  @override
+  String get testSelectionSelectTest => 'Select Test';
+
+  @override
+  String get testSelectionRetry => 'Retry';
+
+  @override
+  String get heartInfoNoHearts =>
+      'You used all the hearts, watch the video or complete the mini game to earn a heart.';
+
+  @override
+  String get exitTestLossWarning =>
+      'If you leave you will lose all the points you earned during the test!';
+
+  @override
+  String get exit => 'EXIT';
 }

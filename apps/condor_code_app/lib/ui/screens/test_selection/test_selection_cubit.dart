@@ -12,7 +12,9 @@ class TestSelectionCubit extends BaseCubit<TestSelectionState> {
     required this.lessonsRepository,
     required super.snackBarEventsProvider,
     required this.lessonId,
-  }) : super(const TestSelectionLoading());
+  }) : super(const TestSelectionLoading()) {
+    loadTests();
+  }
 
   Future<void> loadTests() async {
     emit(const TestSelectionLoading());

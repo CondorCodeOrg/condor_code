@@ -4,19 +4,20 @@ import 'package:condor_code/ui/screens/test/bloc/questions/questions_state.dart'
 import 'package:condor_code/ui/screens/test/provider/test_screen_events_provider.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:condor_code/di/provider_manager.dart';
 import 'package:condor_code/ui/analytics/analytics.dart';
 import 'package:condor_code/ui/analytics/analytics_constants.dart';
 
 class QuestionsBloc extends BaseBloc<QuestionsEvent, QuestionsState> {
   final TestScreenEventsProvider testScreenEventsProvider;
   final QuestionRepository questionRepository;
-  final String lessonId;
+  final Analytics analytics;
+  final String testId;
 
   QuestionsBloc({
     required this.questionRepository,
     required this.testScreenEventsProvider,
-    required this.lessonId,
+    required this.analytics,
+    required this.testId,
     required super.snackBarEventsProvider,
   }) : super(const QuestionsState()) {
     on<QuestionsEvent>((event, emit) async {
@@ -36,7 +37,7 @@ class QuestionsBloc extends BaseBloc<QuestionsEvent, QuestionsState> {
 
   Future<void> _onGetQuestions(Emitter<QuestionsState> emit) async {
     await processDataResult(
-      questionRepository.getQuestions(lessonId),
+      questionRepository.getQuestions(testId),
       onSuccess: (questions) {
         if (questions.isEmpty) {
           testScreenEventsProvider.addEvent(TestScreenAction.failedToLoad);
@@ -60,10 +61,10 @@ class QuestionsBloc extends BaseBloc<QuestionsEvent, QuestionsState> {
     final isWorkOnMistakes = state.isWorkOnMistakesActive;
 
     final isCorrect = state.answerNumber == question.rightAnswerNumber;
-    di<Analytics>().logEvent(AnalyticsEventName.questionAnswered, {
-      AnalyticsPropertyName.lessonId: lessonId,
+    analytics.logEvent(AnalyticsEventName.questionAnswered, {
+      AnalyticsPropertyName.testId: testId,
       'question_id': question.id,
-      'is_correct': isCorrect ? 1 : 0,
+      'is_correct': isCorrect,
     });
 
     if (isCorrect) {

@@ -33,8 +33,4 @@ class TestCubit extends BaseCubit<TestState> {
       }),
     );
   }
-
-  void moveNextQuestion() {
-    emit(TestMoving());
-  }
 }

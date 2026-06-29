@@ -59,10 +59,11 @@ class ProviderManager {
   void _registerBlocs(GetIt di) {
     di.registerFactory<BottomNavigationCubit>(() => BottomNavigationCubit());
     di.registerFactoryParam<QuestionsBloc, String, dynamic>(
-      (lessonId, _) => QuestionsBloc(
-        lessonId: lessonId,
+      (testId, _) => QuestionsBloc(
+        testId: testId,
         questionRepository: di<QuestionRepository>(),
         testScreenEventsProvider: di<TestScreenEventsProvider>(),
+        analytics: di<Analytics>(),
         snackBarEventsProvider: di<SnackBarEventsProvider>(),
       ),
     );

@@ -37,7 +37,11 @@ class _TestHeader extends StatelessWidget {
             ),
           ),
         ),
-        Image.asset('assets/images/heart.webp', width: 30, height: 30),
+        Image.asset(
+          'packages/ui_kit/assets/images/heart.webp',
+          width: 30,
+          height: 30,
+        ),
         const Padding(padding: EdgeInsets.only(left: 10)),
         Container(
           margin: const EdgeInsets.only(right: 10),

@@ -9,8 +9,8 @@ abstract class AppButtonStyles {
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
     padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
     textStyle: AppTextStyles.button,
-    disabledBackgroundColor: AppColors.grey200,
-    disabledForegroundColor: AppColors.grey600,
+    disabledBackgroundColor: AppColors.grey400,
+    disabledForegroundColor: AppColors.grey200,
   );
 
   static ButtonStyle circleButtonStyle = ElevatedButton.styleFrom(
@@ -20,8 +20,8 @@ abstract class AppButtonStyles {
     shape: const CircleBorder(),
     padding: const EdgeInsets.all(12),
     minimumSize: const Size(40, 40),
-    disabledBackgroundColor: AppColors.grey200,
-    disabledForegroundColor: AppColors.grey600,
+    disabledBackgroundColor: AppColors.grey400,
+    disabledForegroundColor: AppColors.grey200,
   );
 
   static ButtonStyle smallButtonStyle = ElevatedButton.styleFrom(

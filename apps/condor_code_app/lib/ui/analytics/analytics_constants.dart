@@ -38,6 +38,7 @@ class AnalyticsPropertyName {
   static const String courseId = 'course_id';
   static const String courseName = 'course_name';
   static const String lessonId = 'lesson_id';
+  static const String testId = 'test_id';
   static const String lessonTitle = 'lesson_title';
   static const String taskId = 'task_id';
   static const String environment = 'environment';
