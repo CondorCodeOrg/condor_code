@@ -26,13 +26,6 @@ class TestSelectionScreen extends StatefulWidget {
 
 class _TestSelectionScreenState extends State<TestSelectionScreen> {
   @override
-  void initState() {
-    super.initState();
-    // Load the test details when the screen initializes.
-    context.read<TestSelectionCubit>().loadTests();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
@@ -54,7 +47,9 @@ class _TestSelectionScreenState extends State<TestSelectionScreen> {
                 ? state.lessonName
                 : '';
             return Text(
-              lessonName.isNotEmpty ? 'Tests for $lessonName' : 'Select Test',
+              lessonName.isNotEmpty
+                  ? l10n.testSelectionTitle(lessonName)
+                  : l10n.testSelectionSelectTest,
               style: AppTextStyles.h1.copyWith(color: AppColors.white),
             );
           },
@@ -94,7 +89,10 @@ class _TestSelectionScreenState extends State<TestSelectionScreen> {
                         style: AppButtonStyles.smallButtonStyle,
                         onPressed: () =>
                             context.read<TestSelectionCubit>().loadTests(),
-                        child: const Text('Retry', style: AppTextStyles.button),
+                        child: Text(
+                          l10n.testSelectionRetry,
+                          style: AppTextStyles.button,
+                        ),
                       ),
                     ],
                   ),
@@ -125,7 +123,7 @@ class _TestSelectionScreenState extends State<TestSelectionScreen> {
                               AnalyticsEventName.testSelected,
                               {
                                 AnalyticsPropertyName.lessonId: widget.lessonId,
-                                'test_id': test.id,
+                                AnalyticsPropertyName.testId: test.id,
                               },
                             );
                           },
@@ -138,15 +136,7 @@ class _TestSelectionScreenState extends State<TestSelectionScreen> {
                     child: SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        style: AppButtonStyles.mainButtonStyle.copyWith(
-                          backgroundColor:
-                              WidgetStateProperty.resolveWith<Color?>((states) {
-                                if (selectedTestId == null) {
-                                  return AppColors.grey400;
-                                }
-                                return AppColors.neon;
-                              }),
-                        ),
+                        style: AppButtonStyles.mainButtonStyle,
                         onPressed: selectedTestId == null
                             ? null
                             : () {
@@ -154,7 +144,8 @@ class _TestSelectionScreenState extends State<TestSelectionScreen> {
                                     .logEvent(AnalyticsEventName.testStarted, {
                                       AnalyticsPropertyName.lessonId:
                                           widget.lessonId,
-                                      'test_id': selectedTestId,
+                                      AnalyticsPropertyName.testId:
+                                          selectedTestId,
                                     });
                                 context.go(
                                   '/course/${widget.courseId}/${widget.lessonId}/tests/$selectedTestId',
@@ -162,11 +153,7 @@ class _TestSelectionScreenState extends State<TestSelectionScreen> {
                               },
                         child: Text(
                           l10n.startTest.toUpperCase(),
-                          style: AppTextStyles.button.copyWith(
-                            color: selectedTestId == null
-                                ? AppColors.grey200
-                                : AppColors.darkGrey800,
-                          ),
+                          style: AppTextStyles.button,
                         ),
                       ),
                     ),

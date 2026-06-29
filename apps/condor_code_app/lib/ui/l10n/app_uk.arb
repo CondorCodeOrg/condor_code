@@ -217,5 +217,27 @@
   "stagingRoleUser": "Користувач",
   "stagingRoleDeveloper": "Розробник",
   "stagingRolePatron": "Патрон",
-  "stagingRolePatronDeveloper": "Патрон + Розробник"
+  "stagingRolePatronDeveloper": "Патрон + Розробник",
+  "resultPerfectLesson": "Ідеальний урок!",
+  "resultPerfectTest": "Ідеальний тест!",
+  "resultApplause": "Оплески для тебе!",
+  "resultTotalPoints": "УСЬОГО БАЛІВ",
+  "resultInstantly": "МИТТЄВО",
+  "resultAmazing": "ДИВОВИЖНО",
+  "resultGetPoints": "ОТРИМАТИ БАЛИ",
+  "testMoveOn": "ПРОДОВЖИТИ",
+  "testGenericError": "Вибачте, виникла помилка.",
+  "testSelectionTitle": "Тести для {lessonName}",
+  "@testSelectionTitle": {
+    "placeholders": {
+      "lessonName": {
+        "type": "String"
+      }
+    }
+  },
+  "testSelectionSelectTest": "Виберіть тест",
+  "testSelectionRetry": "Повторити",
+  "heartInfoNoHearts": "Ви використали всі серця, перегляньте відео або пройдіть міні-гру, щоб отримати серце.",
+  "exitTestLossWarning": "Якщо ви вийдете, ви втратите всі бали, які отримали під час тесту!",
+  "exit": "ВИХІД"
 }

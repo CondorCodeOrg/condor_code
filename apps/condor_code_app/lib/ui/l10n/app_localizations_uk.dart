@@ -501,4 +501,53 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get stagingRolePatronDeveloper => 'Патрон + Розробник';
+
+  @override
+  String get resultPerfectLesson => 'Ідеальний урок!';
+
+  @override
+  String get resultPerfectTest => 'Ідеальний тест!';
+
+  @override
+  String get resultApplause => 'Оплески для тебе!';
+
+  @override
+  String get resultTotalPoints => 'УСЬОГО БАЛІВ';
+
+  @override
+  String get resultInstantly => 'МИТТЄВО';
+
+  @override
+  String get resultAmazing => 'ДИВОВИЖНО';
+
+  @override
+  String get resultGetPoints => 'ОТРИМАТИ БАЛИ';
+
+  @override
+  String get testMoveOn => 'ПРОДОВЖИТИ';
+
+  @override
+  String get testGenericError => 'Вибачте, виникла помилка.';
+
+  @override
+  String testSelectionTitle(String lessonName) {
+    return 'Тести для $lessonName';
+  }
+
+  @override
+  String get testSelectionSelectTest => 'Виберіть тест';
+
+  @override
+  String get testSelectionRetry => 'Повторити';
+
+  @override
+  String get heartInfoNoHearts =>
+      'Ви використали всі серця, перегляньте відео або пройдіть міні-гру, щоб отримати серце.';
+
+  @override
+  String get exitTestLossWarning =>
+      'Якщо ви вийдете, ви втратите всі бали, які отримали під час тесту!';
+
+  @override
+  String get exit => 'ВИХІД';
 }

@@ -16,15 +16,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:condor_code/ui/base/provider/events/snack_bar_events_provider.dart';
 import 'package:condor_code/ui/analytics/analytics.dart';
 import 'package:condor_code/ui/analytics/analytics_constants.dart';
+import 'package:condor_code/ui/l10n/app_localizations.dart';
 
 part '_test_header.dart';
 
 class TestScreen extends StatefulWidget {
-  const TestScreen({super.key, required this.lessonId, required this.courseId});
+  const TestScreen({
+    super.key,
+    required this.testId,
+    required this.lessonId,
+    required this.courseId,
+  });
 
+  final String testId;
   final String lessonId;
   final String courseId;
 
@@ -59,7 +65,7 @@ class _TestScreenState extends State<TestScreen> {
       BlocProvider(create: (context) => di<TestCubit>()),
       BlocProvider(
         create: (context) =>
-            di<QuestionsBloc>(param1: widget.lessonId)
+            di<QuestionsBloc>(param1: widget.testId)
               ..add(OnLoadQuestionsEvent()),
         lazy: false,
       ),
@@ -77,33 +83,7 @@ class _TestScreenState extends State<TestScreen> {
         body: SafeArea(
           child: Focus(
             autofocus: true,
-            onKeyEvent: (node, event) {
-              if (event is KeyDownEvent) {
-                final keyLabel = event.logicalKey.keyLabel;
-                if (keyLabel == '1' ||
-                    keyLabel == '2' ||
-                    keyLabel == '3' ||
-                    keyLabel == '4') {
-                  final option = int.parse(keyLabel);
-                  BlocProvider.of<QuestionsBloc>(
-                    context,
-                  ).add(OnAnswerSelectedEvent(answerNumber: option));
-                  return KeyEventResult.handled;
-                } else if (event.logicalKey == LogicalKeyboardKey.enter) {
-                  if (_isBottomSheetOpen) {
-                    _onAnswerResultDialogButtonPressed(
-                      BlocProvider.of<QuestionsBloc>(context),
-                    );
-                  } else {
-                    BlocProvider.of<QuestionsBloc>(
-                      context,
-                    ).add(OnMoveOnButtonPressedEvent());
-                  }
-                  return KeyEventResult.handled;
-                }
-              }
-              return KeyEventResult.ignored;
-            },
+            onKeyEvent: _onKeyEvent,
             child: LayoutBuilder(
               builder: (context, constraints) {
                 final isDesktop = constraints.maxWidth >= 1024;
@@ -138,7 +118,7 @@ class _TestScreenState extends State<TestScreen> {
                       case TestLoseHearts():
                         WidgetsBinding.instance.addPostFrameCallback((_) {
                           context.go(
-                            '/course/${widget.courseId}/${widget.lessonId}/tests/${widget.lessonId}/hearts',
+                            '/course/${widget.courseId}/${widget.lessonId}/tests/${widget.testId}/hearts',
                           );
                         });
                         break;
@@ -178,6 +158,7 @@ class _TestScreenState extends State<TestScreen> {
                       );
                     }
 
+                    final l10n = AppLocalizations.of(context)!;
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -216,8 +197,8 @@ class _TestScreenState extends State<TestScreen> {
                                 context,
                               ).add(OnMoveOnButtonPressedEvent());
                             },
-                            child: const Text(
-                              'MOVE ON',
+                            child: Text(
+                              l10n.testMoveOn,
                               style: AppTextStyles.button,
                             ),
                           ),
@@ -247,7 +228,8 @@ class _TestScreenState extends State<TestScreen> {
 
   Future<void> _playCorrectSound() async {
     try {
-      const String audioPath = 'audio/correct_answer.mp3';
+      const String audioPath =
+          'packages/ui_kit/assets/audio/correct_answer.mp3';
       await player.play(AssetSource(audioPath));
     } catch (e) {
       debugPrint('Failed to play correct sound: $e');
@@ -256,7 +238,8 @@ class _TestScreenState extends State<TestScreen> {
 
   Future<void> _playInCorrectSound() async {
     try {
-      const String audioPath = 'audio/buzzerwav-14769.mp3';
+      const String audioPath =
+          'packages/ui_kit/assets/audio/buzzerwav-14769.mp3';
       await player.play(AssetSource(audioPath));
     } catch (e) {
       debugPrint('Failed to play incorrect sound: $e');
@@ -267,17 +250,17 @@ class _TestScreenState extends State<TestScreen> {
     timerController.stop();
     di<Analytics>().logEvent(AnalyticsEventName.testCompleted, {
       AnalyticsPropertyName.lessonId: widget.lessonId,
+      AnalyticsPropertyName.testId: widget.testId,
       'correct_count': bloc.state.correctCounter,
       'incorrect_count': bloc.state.incorrectCounter,
       'duration_seconds': timerController.seconds,
     });
+    final seconds = timerController.seconds;
+    final correctAnswer = bloc.state.correctCounter;
+    final inCorrectAnswer = bloc.state.incorrectCounter;
     context.go(
-      '/course/${widget.courseId}/${widget.lessonId}/tests/${widget.lessonId}/result',
-      extra: {
-        'seconds': timerController.seconds,
-        'correctAnswer': bloc.state.correctCounter,
-        'inCorrectAnswer': bloc.state.incorrectCounter,
-      },
+      '/course/${widget.courseId}/${widget.lessonId}/tests/${widget.testId}/result'
+      '?seconds=$seconds&correctAnswer=$correctAnswer&inCorrectAnswer=$inCorrectAnswer',
     );
   }
 
@@ -374,9 +357,9 @@ class _TestScreenState extends State<TestScreen> {
 
   void _returnToPreviousPageWithError(BuildContext context) {
     context.pop();
-    di<SnackBarEventsProvider>().addEvent(
-      SnackBarEvent.error('Sorry, an error occurred.'),
-    );
+    BlocProvider.of<TestCubit>(
+      context,
+    ).showErrorSnackBar(AppLocalizations.of(context)!.testGenericError);
   }
 
   _showExitBottomSheet() => showModalBottomSheet(
@@ -385,4 +368,37 @@ class _TestScreenState extends State<TestScreen> {
     context: context,
     builder: (BuildContext context) => const ExitFromTestBottomSheet(),
   );
+
+  KeyEventResult _onKeyEvent(FocusNode node, KeyEvent event) {
+    if (event is KeyDownEvent) {
+      final keyLabel = event.logicalKey.keyLabel;
+      if (_isDigitOption(keyLabel)) {
+        _selectAnswerOption(int.parse(keyLabel));
+        return KeyEventResult.handled;
+      } else if (event.logicalKey == LogicalKeyboardKey.enter) {
+        _confirmOrMoveOn();
+        return KeyEventResult.handled;
+      }
+    }
+    return KeyEventResult.ignored;
+  }
+
+  bool _isDigitOption(String keyLabel) =>
+      keyLabel == '1' || keyLabel == '2' || keyLabel == '3' || keyLabel == '4';
+
+  void _selectAnswerOption(int option) {
+    BlocProvider.of<QuestionsBloc>(
+      context,
+    ).add(OnAnswerSelectedEvent(answerNumber: option));
+  }
+
+  void _confirmOrMoveOn() {
+    if (_isBottomSheetOpen) {
+      _onAnswerResultDialogButtonPressed(
+        BlocProvider.of<QuestionsBloc>(context),
+      );
+    } else {
+      BlocProvider.of<QuestionsBloc>(context).add(OnMoveOnButtonPressedEvent());
+    }
+  }
 }
