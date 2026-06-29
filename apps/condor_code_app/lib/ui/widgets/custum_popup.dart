@@ -13,7 +13,7 @@ class CustomPopup extends StatelessWidget {
       for (var i = 0; i < 5; i++) {
         images = [
           ...images,
-          Image.asset('assets/images/heart.webp', width: 50),
+          Image.asset('packages/ui_kit/assets/images/heart.webp', width: 50),
         ];
       }
       return images;

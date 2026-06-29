@@ -1,19 +1,23 @@
 import 'package:condor_code/ui/base/bloc/base_bloc.dart';
-import 'package:condor_code/ui/screens/lesson/bloc/questions/questions_event.dart';
-import 'package:condor_code/ui/screens/lesson/bloc/questions/questions_state.dart';
-import 'package:condor_code/ui/screens/lesson/provider/lesson_screen_events_provider.dart';
+import 'package:condor_code/ui/screens/test/bloc/questions/questions_event.dart';
+import 'package:condor_code/ui/screens/test/bloc/questions/questions_state.dart';
+import 'package:condor_code/ui/screens/test/provider/test_screen_events_provider.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:condor_code/ui/analytics/analytics.dart';
+import 'package:condor_code/ui/analytics/analytics_constants.dart';
 
 class QuestionsBloc extends BaseBloc<QuestionsEvent, QuestionsState> {
-  final LessonScreenEventsProvider lessonScreenEventsProvider;
+  final TestScreenEventsProvider testScreenEventsProvider;
   final QuestionRepository questionRepository;
-  final String lessonId;
+  final Analytics analytics;
+  final String testId;
 
   QuestionsBloc({
     required this.questionRepository,
-    required this.lessonScreenEventsProvider,
-    required this.lessonId,
+    required this.testScreenEventsProvider,
+    required this.analytics,
+    required this.testId,
     required super.snackBarEventsProvider,
   }) : super(const QuestionsState()) {
     on<QuestionsEvent>((event, emit) async {
@@ -33,12 +37,12 @@ class QuestionsBloc extends BaseBloc<QuestionsEvent, QuestionsState> {
 
   Future<void> _onGetQuestions(Emitter<QuestionsState> emit) async {
     await processDataResult(
-      questionRepository.getQuestions(lessonId),
+      questionRepository.getQuestions(testId),
       onSuccess: (questions) {
         if (questions.isEmpty) {
-          lessonScreenEventsProvider.addEvent(LessonScreenAction.failedToLoad);
+          testScreenEventsProvider.addEvent(TestScreenAction.failedToLoad);
         }
-        lessonScreenEventsProvider.addEvent(LessonScreenAction.loaded);
+        testScreenEventsProvider.addEvent(TestScreenAction.loaded);
         emit(QuestionsState(questions: questions));
       },
     );
@@ -56,17 +60,24 @@ class QuestionsBloc extends BaseBloc<QuestionsEvent, QuestionsState> {
     final incorrectQuestions = List.of(state.incorrectQuestions);
     final isWorkOnMistakes = state.isWorkOnMistakesActive;
 
-    if (state.answerNumber == question.rightAnswerNumber) {
+    final isCorrect = state.answerNumber == question.rightAnswerNumber;
+    analytics.logEvent(AnalyticsEventName.questionAnswered, {
+      AnalyticsPropertyName.testId: testId,
+      'question_id': question.id,
+      'is_correct': isCorrect,
+    });
+
+    if (isCorrect) {
       correctCounter++;
-      lessonScreenEventsProvider.addEvent(LessonScreenAction.rightAnswer);
+      testScreenEventsProvider.addEvent(TestScreenAction.rightAnswer);
     } else {
       incorrectCounter++;
       heartCount--;
       if (heartCount == 0) {
-        lessonScreenEventsProvider.addEvent(LessonScreenAction.loseHearts);
+        testScreenEventsProvider.addEvent(TestScreenAction.loseHearts);
       } else {
         incorrectQuestions.add(question);
-        lessonScreenEventsProvider.addEvent(LessonScreenAction.wrongAnswer);
+        testScreenEventsProvider.addEvent(TestScreenAction.wrongAnswer);
       }
     }
 
@@ -89,14 +100,12 @@ class QuestionsBloc extends BaseBloc<QuestionsEvent, QuestionsState> {
 
     if (state.isLastQuestion) {
       if (incorrectQuestions.isEmpty) {
-        lessonScreenEventsProvider.addEvent(LessonScreenAction.finish);
+        testScreenEventsProvider.addEvent(TestScreenAction.finish);
       } else {
         incorrectQuestions = [];
 
         if (!state.isWorkOnMistakesActive) {
-          lessonScreenEventsProvider.addEvent(
-            LessonScreenAction.workOnMistakes,
-          );
+          testScreenEventsProvider.addEvent(TestScreenAction.workOnMistakes);
         }
 
         emit(
@@ -113,7 +122,7 @@ class QuestionsBloc extends BaseBloc<QuestionsEvent, QuestionsState> {
     } else {
       currentQuestionPosition++;
       emit(state.copyWith(currentQuestionPosition: currentQuestionPosition));
-      lessonScreenEventsProvider.addEvent(LessonScreenAction.move);
+      testScreenEventsProvider.addEvent(TestScreenAction.move);
     }
   }
 }

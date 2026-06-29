@@ -74,6 +74,8 @@
   "noLessonsInformation": "No lessons here yet",
   "watchOnYouTube": "Watch on YouTube",
   "checkMyKnowledge": "Check my knowledge",
+  "takeTests": "Take Tests",
+  "startTest": "Start Test",
   "invalidYouTubeLink": "Error: Invalid YouTube link",
   "noTasksInformation": "No tasks here yet",
   "checkMyCode": "Check my code",
@@ -215,5 +217,27 @@
   "stagingRoleUser": "User",
   "stagingRoleDeveloper": "Developer",
   "stagingRolePatron": "Patron",
-  "stagingRolePatronDeveloper": "Patron + Developer"
+  "stagingRolePatronDeveloper": "Patron + Developer",
+  "resultPerfectLesson": "Perfect lesson!",
+  "resultPerfectTest": "Perfect test!",
+  "resultApplause": "A round of applause for you!",
+  "resultTotalPoints": "TOTAL POINTS",
+  "resultInstantly": "INSTANTLY",
+  "resultAmazing": "AMAZING",
+  "resultGetPoints": "GET POINTS",
+  "testMoveOn": "MOVE ON",
+  "testGenericError": "Sorry, an error occurred.",
+  "testSelectionTitle": "Tests for {lessonName}",
+  "@testSelectionTitle": {
+    "placeholders": {
+      "lessonName": {
+        "type": "String"
+      }
+    }
+  },
+  "testSelectionSelectTest": "Select Test",
+  "testSelectionRetry": "Retry",
+  "heartInfoNoHearts": "You used all the hearts, watch the video or complete the mini game to earn a heart.",
+  "exitTestLossWarning": "If you leave you will lose all the points you earned during the test!",
+  "exit": "EXIT"
 }

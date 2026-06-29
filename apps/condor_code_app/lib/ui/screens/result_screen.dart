@@ -1,19 +1,25 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:condor_code/ui/l10n/app_localizations.dart';
 import 'package:ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
+import 'package:go_router/go_router.dart';
 
 class ResultScreen extends StatefulWidget {
   final int seconds;
   final int correctAnswer;
   final int inCorrectAnswer;
+  final String? courseId;
+  final String? lessonId;
 
   const ResultScreen({
     super.key,
     required this.seconds,
     required this.correctAnswer,
     required this.inCorrectAnswer,
+    this.courseId,
+    this.lessonId,
   });
 
   @override
@@ -30,8 +36,15 @@ class _ResultScreenState extends State<ResultScreen> {
   }
 
   @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final int sumAnswers = widget.inCorrectAnswer + widget.correctAnswer;
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: AppColors.grey800,
       resizeToAvoidBottomInset: false,
@@ -39,12 +52,13 @@ class _ResultScreenState extends State<ResultScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Expanded(child: Lottie.asset('assets/animations/celebration.json')),
-            const Text('Perfect lesson!', style: AppTextStyles.body2),
-            const Text(
-              'A round of applause for you!',
-              style: AppTextStyles.body3,
+            Expanded(
+              child: Lottie.asset(
+                'packages/ui_kit/assets/animations/celebration.json',
+              ),
             ),
+            Text(l10n.resultPerfectTest, style: AppTextStyles.body2),
+            Text(l10n.resultApplause, style: AppTextStyles.body3),
             const SizedBox(height: 80),
             _ResultScoreCards(
               seconds: widget.seconds,
@@ -56,10 +70,14 @@ class _ResultScreenState extends State<ResultScreen> {
               padding: const EdgeInsets.only(bottom: 20),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  if (widget.courseId != null && widget.lessonId != null) {
+                    context.go('/course/${widget.courseId}/${widget.lessonId}');
+                  } else {
+                    context.pop();
+                  }
                 },
                 style: AppButtonStyles.mainButtonStyle,
-                child: const Text('GET POINTS', style: AppTextStyles.body2),
+                child: Text(l10n.resultGetPoints, style: AppTextStyles.body2),
               ),
             ),
           ],
@@ -69,8 +87,12 @@ class _ResultScreenState extends State<ResultScreen> {
   }
 
   Future<void> playCelebrationSound() async {
-    const String audioPath = 'audio/wow.mp3';
-    await player.play(AssetSource(audioPath));
+    try {
+      const String audioPath = 'packages/ui_kit/assets/audio/wow.mp3';
+      await player.play(AssetSource(audioPath));
+    } catch (e) {
+      debugPrint('Failed to play celebration sound: $e');
+    }
   }
 }
 
@@ -88,26 +110,27 @@ class _ResultScoreCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final correctTime = formattedTime(timeInSecond: seconds);
+    final l10n = AppLocalizations.of(context)!;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        const _ResultScoreCard(
+        _ResultScoreCard(
           color: Colors.purpleAccent,
-          title: 'TOTAL POINTS',
+          title: l10n.resultTotalPoints,
           value: '50',
-          imagePath: 'assets/images/lightning-bolt-4128.svg',
+          imagePath: 'packages/ui_kit/assets/images/lightning-bolt-4128.svg',
         ),
         _ResultScoreCard(
           color: Colors.blue,
-          title: 'INSTANTLY',
+          title: l10n.resultInstantly,
           value: correctTime,
-          imagePath: 'assets/images/result_time.svg',
+          imagePath: 'packages/ui_kit/assets/images/result_time.svg',
         ),
         _ResultScoreCard(
           color: Colors.green,
-          title: 'AMAZING',
+          title: l10n.resultAmazing,
           value: '${convertToPercent(sumAnswers, correctAnswer)} %',
-          imagePath: 'assets/images/percentage_score.svg',
+          imagePath: 'packages/ui_kit/assets/images/percentage_score.svg',
         ),
       ],
     );

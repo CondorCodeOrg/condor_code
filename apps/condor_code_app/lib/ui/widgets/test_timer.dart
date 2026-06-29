@@ -2,19 +2,19 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'package:condor_code/ui/screens/lesson/utils/enum/timer_action.dart';
-import 'package:condor_code/ui/screens/lesson/utils/timer_controller.dart';
+import 'package:condor_code/ui/screens/test/utils/enum/timer_action.dart';
+import 'package:condor_code/ui/screens/test/utils/timer_controller.dart';
 
-class LessonTimer extends StatefulWidget {
+class TestTimer extends StatefulWidget {
   final TimerController timerController;
 
-  const LessonTimer({super.key, required this.timerController});
+  const TestTimer({super.key, required this.timerController});
 
   @override
   TimerState createState() => TimerState();
 }
 
-class TimerState extends State<LessonTimer> {
+class TimerState extends State<TestTimer> {
   Timer? _timer;
   bool _isTimerRunning = false;
 

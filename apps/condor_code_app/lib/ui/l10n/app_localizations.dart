@@ -248,6 +248,18 @@ abstract class AppLocalizations {
   /// **'Check my knowledge'**
   String get checkMyKnowledge;
 
+  /// No description provided for @takeTests.
+  ///
+  /// In en, this message translates to:
+  /// **'Take Tests'**
+  String get takeTests;
+
+  /// No description provided for @startTest.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Test'**
+  String get startTest;
+
   /// No description provided for @invalidYouTubeLink.
   ///
   /// In en, this message translates to:
@@ -967,6 +979,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Patron + Developer'**
   String get stagingRolePatronDeveloper;
+
+  /// No description provided for @resultPerfectLesson.
+  ///
+  /// In en, this message translates to:
+  /// **'Perfect lesson!'**
+  String get resultPerfectLesson;
+
+  /// No description provided for @resultPerfectTest.
+  ///
+  /// In en, this message translates to:
+  /// **'Perfect test!'**
+  String get resultPerfectTest;
+
+  /// No description provided for @resultApplause.
+  ///
+  /// In en, this message translates to:
+  /// **'A round of applause for you!'**
+  String get resultApplause;
+
+  /// No description provided for @resultTotalPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'TOTAL POINTS'**
+  String get resultTotalPoints;
+
+  /// No description provided for @resultInstantly.
+  ///
+  /// In en, this message translates to:
+  /// **'INSTANTLY'**
+  String get resultInstantly;
+
+  /// No description provided for @resultAmazing.
+  ///
+  /// In en, this message translates to:
+  /// **'AMAZING'**
+  String get resultAmazing;
+
+  /// No description provided for @resultGetPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'GET POINTS'**
+  String get resultGetPoints;
+
+  /// No description provided for @testMoveOn.
+  ///
+  /// In en, this message translates to:
+  /// **'MOVE ON'**
+  String get testMoveOn;
+
+  /// No description provided for @testGenericError.
+  ///
+  /// In en, this message translates to:
+  /// **'Sorry, an error occurred.'**
+  String get testGenericError;
+
+  /// No description provided for @testSelectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tests for {lessonName}'**
+  String testSelectionTitle(String lessonName);
+
+  /// No description provided for @testSelectionSelectTest.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Test'**
+  String get testSelectionSelectTest;
+
+  /// No description provided for @testSelectionRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get testSelectionRetry;
+
+  /// No description provided for @heartInfoNoHearts.
+  ///
+  /// In en, this message translates to:
+  /// **'You used all the hearts, watch the video or complete the mini game to earn a heart.'**
+  String get heartInfoNoHearts;
+
+  /// No description provided for @exitTestLossWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'If you leave you will lose all the points you earned during the test!'**
+  String get exitTestLossWarning;
+
+  /// No description provided for @exit.
+  ///
+  /// In en, this message translates to:
+  /// **'EXIT'**
+  String get exit;
 }
 
 class _AppLocalizationsDelegate

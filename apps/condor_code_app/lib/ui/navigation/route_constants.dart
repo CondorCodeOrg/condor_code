@@ -29,4 +29,7 @@ class RouteConstants {
   static const String knowledgeBaseHome = '/knowledgeBase/home';
   static const String knowledgeBaseRoadmap = '/knowledgeBase/roadmap';
   static const String knowledgeBaseResources = '/knowledgeBase/resources';
+
+  static const String testDetails = '/course/:courseId/:lessonId/tests/:testId';
+  static const String tests = '/course/:courseId/:lessonId/tests';
 }

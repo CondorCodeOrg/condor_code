@@ -14,6 +14,10 @@ class AnalyticsEventName {
   static const String userLogin = 'user_login';
   static const String userLogout = 'user_logout';
   static const String wishFlutterCourse = 'wish_flutter_course';
+  static const String testSelected = 'test_selected';
+  static const String testStarted = 'test_started';
+  static const String questionAnswered = 'question_answered';
+  static const String testCompleted = 'test_completed';
 }
 
 /// Firebase Analytics event parameter keys.
@@ -34,6 +38,7 @@ class AnalyticsPropertyName {
   static const String courseId = 'course_id';
   static const String courseName = 'course_name';
   static const String lessonId = 'lesson_id';
+  static const String testId = 'test_id';
   static const String lessonTitle = 'lesson_title';
   static const String taskId = 'task_id';
   static const String environment = 'environment';
