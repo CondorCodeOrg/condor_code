@@ -248,6 +248,18 @@ abstract class AppLocalizations {
   /// **'Check my knowledge'**
   String get checkMyKnowledge;
 
+  /// No description provided for @summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Summary'**
+  String get summary;
+
+  /// No description provided for @noSummaryAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No summary available'**
+  String get noSummaryAvailable;
+
   /// No description provided for @invalidYouTubeLink.
   ///
   /// In en, this message translates to:

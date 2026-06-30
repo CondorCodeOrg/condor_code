@@ -128,6 +128,7 @@ class _CourseScreenBody extends StatelessWidget {
                   courseName: courseName,
                   expanded: isExpanded,
                   isTasksExist: state.isTasksExist,
+                  lesson: state.selectedLesson,
                 ),
                 header: _CourseHeader(courseName: courseName),
                 narrowLayout: _NarrowLayout(
@@ -306,6 +307,7 @@ class _NarrowLayout extends StatelessWidget {
             courseId: courseId,
             courseName: courseName,
             isTasksExist: state.isTasksExist,
+            lesson: state.selectedLesson,
           ),
         ),
       ],
