@@ -254,6 +254,12 @@ abstract class AppLocalizations {
   /// **'Summary'**
   String get summary;
 
+  /// No description provided for @noSummaryAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No summary available'**
+  String get noSummaryAvailable;
+
   /// No description provided for @invalidYouTubeLink.
   ///
   /// In en, this message translates to:

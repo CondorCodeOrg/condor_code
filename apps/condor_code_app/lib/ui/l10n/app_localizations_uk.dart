@@ -102,6 +102,9 @@ class AppLocalizationsUk extends AppLocalizations {
   String get summary => 'Конспект';
 
   @override
+  String get noSummaryAvailable => 'Конспект ще не додано';
+
+  @override
   String get invalidYouTubeLink => 'Помилка: Недійсне посилання на YouTube';
 
   @override

@@ -75,6 +75,7 @@
   "watchOnYouTube": "Watch on YouTube",
   "checkMyKnowledge": "Check my knowledge",
   "summary": "Summary",
+  "noSummaryAvailable": "No summary available",
   "invalidYouTubeLink": "Error: Invalid YouTube link",
   "noTasksInformation": "No tasks here yet",
   "checkMyCode": "Check my code",
