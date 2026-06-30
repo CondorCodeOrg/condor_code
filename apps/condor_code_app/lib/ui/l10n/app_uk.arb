@@ -216,4 +216,17 @@
   "stagingRoleDeveloper": "Розробник",
   "stagingRolePatron": "Патрон",
   "stagingRolePatronDeveloper": "Патрон + Розробник"
+  "leaveFeedback": "Залишити відгук",
+  "feedbackTitle": "Залишити відгук",
+  "feedbackLabel": "Ваш відгук *",
+  "feedbackHint": "Напишіть ваш відгук",
+  "feedbackEmailLabel": "Електронна пошта",
+  "feedbackEmailHint": "Введіть вашу пошту",
+  "feedbackSubmit": "Надіслати",
+  "feedbackCancel": "Скасувати",
+  "feedbackSuccess": "Дякуємо за ваш відгук!",
+  "feedbackError": "Не вдалося надіслати відгук. Спробуйте ще раз.",
+  "feedbackRequired": "Це поле обов'язкове",
+  "feedbackMinLength": "Відгук має містити щонайменше 10 символів",
+  "feedbackInvalidEmail": "Введіть коректну адресу електронної пошти"
 }

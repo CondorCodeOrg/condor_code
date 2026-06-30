@@ -8,6 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui_kit/ui_kit.dart';
 import 'package:ui_kit/widgets/condor_code_network_image_view.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:condor_code/ui/widgets/feedback_dialog.dart';
 
 /// Replace with your own URLs.
 const String _urlYouTube = 'https://www.youtube.com/@Oleh_Savenko';
@@ -121,6 +123,57 @@ class ContactsScreen extends StatelessWidget {
     ];
   }
 
+  // FEEDBACK METHODS
+
+  void _showFeedbackDialog(BuildContext context) {
+    // Track analytics event when user clicks the feedback button
+    FirebaseAnalytics.instance.logEvent(
+      name: 'feedback_button_clicked',
+      parameters: {
+        'screen': 'contacts',
+        'timestamp': DateTime.now().toIso8601String(),
+      },
+    );
+
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) => const FeedbackDialog(),
+    );
+  }
+
+  Widget _buildFeedbackButton(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      child: ElevatedButton(
+        onPressed: () => _showFeedbackDialog(context),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.neon,
+          foregroundColor: AppColors.darkGrey800,
+          minimumSize: const Size(double.infinity, 56),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          elevation: 0,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.feedback_outlined, size: 24),
+            const SizedBox(width: 12),
+            Text(
+              'Залишити відгук',
+              style: AppTextStyles.button.copyWith(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDesktop = MediaQuery.sizeOf(context).width >= 1024;
@@ -173,6 +226,9 @@ class ContactsScreen extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 16),
                                   _buildCompactRow(context),
+                                  const SizedBox(height: 24),
+                                  _buildFeedbackButton(context),
+                                  const SizedBox(height: 16),
                                 ],
                               ),
                             ),

@@ -216,4 +216,17 @@
   "stagingRoleDeveloper": "Developer",
   "stagingRolePatron": "Patron",
   "stagingRolePatronDeveloper": "Patron + Developer"
+  "leaveFeedback": "Leave feedback",
+  "feedbackTitle": "Leave feedback",
+  "feedbackLabel": "Your feedback *",
+  "feedbackHint": "Write your feedback",
+  "feedbackEmailLabel": "Email",
+  "feedbackEmailHint": "Enter your email",
+  "feedbackSubmit": "Submit",
+  "feedbackCancel": "Cancel",
+  "feedbackSuccess": "Thank you for your feedback!",
+  "feedbackError": "Failed to send feedback. Try again.",
+  "feedbackRequired": "This field is required",
+  "feedbackMinLength": "Feedback must contain at least 10 characters",
+  "feedbackInvalidEmail": "Enter a valid email address"
 }
