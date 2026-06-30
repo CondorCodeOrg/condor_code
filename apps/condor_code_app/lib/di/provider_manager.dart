@@ -79,7 +79,10 @@ class ProviderManager {
   void _registerBlocs(GetIt di) {
     di.registerFactory<BottomNavigationCubit>(() => BottomNavigationCubit());
     di.registerFactory<FeedbackCubit>(
-      () => FeedbackCubit(di<FeedbackRepository>()),
+      () => FeedbackCubit(
+        di<FeedbackRepository>(),
+        snackBarEventsProvider: di<SnackBarEventsProvider>(),
+      ),
     );
     di.registerFactoryParam<QuestionsBloc, String, dynamic>(
       (lessonId, _) => QuestionsBloc(
