@@ -19,7 +19,6 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
   final TextEditingController _messageController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  bool _isSubmitting = false;
   bool _showEmailField = false;
 
   @override
@@ -43,53 +42,19 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
   Future<void> _submitFeedback() async {
     if (!_formKey.currentState!.validate()) return;
 
-    setState(() => _isSubmitting = true);
+    final user = FirebaseAuth.instance.currentUser;
 
-    try {
-      final user = FirebaseAuth.instance.currentUser;
+    final feedback = FeedbackModel(
+      id: '',
+      message: _messageController.text,
+      userId: user?.uid,
+      email: _showEmailField ? _emailController.text : null,
+      timestamp: DateTime.now(),
+      platform: await _getPlatform(),
+      deviceInfo: await _getDeviceInfo(),
+    );
 
-      final feedback = FeedbackModel(
-        id: '',
-        message: _messageController.text,
-        userId: user?.uid,
-        email: _showEmailField ? _emailController.text : null,
-        timestamp: DateTime.now(),
-        platform: await _getPlatform(),
-        deviceInfo: await _getDeviceInfo(),
-      );
-
-      final cubit = context.read<FeedbackCubit>();
-
-      await cubit.submitFeedback(feedback);
-
-      final success = cubit.state.success;
-
-      if (!mounted) return;
-
-      if (success) {
-        Navigator.pop(context);
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(AppLocalizations.of(context)?.feedbackError),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('${AppLocalizations.of(context).feedbackError}: $e'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    } finally {
-      if (mounted) {
-        setState(() => _isSubmitting = false);
-      }
-    }
+    context.read<FeedbackCubit>().submitFeedback(feedback);
   }
 
   Future<String> _getPlatform() async {
@@ -138,104 +103,131 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Залишити відгук',
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _messageController,
-                maxLines: 5,
-                decoration: const InputDecoration(
-                  labelText: 'Ваш відгук *',
-                  hintText: 'Розкажіть нам про ваш досвід...',
-                  border: OutlineInputBorder(),
+    return BlocListener<FeedbackCubit, FeedbackState>(
+      listener: (context, state) {
+        if (state.success) {
+          Navigator.pop(context);
+        }
+
+        if (state.error != null && state.error!.isNotEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(AppLocalizations.of(context)!.feedbackError),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      },
+      child: Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Залишити відгук',
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ],
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Будь ласка, введіть ваш відгук';
-                  }
-                  if (value.length < 10) {
-                    return 'Відгук повинен містити щонайменше 10 символів';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-              if (_showEmailField) ...[
+
+                const SizedBox(height: 16),
+
                 TextFormField(
-                  controller: _emailController,
+                  controller: _messageController,
+                  maxLines: 5,
                   decoration: const InputDecoration(
-                    labelText: 'Email (необов\'язково)',
-                    hintText: 'example@email.com',
+                    labelText: 'Ваш відгук *',
+                    hintText: 'Розкажіть нам про ваш досвід...',
                     border: OutlineInputBorder(),
                   ),
-                  keyboardType: TextInputType.emailAddress,
                   validator: (value) {
-                    if (value != null &&
-                        value.isNotEmpty &&
-                        !RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                      return 'Введіть коректний email';
+                    if (value == null || value.isEmpty) {
+                      return 'Будь ласка, введіть ваш відгук';
+                    }
+                    if (value.length < 10) {
+                      return 'Відгук повинен містити щонайменше 10 символів';
                     }
                     return null;
                   },
                 ),
+
                 const SizedBox(height: 16),
-              ],
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    style: TextButton.styleFrom(
-                      foregroundColor: AppColors.white,
+
+                if (_showEmailField) ...[
+                  TextFormField(
+                    controller: _emailController,
+                    decoration: const InputDecoration(
+                      labelText: 'Email (необов\'язково)',
+                      hintText: 'example@email.com',
+                      border: OutlineInputBorder(),
                     ),
-                    child: const Text('Скасувати'),
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (value) {
+                      if (value != null &&
+                          value.isNotEmpty &&
+                          !RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                        return 'Введіть коректний email';
+                      }
+                      return null;
+                    },
                   ),
-                  const SizedBox(width: 12),
-                  ElevatedButton(
-                    onPressed: _isSubmitting ? null : _submitFeedback,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.neon,
-                      foregroundColor: AppColors.darkGrey800,
-                      minimumSize: const Size(120, 48),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    child: _isSubmitting
-                        ? const SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color: AppColors.darkGrey800,
-                            ),
-                          )
-                        : const Text('Надіслати'),
-                  ),
+                  const SizedBox(height: 16),
                 ],
-              ),
-            ],
+
+                BlocBuilder<FeedbackCubit, FeedbackState>(
+                  builder: (context, state) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          style: TextButton.styleFrom(
+                            foregroundColor: AppColors.white,
+                          ),
+                          child: const Text('Скасувати'),
+                        ),
+                        const SizedBox(width: 12),
+                        ElevatedButton(
+                          onPressed: state.isSubmitting
+                              ? null
+                              : _submitFeedback,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.neon,
+                            foregroundColor: AppColors.darkGrey800,
+                            minimumSize: const Size(120, 48),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: state.isSubmitting
+                              ? const SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    color: AppColors.darkGrey800,
+                                  ),
+                                )
+                              : const Text('Надіслати'),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

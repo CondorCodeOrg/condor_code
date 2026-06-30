@@ -8,7 +8,7 @@ class FeedbackCubit extends Cubit<FeedbackState> {
 
   final FeedbackRepository _repo;
 
-  Future<void> submitFeedback(FeedbackModel feedback) async {
+  Future<bool> submitFeedback(FeedbackModel feedback) async {
     emit(state.copyWith(isSubmitting: true, error: null, success: false));
 
     try {
@@ -21,6 +21,8 @@ class FeedbackCubit extends Cubit<FeedbackState> {
           error: success ? null : 'Failed to submit feedback',
         ),
       );
+
+      return success;
     } catch (e) {
       emit(
         state.copyWith(
@@ -29,6 +31,8 @@ class FeedbackCubit extends Cubit<FeedbackState> {
           error: e.toString(),
         ),
       );
+
+      return false;
     }
   }
 }
