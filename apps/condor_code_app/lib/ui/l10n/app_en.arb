@@ -87,7 +87,7 @@
   "tiktok": "TikTok",
   "welcomeTo": "Welcome to ",
   "condorCodeBrand": "Condor Code!",
-  "homeIntro": "You are on the Condor Code website — a platform created by students of individual mentor Oleh Savenko. Here you can learn Flutter and Dart, find lessons and homework with answers, and check your results.",
+  "homeIntro": "You are on the Condor Code website — a platform created by students of individual mentor Oleh Savenko. Here you can learn Flutter and Dart, find lessons and homework with answers[...]",
   "featureLessonsTitle": "Flutter and Dart Lessons",
   "featureLessonsDesc": "Structured materials for gradual learning of Dart and the Flutter framework.",
   "featureHomeworkTitle": "Homework with Answers",
@@ -215,7 +215,7 @@
   "stagingRoleUser": "User",
   "stagingRoleDeveloper": "Developer",
   "stagingRolePatron": "Patron",
-  "stagingRolePatronDeveloper": "Patron + Developer"
+  "stagingRolePatronDeveloper": "Patron + Developer",
   "leaveFeedback": "Leave feedback",
   "feedbackTitle": "Leave feedback",
   "feedbackLabel": "Your feedback *",
