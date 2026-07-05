@@ -7,7 +7,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:ui_kit/ui_kit.dart' show AppColors, AppEnvBanner, fadeOnlyPageTransitionsTheme;
+import 'package:ui_kit/ui_kit.dart'
+    show AppColors, AppEnvBanner, fadeOnlyPageTransitionsTheme;
 
 class CondorCodeApp extends StatefulWidget {
   final AppConfig config;
@@ -49,7 +50,10 @@ class _CondorCodeAppState extends State<CondorCodeApp> {
       ],
       theme: ThemeData(
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.neon, brightness: Brightness.dark),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: AppColors.neon,
+          brightness: Brightness.dark,
+        ),
         pageTransitionsTheme: fadeOnlyPageTransitionsTheme(),
       ),
       routerConfig: getRouter(widget.config),

@@ -1,8 +1,11 @@
 import 'package:condorcode_admin/app.dart';
 import 'package:condorcode_admin/config/app_config.dart';
-import 'package:condorcode_admin/config/firebase/firebase_options_dev.dart' as fb_dev;
-import 'package:condorcode_admin/config/firebase/firebase_options_prod.dart' as fb_prod;
-import 'package:condorcode_admin/config/firebase/firebase_options_stg.dart' as fb_staging;
+import 'package:condorcode_admin/config/firebase/firebase_options_dev.dart'
+    as fb_dev;
+import 'package:condorcode_admin/config/firebase/firebase_options_prod.dart'
+    as fb_prod;
+import 'package:condorcode_admin/config/firebase/firebase_options_stg.dart'
+    as fb_staging;
 import 'package:condorcode_admin/di/provider_manager.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +19,10 @@ void main() async {
   GoRouter.optionURLReflectsImperativeAPIs = true;
 
   const buildType = String.fromEnvironment('BUILD_TYPE', defaultValue: 'dev');
-  const dataSource = String.fromEnvironment('DATA_SOURCE', defaultValue: 'mock');
+  const dataSource = String.fromEnvironment(
+    'DATA_SOURCE',
+    defaultValue: 'mock',
+  );
 
   registerCondorHollowBones();
   usePathUrlStrategy();

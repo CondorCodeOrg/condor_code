@@ -61,7 +61,10 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
       builder: (context, child) => Stack(
         children: [
           if (child != null) child else const SizedBox.shrink(),
-          AppEnvBanner(environmentLabel: widget.config.bannerLabel, style: AppEnvBannerStyle.dark),
+          AppEnvBanner(
+            environmentLabel: widget.config.bannerLabel,
+            style: AppEnvBannerStyle.dark,
+          ),
         ],
       ),
     );
