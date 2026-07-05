@@ -15,4 +15,10 @@ class AppConfig {
   bool get isStaging => buildType == BuildType.staging;
 
   bool get isMock => dataSource == DataSource.mock;
+
+  String get bannerLabel => switch (buildType) {
+    BuildType.dev => 'DEV',
+    BuildType.staging => 'ST',
+    BuildType.prod => 'PR',
+  };
 }

@@ -1,15 +1,17 @@
 import 'dart:async';
 
+import 'package:condorcode_admin/config/app_config.dart';
+import 'package:condorcode_admin/generated/l10n/l10n.dart';
 import 'package:condorcode_admin/presentation/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ui_kit/theme/fade_only_page_transitions.dart';
-
-import 'package:condorcode_admin/generated/l10n/l10n.dart';
+import 'package:ui_kit/ui_kit.dart';
 
 class App extends ConsumerStatefulWidget {
-  const App({super.key});
+  final AppConfig config;
+
+  const App({super.key, required this.config});
 
   @override
   ConsumerState<App> createState() => _AppState();
@@ -56,7 +58,12 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
         S.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      builder: (context, child) => child ?? const SizedBox.shrink(),
+      builder: (context, child) => Stack(
+        children: [
+          if (child != null) child else const SizedBox.shrink(),
+          AppEnvBanner(environmentLabel: widget.config.bannerLabel, style: AppEnvBannerStyle.dark),
+        ],
+      ),
     );
   }
 }
