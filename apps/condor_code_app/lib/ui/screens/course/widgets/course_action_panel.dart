@@ -44,8 +44,9 @@ class CourseActionPanel extends StatelessWidget {
           )
         : null;
 
-    final onSummaryPressed =
-        lesson != null ? () => _openSummary(context, lesson!) : null;
+    final onSummaryPressed = lesson != null
+        ? () => _openSummary(context, lesson!)
+        : null;
 
     if (!expanded) {
       return Column(
@@ -174,7 +175,7 @@ class _SummaryButton extends StatelessWidget {
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.neon,
-          side: BorderSide(color: AppColors.neon),
+          side: const BorderSide(color: AppColors.neon),
           padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),

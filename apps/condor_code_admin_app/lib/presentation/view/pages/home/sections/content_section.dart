@@ -548,11 +548,9 @@ class _CourseDetailsState extends ConsumerState<_CourseDetails> {
 
   void _onLessonsReordered(List<Lesson> lessons, int oldIndex, int newIndex) {
     if (_isReorderingLessons || _isDeletingCourse) return;
-    var ni = newIndex;
-    if (ni > oldIndex) ni -= 1;
     final next = List<Lesson>.from(lessons);
     final item = next.removeAt(oldIndex);
-    next.insert(ni, item);
+    next.insert(newIndex, item);
     _persistLessonOrder(next);
   }
 
@@ -866,7 +864,7 @@ class _CourseDetailsState extends ConsumerState<_CourseDetails> {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   buildDefaultDragHandles: false,
-                  onReorder: _isDeletingCourse
+                  onReorderItem: _isDeletingCourse
                       ? (_, __) {}
                       : (oldIndex, newIndex) =>
                             _onLessonsReordered(lessons, oldIndex, newIndex),

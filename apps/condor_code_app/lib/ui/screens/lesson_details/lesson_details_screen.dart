@@ -34,6 +34,7 @@ class LessonDetailsScreen extends StatelessWidget {
     );
   }
 }
+
 class _SummaryButton extends StatelessWidget {
   final Lesson lesson;
 
@@ -51,18 +52,16 @@ class _SummaryButton extends StatelessWidget {
               AnalyticsPropertyName.buttonId: AnalyticsButtonId.summary,
               AnalyticsPropertyName.lessonId: lesson.id,
             });
-            context.push(
-              RouteConstants.lessonSummary,
-              extra: lesson,
-            );
+            context.push(RouteConstants.lessonSummary, extra: lesson);
           },
           style: AppButtonStyles.mainButtonStyle,
-          child: Text(localization.summary),   
+          child: Text(localization.summary),
         ),
       ),
     );
   }
 }
+
 class _CheckButton extends StatelessWidget {
   final Lesson lesson;
 
@@ -228,33 +227,35 @@ class _MainContent extends StatelessWidget {
     final state = this.state;
     return switch (state) {
       LessonDetailsLoading() => const Expanded(child: _LessonDetailsSkeleton()),
-     LessonDetailsLoaded() => Expanded(
-  child: Column(
-    children: [
-      TopNavigationBar(text: state.lesson.title),
-      Expanded(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Text(
-                state.lesson.topic,
-                style: AppTextStyles.h2.copyWith(color: AppColors.neon),
+      LessonDetailsLoaded() => Expanded(
+        child: Column(
+          children: [
+            TopNavigationBar(text: state.lesson.title),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Text(
+                      state.lesson.topic,
+                      style: AppTextStyles.h2.copyWith(color: AppColors.neon),
+                    ),
+                    _YouTubePlayer(youtubeUrl: state.lesson.youtubeUrl),
+                    state.lesson.isYouTubeLesson
+                        ? _WatchOnYouTubeTextButton(
+                            youtubeUrl: state.lesson.youtubeUrl,
+                          )
+                        : const SizedBox.shrink(),
+                    _DescriptionText(description: state.lesson.description),
+                    const SizedBox(height: 24),
+                    _SummaryButton(lesson: state.lesson),
+                  ],
+                ),
               ),
-              _YouTubePlayer(youtubeUrl: state.lesson.youtubeUrl),
-              state.lesson.isYouTubeLesson
-                  ? _WatchOnYouTubeTextButton(youtubeUrl: state.lesson.youtubeUrl)
-                  : const SizedBox.shrink(),
-              _DescriptionText(description: state.lesson.description),
-              const SizedBox(height: 24),
-              _SummaryButton(lesson: state.lesson),
-            ],
-          ),
+            ),
+            _CheckButton(lesson: state.lesson),
+          ],
         ),
       ),
-      _CheckButton(lesson: state.lesson),
-    ],
-  ),
-),
     };
   }
 }
