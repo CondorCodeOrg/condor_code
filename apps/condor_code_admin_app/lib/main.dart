@@ -41,7 +41,7 @@ void main() async {
   final providerManager = ProviderManager();
   providerManager.configureDependencies(config);
 
-  runApp(const ProviderScope(child: App()));
+  runApp(ProviderScope(child: App(config: config)));
 }
 
 FirebaseOptions _getFirebaseOptions(AppConfig config) {

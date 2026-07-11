@@ -7,6 +7,7 @@ final di = GetIt.instance;
 class ProviderManager {
   /// Configures dependencies in the provided [GetIt] instance.
   Future<void> configureDependencies(AppConfig config) async {
+    di.registerSingleton<AppConfig>(config);
     await _registerDataModule(di, config);
   }
 

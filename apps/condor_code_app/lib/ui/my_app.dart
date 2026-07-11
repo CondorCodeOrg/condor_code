@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ui_kit/ui_kit.dart'
-    show AppColors, fadeOnlyPageTransitionsTheme;
+    show AppColors, AppEnvBanner, fadeOnlyPageTransitionsTheme;
 
 class CondorCodeApp extends StatefulWidget {
   final AppConfig config;
@@ -39,6 +39,7 @@ class _CondorCodeAppState extends State<CondorCodeApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       locale: const Locale('uk'),
       supportedLocales: const [Locale('uk')],
       localizationsDelegates: const [
@@ -56,6 +57,12 @@ class _CondorCodeAppState extends State<CondorCodeApp> {
         pageTransitionsTheme: fadeOnlyPageTransitionsTheme(),
       ),
       routerConfig: getRouter(widget.config),
+      builder: (context, child) => Stack(
+        children: [
+          if (child != null) child,
+          AppEnvBanner(environmentLabel: widget.config.bannerLabel),
+        ],
+      ),
     );
   }
 
