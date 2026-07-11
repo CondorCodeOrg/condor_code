@@ -25,7 +25,7 @@ class TasksListWidget extends StatelessWidget {
     late final Widget content;
     if (isEmpty) {
       content = EmptyStateWidget(
-        imgUrl: 'assets/images/empty_courses.svg',
+        imgUrl: 'packages/ui_kit/assets/images/empty_courses.svg',
         title: localization.noTasksInformation,
         description: localization.informationWhereTasksLocated(lessonName),
       );

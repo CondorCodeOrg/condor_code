@@ -27,6 +27,12 @@ import 'package:domain/domain.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:condor_code/ui/screens/test_selection/test_selection_screen.dart';
+import 'package:condor_code/ui/screens/test_selection/test_selection_cubit.dart';
+import 'package:condor_code/ui/screens/test/test_screen.dart';
+import 'package:condor_code/ui/screens/result_screen.dart';
+import 'package:condor_code/ui/screens/heart_information_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -302,6 +308,81 @@ GoRouter getRouter(AppConfig appConfig) => GoRouter(
         final answer = state.extra as Answer;
         return TaskAnswerScreen(answer: answer);
       },
+    ),
+    GoRoute(
+      path: RouteConstants.tests, // /course/:courseId/:lessonId/tests
+      builder: (context, state) {
+        final courseId = state.pathParameters['courseId']!;
+        final lessonId = state.pathParameters['lessonId']!;
+        return BlocProvider(
+          create: (_) => di<TestSelectionCubit>(param1: lessonId),
+          child: TestSelectionScreen(courseId: courseId, lessonId: lessonId),
+        );
+      },
+      routes: [
+        GoRoute(
+          path: ':testId', // nested: /course/:courseId/:lessonId/tests/:testId
+          builder: (context, state) {
+            final courseId = state.pathParameters['courseId'] ?? '';
+            final lessonId = state.pathParameters['lessonId'] ?? '';
+            final testId = state.pathParameters['testId']!;
+            return TestScreen(
+              testId: testId,
+              lessonId: lessonId,
+              courseId: courseId,
+            );
+          },
+          routes: [
+            GoRoute(
+              path:
+                  'result', // nested: /course/:courseId/:lessonId/tests/:testId/result
+              redirect: (context, state) {
+                final queryParams = state.uri.queryParameters;
+                final seconds = queryParams['seconds'];
+                final correctAnswer = queryParams['correctAnswer'];
+                final inCorrectAnswer = queryParams['inCorrectAnswer'];
+
+                if (seconds == null ||
+                    correctAnswer == null ||
+                    inCorrectAnswer == null) {
+                  final courseId = state.pathParameters['courseId'] ?? '';
+                  final lessonId = state.pathParameters['lessonId'] ?? '';
+                  if (courseId.isNotEmpty && lessonId.isNotEmpty) {
+                    return '/course/$courseId/$lessonId';
+                  }
+                  return RouteConstants.courses;
+                }
+                return null;
+              },
+              builder: (context, state) {
+                final courseId = state.pathParameters['courseId'] ?? '';
+                final lessonId = state.pathParameters['lessonId'] ?? '';
+                final queryParams = state.uri.queryParameters;
+
+                final seconds =
+                    int.tryParse(queryParams['seconds'] ?? '0') ?? 0;
+                final correctAnswer =
+                    int.tryParse(queryParams['correctAnswer'] ?? '0') ?? 0;
+                final inCorrectAnswer =
+                    int.tryParse(queryParams['inCorrectAnswer'] ?? '0') ?? 0;
+
+                return ResultScreen(
+                  seconds: seconds,
+                  correctAnswer: correctAnswer,
+                  inCorrectAnswer: inCorrectAnswer,
+                  courseId: courseId,
+                  lessonId: lessonId,
+                );
+              },
+            ),
+            GoRoute(
+              path:
+                  'hearts', // nested: /course/:courseId/:lessonId/tests/:testId/hearts
+              builder: (context, state) => const HeartInformationScreen(),
+            ),
+          ],
+        ),
+      ],
     ),
   ],
 );

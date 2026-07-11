@@ -25,7 +25,7 @@ class LessonsListWidget extends StatelessWidget {
     late final Widget content;
     if (isEmpty) {
       content = EmptyStateWidget(
-        imgUrl: 'assets/images/empty_courses.svg',
+        imgUrl: 'packages/ui_kit/assets/images/empty_courses.svg',
         title: localization.noLessonsInformation,
         description: localization.informationWhereLessonsLocated(lessonName),
       );

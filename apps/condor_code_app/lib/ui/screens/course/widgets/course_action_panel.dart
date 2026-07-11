@@ -38,8 +38,20 @@ class CourseActionPanel extends StatelessWidget {
           )
         : null;
 
+    final onTakeTestsPressed = lessonId != null
+        ? () {
+            context.push('/course/$courseId/$lessonId/tests');
+          }
+        : null;
+
     if (!expanded) {
-      return _CheckKnowledgeButton(onPressed: onPressed);
+      return Row(
+        children: [
+          Expanded(child: _CheckKnowledgeButton(onPressed: onPressed)),
+          const SizedBox(width: 12),
+          Expanded(child: _TakeTestsButton(onPressed: onTakeTestsPressed)),
+        ],
+      );
     }
 
     return Container(
@@ -59,7 +71,13 @@ class CourseActionPanel extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: _CheckKnowledgeButton(onPressed: onPressed),
+              child: Column(
+                children: [
+                  _CheckKnowledgeButton(onPressed: onPressed),
+                  const SizedBox(height: 12),
+                  _TakeTestsButton(onPressed: onTakeTestsPressed),
+                ],
+              ),
             ),
             const Spacer(),
           ],
@@ -124,6 +142,37 @@ class _CheckKnowledgeButton extends StatelessWidget {
         label: Text(
           localization.checkMyKnowledge,
           style: AppTextStyles.body2.copyWith(fontWeight: FontWeight.w700),
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
+    );
+  }
+}
+
+class _TakeTestsButton extends StatelessWidget {
+  const _TakeTestsButton({required this.onPressed});
+
+  final VoidCallback? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton.icon(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.neon,
+          foregroundColor: AppColors.darkGrey800,
+          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+        icon: const Icon(Icons.assignment_turned_in_outlined, size: 20),
+        label: Text(
+          localization.takeTests,
+          style: AppTextStyles.body2.copyWith(fontWeight: FontWeight.w700),
+          overflow: TextOverflow.ellipsis,
         ),
       ),
     );
