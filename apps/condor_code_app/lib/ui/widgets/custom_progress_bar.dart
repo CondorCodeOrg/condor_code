@@ -23,7 +23,7 @@ class CustomProgressBar extends StatelessWidget {
     width: width,
     height: height,
     decoration: BoxDecoration(
-      color: AppColors.lightGrey,
+      color: context.colors.textSecondary,
       borderRadius: BorderRadius.circular(10),
     ),
     child: Stack(

@@ -215,5 +215,16 @@
   "stagingRoleUser": "User",
   "stagingRoleDeveloper": "Developer",
   "stagingRolePatron": "Patron",
-  "stagingRolePatronDeveloper": "Patron + Developer"
+  "stagingRolePatronDeveloper": "Patron + Developer",
+  "moveOn": "Move on",
+  "answerResultCorrect": "Everything is right, great!",
+  "answerResultIncorrect": "Wrong, correct answer: {number}.",
+  "@answerResultIncorrect": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "answerResultMistakesInfo": "Now we will work on the mistakes."
 }

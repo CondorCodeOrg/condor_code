@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:condorcode_admin/config/app_config.dart';
 import 'package:condorcode_admin/generated/l10n/l10n.dart';
+import 'package:condorcode_admin/presentation/logic/theme/theme_notifier.dart';
 import 'package:condorcode_admin/presentation/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -46,10 +47,15 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     final routerConfig = ref.watch(AppRouter.routerProvider);
+    final themeMode = ref.watch(themeNotifierProvider);
+
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      themeMode: ThemeMode.light,
-      theme: ThemeData(pageTransitionsTheme: fadeOnlyPageTransitionsTheme()),
+      theme: buildCondorTheme(Brightness.light),
+      darkTheme: buildCondorTheme(Brightness.dark),
+      themeMode: themeMode.toMaterial,
+      themeAnimationDuration: const Duration(milliseconds: 300),
+      themeAnimationCurve: Curves.easeInOut,
       routerConfig: routerConfig,
       localizationsDelegates: const [
         GlobalWidgetsLocalizations.delegate,

@@ -495,4 +495,18 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get stagingRolePatronDeveloper => 'Патрон + Розробник';
+
+  @override
+  String get moveOn => 'Далі';
+
+  @override
+  String get answerResultCorrect => 'Все правильно, чудово!';
+
+  @override
+  String answerResultIncorrect(int number) {
+    return 'Неправильно, правильна відповідь: $number.';
+  }
+
+  @override
+  String get answerResultMistakesInfo => 'Зараз попрацюємо над помилками.';
 }

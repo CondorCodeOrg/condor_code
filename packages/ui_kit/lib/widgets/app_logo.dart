@@ -23,6 +23,7 @@ class AppLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final content = Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -44,14 +45,14 @@ class AppLogo extends StatelessWidget {
               fontWeight: fontWeight,
               letterSpacing: letterSpacing,
             ),
-            children: const [
+            children: [
               TextSpan(
                 text: 'CONDOR_',
-                style: TextStyle(color: AppColors.white),
+                style: TextStyle(color: colors.textPrimary),
               ),
               TextSpan(
                 text: 'CODE',
-                style: TextStyle(color: AppColors.neon),
+                style: TextStyle(color: colors.accent),
               ),
             ],
           ),
@@ -62,10 +63,10 @@ class AppLogo extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 6),
                 child: Text(
                   label == AppLogoLabel.dev ? 'DEV' : 'STAGE',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.neon,
+                    color: colors.accent,
                   ),
                 ),
               ),

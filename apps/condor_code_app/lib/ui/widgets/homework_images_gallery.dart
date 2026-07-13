@@ -51,7 +51,7 @@ class HomeworkImagesGallery extends StatelessWidget {
   ) {
     return showDialog(
       context: context,
-      barrierColor: Colors.black.withValues(alpha: 0.7),
+      barrierColor: context.colors.scaffoldBackground.withValues(alpha: 0.7),
       barrierDismissible: true,
       builder: (context) {
         return FullScreenImagesDialog(
@@ -263,7 +263,7 @@ class _CloseIcon extends StatelessWidget {
       top: 0,
       right: 56,
       child: IconButton(
-        icon: const Icon(Icons.close, color: AppColors.white, size: 50),
+        icon: Icon(Icons.close, color: context.colors.textPrimary, size: 50),
         onPressed: () => Navigator.of(context).pop(),
       ),
     );
@@ -346,8 +346,8 @@ class _MobilePhoto extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.grey400, width: 1),
-        color: AppColors.grey800,
+        border: Border.all(color: context.colors.border, width: 1),
+        color: context.colors.scaffoldBackground,
       ),
       child: TaskFullScreenImage(
         imageUrl: imageUrl,
@@ -367,8 +367,8 @@ class _WebPhoto extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.grey400, width: 1),
-        color: AppColors.grey800,
+        border: Border.all(color: context.colors.border, width: 1),
+        color: context.colors.scaffoldBackground,
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
@@ -405,7 +405,7 @@ class _GalleryArrowButton extends StatelessWidget {
           child: Center(
             child: Icon(
               isLeft ? Icons.arrow_back_ios_new : Icons.arrow_forward_ios,
-              color: AppColors.white,
+              color: context.colors.textPrimary,
               size: 36,
             ),
           ),

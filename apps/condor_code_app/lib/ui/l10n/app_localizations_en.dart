@@ -496,4 +496,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stagingRolePatronDeveloper => 'Patron + Developer';
+
+  @override
+  String get moveOn => 'Move on';
+
+  @override
+  String get answerResultCorrect => 'Everything is right, great!';
+
+  @override
+  String answerResultIncorrect(int number) {
+    return 'Wrong, correct answer: $number.';
+  }
+
+  @override
+  String get answerResultMistakesInfo => 'Now we will work on the mistakes.';
 }

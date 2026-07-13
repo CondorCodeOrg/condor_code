@@ -1,3 +1,5 @@
+import 'package:domain/models/enums/theme_mode.dart';
+
 abstract class SharedPreferencesManager {
   Future<void> saveUserAvatarFilePath(String path);
 
@@ -15,4 +17,8 @@ abstract class SharedPreferencesManager {
 
   /// Staging-only: clear saved credentials on explicit sign-out.
   Future<void> clearStagingCredentials();
+
+  Future<void> saveThemeMode(ThemeMode mode);
+
+  Future<ThemeMode> getThemeMode();
 }
