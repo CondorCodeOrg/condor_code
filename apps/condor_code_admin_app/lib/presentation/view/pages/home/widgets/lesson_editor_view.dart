@@ -5,6 +5,7 @@ import 'package:condorcode_admin/utilities/context_extensions.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ui_kit/ui_kit.dart';
 
 class LessonEditorView extends ConsumerStatefulWidget {
   const LessonEditorView({
@@ -99,10 +100,10 @@ class _LessonEditorViewState extends ConsumerState<LessonEditorView> {
             Expanded(
               child: Text(
                 '$screenTitle • ${widget.course.name}',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+                  color: context.colors.textPrimary,
                 ),
               ),
             ),
@@ -111,23 +112,23 @@ class _LessonEditorViewState extends ConsumerState<LessonEditorView> {
         const SizedBox(height: 8),
         Text(
           context.strings.createLessonHint,
-          style: const TextStyle(color: Colors.grey),
+          style: TextStyle(color: context.colors.textSecondary),
         ),
         const SizedBox(height: 16),
         if (editorState.errorMessage != null) ...[
           Material(
-            color: Colors.red.shade50,
+            color: context.colors.alert.withValues(alpha: 0.12),
             borderRadius: BorderRadius.circular(12),
             child: Padding(
               padding: const EdgeInsets.all(12),
               child: Row(
                 children: [
-                  Icon(Icons.error_outline, color: Colors.red.shade700),
+                  Icon(Icons.error_outline, color: context.colors.alert),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       editorState.errorMessage!,
-                      style: TextStyle(color: Colors.red.shade900),
+                      style: TextStyle(color: context.colors.alert),
                     ),
                   ),
                 ],
@@ -166,7 +167,7 @@ class _LessonEditorViewState extends ConsumerState<LessonEditorView> {
                 contentPadding: EdgeInsets.zero,
                 title: Text(context.strings.youtubeLessonLabel),
                 value: lesson.isYouTubeLesson,
-                thumbColor: WidgetStateProperty.all(Colors.lightGreenAccent),
+                thumbColor: WidgetStateProperty.all(context.colors.accent),
                 onChanged: (value) {
                   _updateLesson((b) => b.copyWith(isYouTubeLesson: value));
                 },
@@ -242,8 +243,8 @@ class _LessonEditorViewState extends ConsumerState<LessonEditorView> {
         ElevatedButton(
           onPressed: editorState.isSaving ? null : _save,
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.lightGreenAccent,
-            foregroundColor: Colors.white,
+            backgroundColor: context.colors.accent,
+            foregroundColor: context.colors.accentForeground,
             padding: const EdgeInsets.symmetric(vertical: 20),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
@@ -251,12 +252,12 @@ class _LessonEditorViewState extends ConsumerState<LessonEditorView> {
             elevation: 0,
           ),
           child: editorState.isSaving
-              ? const SizedBox(
+              ? SizedBox(
                   height: 22,
                   width: 22,
                   child: CircularProgressIndicator(
                     strokeWidth: 2,
-                    color: Colors.white,
+                    color: context.colors.accentForeground,
                   ),
                 )
               : Text(
@@ -264,7 +265,6 @@ class _LessonEditorViewState extends ConsumerState<LessonEditorView> {
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
-                    color: Colors.black,
                   ),
                 ),
         ),
@@ -359,7 +359,7 @@ class _TaskEditorCardState extends State<_TaskEditorCard> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.grey.shade50,
+      color: context.colors.surface,
       borderRadius: BorderRadius.circular(12),
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -521,7 +521,7 @@ class _QuestionEditorCardState extends State<_QuestionEditorCard> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.grey.shade50,
+      color: context.colors.surface,
       borderRadius: BorderRadius.circular(12),
       child: Padding(
         padding: const EdgeInsets.all(16),

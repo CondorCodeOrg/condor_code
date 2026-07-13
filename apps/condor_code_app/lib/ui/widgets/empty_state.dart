@@ -35,10 +35,12 @@ class EmptyStateWidget extends StatelessWidget {
             title,
             style: kIsWeb
                 ? AppTextStyles.h1.copyWith(
-                    color: AppColors.lightGrey,
+                    color: context.colors.textSecondary,
                     fontSize: 24,
                   )
-                : AppTextStyles.h2.copyWith(color: AppColors.lightGrey),
+                : AppTextStyles.h2.copyWith(
+                    color: context.colors.textSecondary,
+                  ),
             textAlign: TextAlign.center,
           ),
         ),
@@ -46,7 +48,7 @@ class EmptyStateWidget extends StatelessWidget {
           description,
           style: kIsWeb
               ? AppTextStyles.h2.copyWith(
-                  color: AppColors.grey200,
+                  color: context.colors.textSecondary,
                   fontSize: 20,
                 )
               : AppTextStyles.inputHint,
@@ -58,7 +60,7 @@ class EmptyStateWidget extends StatelessWidget {
                 width: MediaQuery.of(context).size.width / 3,
                 height: MediaQuery.of(context).size.height / 12,
                 child: ElevatedButton(
-                  style: AppButtonStyles.mainButtonStyle.copyWith(),
+                  style: AppButtonStyles.mainButtonStyle(context).copyWith(),
                   onPressed: () => _onButtonPressed(context),
                   child: Text(localization.letUsKnow),
                 ),
@@ -66,7 +68,7 @@ class EmptyStateWidget extends StatelessWidget {
             : SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  style: AppButtonStyles.mainButtonStyle.copyWith(),
+                  style: AppButtonStyles.mainButtonStyle(context).copyWith(),
                   onPressed: () => _onButtonPressed(context),
                   child: Text(localization.letUsKnow),
                 ),

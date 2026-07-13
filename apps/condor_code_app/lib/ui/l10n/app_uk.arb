@@ -215,5 +215,16 @@
   "stagingRoleUser": "Користувач",
   "stagingRoleDeveloper": "Розробник",
   "stagingRolePatron": "Патрон",
-  "stagingRolePatronDeveloper": "Патрон + Розробник"
+  "stagingRolePatronDeveloper": "Патрон + Розробник",
+  "moveOn": "Далі",
+  "answerResultCorrect": "Все правильно, чудово!",
+  "answerResultIncorrect": "Неправильно, правильна відповідь: {number}.",
+  "@answerResultIncorrect": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "answerResultMistakesInfo": "Зараз попрацюємо над помилками."
 }

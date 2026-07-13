@@ -21,12 +21,14 @@ import 'package:condor_code/ui/screens/main/bloc/bottom_navigation_cubit.dart';
 import 'package:condor_code/ui/screens/main/bloc/snack_bar_cubit.dart';
 import 'package:condor_code/ui/screens/staging/only_testers_cubit/only_testers_cubit.dart';
 import 'package:condor_code/ui/screens/staging/staging_auth_cubit/staging_auth_cubit.dart';
+import 'package:condor_code/ui/theme/theme_cubit.dart';
 import 'package:condor_code/ui/screens/task_answer/task_answer_cubit/task_answer_cubit.dart';
 import 'package:condor_code/ui/screens/task_details/task_details_cubit/task_details_cubit.dart';
 import 'package:condor_code/ui/screens/tasks_list/tasks_list_cubit/tasks_list_cubit.dart';
 import 'package:data/data.dart' as data;
 import 'package:domain/domain.dart';
 import 'package:get_it/get_it.dart';
+import 'package:ui_kit/theme/theme_mode_service.dart';
 
 final di = GetIt.instance;
 
@@ -131,6 +133,12 @@ class ProviderManager {
         snackBarEventsProvider: di(),
         analytics: di(),
       ),
+    );
+    di.registerLazySingleton<ThemeModeService>(
+      () => ThemeModeService(di<ThemeModeRepository>()),
+    );
+    di.registerLazySingleton<ThemeCubit>(
+      () => ThemeCubit(service: di<ThemeModeService>()),
     );
     di.registerFactory<OnlyTestersCubit>(
       () => OnlyTestersCubit(

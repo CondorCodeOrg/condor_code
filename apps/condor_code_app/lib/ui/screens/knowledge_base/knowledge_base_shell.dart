@@ -16,11 +16,11 @@ class KnowledgeBaseShell extends StatelessWidget {
 
   final Widget child;
 
-  static final _railDecoration = BoxDecoration(
-    color: AppColors.grey800,
+  static BoxDecoration _railDecoration(BuildContext context) => BoxDecoration(
+    color: context.colors.scaffoldBackground,
     border: Border(
       right: BorderSide(
-        color: AppColors.grey400.withValues(alpha: 0.45),
+        color: context.colors.border.withValues(alpha: 0.45),
         width: 1,
       ),
     ),
@@ -29,13 +29,13 @@ class KnowledgeBaseShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color: AppColors.darkGrey800,
+      color: context.colors.textPrimary,
       child: SidePanelScreenWidget(
         sidePanelBuilder: (collapsed) => SidePanel(
           collapsed: collapsed,
           expandedWidth: 260,
           collapsedWidth: 72,
-          decoration: _railDecoration,
+          decoration: _railDecoration(context),
           safeArea: true,
           showHeaderDivider: false,
           child: _KnowledgeBaseSideRailContent(collapsed: collapsed),
@@ -127,10 +127,10 @@ class _KnowledgeBaseSideRailContent extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                color: AppColors.grey600,
+                color: context.colors.surface,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: AppColors.grey400.withValues(alpha: 0.6),
+                  color: context.colors.border.withValues(alpha: 0.6),
                 ),
               ),
               child: Column(
@@ -139,15 +139,15 @@ class _KnowledgeBaseSideRailContent extends StatelessWidget {
                   Text(
                     l10n.knowledgeBase,
                     style: AppTextStyles.caption1.copyWith(
-                      color: AppColors.grey200,
+                      color: context.colors.textSecondary,
                     ),
                   ),
                   const SizedBox(height: 10),
                   FilledButton(
                     onPressed: () {},
                     style: FilledButton.styleFrom(
-                      backgroundColor: AppColors.neon,
-                      foregroundColor: AppColors.darkGrey800,
+                      backgroundColor: context.colors.accent,
+                      foregroundColor: context.colors.textPrimary,
                       padding: const EdgeInsets.symmetric(vertical: 10),
                     ),
                     child: Text(
@@ -175,10 +175,10 @@ class _KnowledgeBaseSideRailContent extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(12),
                     alignment: Alignment.center,
-                    child: const Icon(
+                    child: Icon(
                       Icons.workspace_premium_outlined,
                       size: 22,
-                      color: AppColors.neon,
+                      color: context.colors.accent,
                     ),
                   ),
                 ),
@@ -226,8 +226,8 @@ class _ModernNavDivider extends StatelessWidget {
           gradient: LinearGradient(
             colors: [
               Colors.transparent,
-              AppColors.neon.withValues(alpha: 0.45),
-              AppColors.grey200.withValues(alpha: 0.55),
+              context.colors.accent.withValues(alpha: 0.45),
+              context.colors.textSecondary.withValues(alpha: 0.55),
               Colors.transparent,
             ],
             stops: const [0, 0.35, 0.65, 1],
@@ -272,7 +272,9 @@ class _SideNavItem extends StatelessWidget {
         child: Icon(
           icon,
           size: 22,
-          color: selected ? AppColors.neon : AppColors.grey200,
+          color: selected
+              ? context.colors.accent
+              : context.colors.textSecondary,
         ),
       );
     }
@@ -283,7 +285,9 @@ class _SideNavItem extends StatelessWidget {
         leading: Icon(
           icon,
           size: 22,
-          color: selected ? AppColors.neon : AppColors.grey200,
+          color: selected
+              ? context.colors.accent
+              : context.colors.textSecondary,
         ),
         title: label,
         isSelected: selected,

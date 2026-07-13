@@ -39,7 +39,8 @@ void main() async {
   }
 
   final providerManager = ProviderManager();
-  providerManager.configureDependencies(config);
+  await providerManager.configureDependencies(config);
+  await di<ThemeModeService>().load();
 
   runApp(ProviderScope(child: App(config: config)));
 }

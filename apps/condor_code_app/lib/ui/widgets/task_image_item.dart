@@ -23,7 +23,7 @@ class TaskImageItem extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: AppColors.grey400, width: 1),
+          border: Border.all(color: context.colors.border, width: 1),
           borderRadius: BorderRadius.circular(12),
         ),
         child: switch (imageType) {

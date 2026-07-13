@@ -1,10 +1,12 @@
 import 'package:data/data_sources/shared_pref/shared_preferences_manager.dart';
+import 'package:domain/models/enums/theme_mode.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesManagerImpl implements SharedPreferencesManager {
   static const _avatarKey = 'userAvatarFilePath';
   static const _stagingEmailKey = 'stagingEmail';
   static const _stagingPasswordKey = 'stagingPassword';
+  static const _themeModeKey = 'themeMode';
 
   @override
   Future<void> saveUserAvatarFilePath(String path) async {
@@ -43,5 +45,21 @@ class SharedPreferencesManagerImpl implements SharedPreferencesManager {
     final prefs = SharedPreferencesAsync();
     await prefs.remove(_stagingEmailKey);
     await prefs.remove(_stagingPasswordKey);
+  }
+
+  @override
+  Future<void> saveThemeMode(ThemeMode mode) async {
+    final prefs = SharedPreferencesAsync();
+    await prefs.setString(_themeModeKey, mode.name);
+  }
+
+  @override
+  Future<ThemeMode> getThemeMode() async {
+    final prefs = SharedPreferencesAsync();
+    final saved = await prefs.getString(_themeModeKey);
+    return ThemeMode.values.firstWhere(
+      (mode) => mode.name == saved,
+      orElse: () => ThemeMode.dark,
+    );
   }
 }

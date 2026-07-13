@@ -20,7 +20,7 @@ class TasksListScreen extends StatelessWidget {
       child: BlocBuilder<TasksListCubit, TasksListState>(
         builder: (BuildContext context, TasksListState state) {
           return Scaffold(
-            backgroundColor: AppColors.grey800,
+            backgroundColor: context.colors.scaffoldBackground,
             body: SafeArea(
               child: Column(
                 children: [

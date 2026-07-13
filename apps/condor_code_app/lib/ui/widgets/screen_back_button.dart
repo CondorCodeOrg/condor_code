@@ -21,12 +21,12 @@ class ScreenBackButton extends StatelessWidget {
             width: 34,
             height: 34,
             decoration: BoxDecoration(
-              color: AppColors.grey400.withValues(alpha: 0.25),
+              color: context.colors.border.withValues(alpha: 0.25),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.arrow_back_rounded,
-              color: AppColors.grey200,
+              color: context.colors.textSecondary,
               size: 20,
             ),
           ),

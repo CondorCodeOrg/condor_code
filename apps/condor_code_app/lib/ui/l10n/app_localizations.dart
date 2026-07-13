@@ -967,6 +967,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Patron + Developer'**
   String get stagingRolePatronDeveloper;
+
+  /// No description provided for @moveOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Move on'**
+  String get moveOn;
+
+  /// No description provided for @answerResultCorrect.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything is right, great!'**
+  String get answerResultCorrect;
+
+  /// No description provided for @answerResultIncorrect.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong, correct answer: {number}.'**
+  String answerResultIncorrect(int number);
+
+  /// No description provided for @answerResultMistakesInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Now we will work on the mistakes.'**
+  String get answerResultMistakesInfo;
 }
 
 class _AppLocalizationsDelegate

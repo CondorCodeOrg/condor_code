@@ -199,9 +199,11 @@ class _KnowledgeCheckHeader extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
       decoration: BoxDecoration(
-        color: AppColors.grey600.withValues(alpha: 0.35),
+        color: context.colors.surface.withValues(alpha: 0.35),
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.grey400.withValues(alpha: 0.45)),
+        border: Border.all(
+          color: context.colors.border.withValues(alpha: 0.45),
+        ),
       ),
       child: Row(
         children: [
@@ -219,12 +221,12 @@ class _KnowledgeCheckHeader extends StatelessWidget {
             width: 34,
             height: 34,
             decoration: BoxDecoration(
-              color: AppColors.neon.withValues(alpha: 0.15),
+              color: context.colors.accent.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.quiz_rounded,
-              color: AppColors.neon,
+              color: context.colors.accent,
               size: 20,
             ),
           ),
@@ -233,7 +235,7 @@ class _KnowledgeCheckHeader extends StatelessWidget {
             child: Text(
               title,
               style: AppTextStyles.h2.copyWith(
-                color: AppColors.white,
+                color: context.colors.textPrimary,
                 fontWeight: FontWeight.w800,
               ),
             ),

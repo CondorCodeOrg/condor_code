@@ -114,6 +114,6 @@ class _QuestionPageState extends State<QuestionPage> {
   }
 
   ButtonStyle getButtonStyle({required bool isSelected}) => isSelected
-      ? AppButtonStyles.selectedTestButton
-      : AppButtonStyles.defaultTestButton;
+      ? AppButtonStyles.selectedTestButton(context)
+      : AppButtonStyles.defaultTestButton(context);
 }

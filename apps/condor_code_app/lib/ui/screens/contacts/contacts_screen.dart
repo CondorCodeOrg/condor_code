@@ -158,7 +158,7 @@ class ContactsScreen extends StatelessWidget {
                                   Text(
                                     localization.subscribeToUs,
                                     style: AppTextStyles.body1.copyWith(
-                                      color: AppColors.white,
+                                      color: context.colors.textPrimary,
                                     ),
                                     textAlign: TextAlign.center,
                                   ),
@@ -265,18 +265,20 @@ class _ContactRowBlockState extends State<_ContactRowBlock> {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
-          color: AppColors.grey800.withValues(alpha: _hover ? 0.98 : 0.88),
+          color: context.colors.scaffoldBackground.withValues(
+            alpha: _hover ? 0.98 : 0.88,
+          ),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: _hover
-                ? AppColors.neon.withValues(alpha: 0.45)
-                : AppColors.grey400.withValues(alpha: 0.35),
+                ? context.colors.accent.withValues(alpha: 0.45)
+                : context.colors.border.withValues(alpha: 0.35),
             width: _hover ? 1.2 : 0.8,
           ),
           boxShadow: _hover
               ? [
                   BoxShadow(
-                    color: AppColors.neon.withValues(alpha: 0.06),
+                    color: context.colors.accent.withValues(alpha: 0.06),
                     blurRadius: 20,
                     offset: const Offset(0, 6),
                   ),
@@ -303,7 +305,7 @@ class _ContactRowBlockState extends State<_ContactRowBlock> {
               Text(
                 b.title,
                 style: AppTextStyles.h2.copyWith(
-                  color: AppColors.neon,
+                  color: context.colors.accent,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -311,7 +313,7 @@ class _ContactRowBlockState extends State<_ContactRowBlock> {
               Text(
                 b.description,
                 style: AppTextStyles.body3.copyWith(
-                  color: AppColors.white,
+                  color: context.colors.textPrimary,
                   height: 1.5,
                 ),
               ),
@@ -335,7 +337,7 @@ class _ContactRowBlockState extends State<_ContactRowBlock> {
         Text(
           b.title,
           style: AppTextStyles.h2.copyWith(
-            color: AppColors.neon,
+            color: context.colors.accent,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -343,7 +345,7 @@ class _ContactRowBlockState extends State<_ContactRowBlock> {
         Text(
           b.description,
           style: AppTextStyles.body3.copyWith(
-            color: AppColors.white,
+            color: context.colors.textPrimary,
             height: 1.5,
           ),
         ),
@@ -368,10 +370,10 @@ class _ContactRowBlockState extends State<_ContactRowBlock> {
       height: 52,
       width: 52,
       decoration: BoxDecoration(
-        color: AppColors.grey600,
+        color: context.colors.surface,
         borderRadius: BorderRadius.circular(14),
       ),
-      child: Icon(icon, color: AppColors.neon, size: 28),
+      child: Icon(icon, color: context.colors.accent, size: 28),
     );
   }
 
@@ -387,15 +389,15 @@ class _ContactRowBlockState extends State<_ContactRowBlock> {
             Text(
               localization.goTo,
               style: AppTextStyles.button.copyWith(
-                color: AppColors.neon,
+                color: context.colors.accent,
                 fontSize: 14,
               ),
             ),
             const SizedBox(width: 8),
-            const Icon(
+            Icon(
               Icons.arrow_forward_rounded,
               size: 20,
-              color: AppColors.neon,
+              color: context.colors.accent,
             ),
           ],
         ),
@@ -482,7 +484,7 @@ class _HorizontalVideoCardState extends State<_HorizontalVideoCard>
                           end: Alignment.bottomCenter,
                           colors: [
                             Colors.transparent,
-                            AppColors.darkGrey800.withValues(alpha: 0.5),
+                            context.colors.textPrimary.withValues(alpha: 0.5),
                           ],
                         ),
                       ),
@@ -491,12 +493,12 @@ class _HorizontalVideoCardState extends State<_HorizontalVideoCard>
                       child: Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: AppColors.neon.withValues(alpha: 0.2),
+                          color: context.colors.accent.withValues(alpha: 0.2),
                           shape: BoxShape.circle,
                         ),
-                        child: const Icon(
+                        child: Icon(
                           Icons.play_arrow_rounded,
-                          color: AppColors.neon,
+                          color: context.colors.accent,
                           size: 48,
                         ),
                       ),
@@ -529,10 +531,10 @@ class _HorizontalVideoCardState extends State<_HorizontalVideoCard>
 
   Widget _placeholder() {
     return Container(
-      color: AppColors.grey600,
-      child: const Icon(
+      color: context.colors.surface,
+      child: Icon(
         Icons.videocam_rounded,
-        color: AppColors.grey400,
+        color: context.colors.border,
         size: 56,
       ),
     );
@@ -560,26 +562,26 @@ class _HorizontalVideoPlaceholder extends StatelessWidget {
               width: width,
               height: height,
               decoration: BoxDecoration(
-                color: AppColors.grey600,
+                color: context.colors.surface,
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
-                  color: AppColors.grey400.withValues(alpha: 0.5),
+                  color: context.colors.border.withValues(alpha: 0.5),
                   width: 1,
                 ),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.video_library_rounded,
-                    color: AppColors.grey400,
+                    color: context.colors.border,
                     size: 48,
                   ),
                   const SizedBox(height: 12),
                   Text(
                     localization.addVideoPlaceholder,
                     style: AppTextStyles.caption1.copyWith(
-                      color: AppColors.white,
+                      color: context.colors.textPrimary,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -628,18 +630,20 @@ class _ContactCardState extends State<_ContactCard> {
             duration: const Duration(milliseconds: 180),
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: AppColors.grey800.withValues(alpha: _hover ? 1 : 0.85),
+              color: context.colors.scaffoldBackground.withValues(
+                alpha: _hover ? 1 : 0.85,
+              ),
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
                 color: _hover
-                    ? AppColors.neon.withValues(alpha: 0.5)
-                    : AppColors.grey400.withValues(alpha: 0.4),
+                    ? context.colors.accent.withValues(alpha: 0.5)
+                    : context.colors.border.withValues(alpha: 0.4),
                 width: _hover ? 1.2 : 0.8,
               ),
               boxShadow: _hover
                   ? [
                       BoxShadow(
-                        color: AppColors.neon.withValues(alpha: 0.08),
+                        color: context.colors.accent.withValues(alpha: 0.08),
                         blurRadius: 16,
                         offset: const Offset(0, 4),
                       ),
@@ -654,16 +658,16 @@ class _ContactCardState extends State<_ContactCard> {
                   height: 52,
                   width: 52,
                   decoration: BoxDecoration(
-                    color: AppColors.grey600,
+                    color: context.colors.surface,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Icon(e.icon, color: AppColors.neon, size: 28),
+                  child: Icon(e.icon, color: context.colors.accent, size: 28),
                 ),
                 const SizedBox(height: 14),
                 Text(
                   e.title,
                   style: AppTextStyles.body2.copyWith(
-                    color: AppColors.neon,
+                    color: context.colors.accent,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -671,7 +675,7 @@ class _ContactCardState extends State<_ContactCard> {
                 Text(
                   e.description,
                   style: AppTextStyles.body3.copyWith(
-                    color: AppColors.white,
+                    color: context.colors.textPrimary,
                     height: 1.45,
                   ),
                 ),
@@ -682,15 +686,15 @@ class _ContactCardState extends State<_ContactCard> {
                     Text(
                       localization.goTo,
                       style: AppTextStyles.button.copyWith(
-                        color: AppColors.neon,
+                        color: context.colors.accent,
                         fontSize: 13,
                       ),
                     ),
                     const SizedBox(width: 6),
-                    const Icon(
+                    Icon(
                       Icons.arrow_forward_rounded,
                       size: 18,
-                      color: AppColors.neon,
+                      color: context.colors.accent,
                     ),
                   ],
                 ),
@@ -708,15 +712,24 @@ class _ContactsBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(painter: _WavyContactsPainter(), size: Size.infinite);
+    return CustomPaint(
+      painter: _WavyContactsPainter(
+        waveColor: context.colors.surface.withValues(alpha: 0.08),
+      ),
+      size: Size.infinite,
+    );
   }
 }
 
 class _WavyContactsPainter extends CustomPainter {
+  const _WavyContactsPainter({required this.waveColor});
+
+  final Color waveColor;
+
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = AppColors.grey600.withValues(alpha: 0.08)
+      ..color = waveColor
       ..strokeWidth = 1
       ..style = PaintingStyle.stroke;
 
