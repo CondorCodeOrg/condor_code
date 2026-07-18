@@ -215,7 +215,7 @@
   "stagingRoleUser": "Користувач",
   "stagingRoleDeveloper": "Розробник",
   "stagingRolePatron": "Патрон",
-  "stagingRolePatronDeveloper": "Патрон + Розробник"
+  "stagingRolePatronDeveloper": "Патрон + Розробник",
   "leaveFeedback": "Залишити відгук",
   "feedbackTitle": "Залишити відгук",
   "feedbackLabel": "Ваш відгук *",

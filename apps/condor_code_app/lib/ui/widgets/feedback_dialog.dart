@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:condor_code/ui/l10n/app_localizations.dart';
 import 'dart:io';
 import 'package:condor_code/ui/screens/feedback/feedback_cubit.dart';
+import 'package:condor_code/ui/screens/feedback/feedback_state.dart';
 
 class FeedbackDialog extends StatefulWidget {
   const FeedbackDialog({super.key});

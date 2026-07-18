@@ -329,7 +329,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeIntro.
   ///
   /// In en, this message translates to:
-  /// **'You are on the Condor Code website — a platform created by students of individual mentor Oleh Savenko. Here you can learn Flutter and Dart, find lessons and homework with answers, and check your results.'**
+  /// **'You are on the Condor Code website — a platform created by students of individual mentor Oleh Savenko. Here you can learn Flutter and Dart, find lessons and homework with answers[...]'**
   String get homeIntro;
 
   /// No description provided for @featureLessonsTitle.
@@ -967,6 +967,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Patron + Developer'**
   String get stagingRolePatronDeveloper;
+
+  /// No description provided for @leaveFeedback.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave feedback'**
+  String get leaveFeedback;
+
+  /// No description provided for @feedbackTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave feedback'**
+  String get feedbackTitle;
+
+  /// No description provided for @feedbackLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Your feedback *'**
+  String get feedbackLabel;
+
+  /// No description provided for @feedbackHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Write your feedback'**
+  String get feedbackHint;
+
+  /// No description provided for @feedbackEmailLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get feedbackEmailLabel;
+
+  /// No description provided for @feedbackEmailHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email'**
+  String get feedbackEmailHint;
+
+  /// No description provided for @feedbackSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit'**
+  String get feedbackSubmit;
+
+  /// No description provided for @feedbackCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get feedbackCancel;
+
+  /// No description provided for @feedbackSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you for your feedback!'**
+  String get feedbackSuccess;
+
+  /// No description provided for @feedbackError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to send feedback. Try again.'**
+  String get feedbackError;
+
+  /// No description provided for @feedbackRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required'**
+  String get feedbackRequired;
+
+  /// No description provided for @feedbackMinLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Feedback must contain at least 10 characters'**
+  String get feedbackMinLength;
+
+  /// No description provided for @feedbackInvalidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid email address'**
+  String get feedbackInvalidEmail;
 }
 
 class _AppLocalizationsDelegate

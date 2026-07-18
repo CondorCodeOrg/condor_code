@@ -495,4 +495,44 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get stagingRolePatronDeveloper => 'Патрон + Розробник';
+
+  @override
+  String get leaveFeedback => 'Залишити відгук';
+
+  @override
+  String get feedbackTitle => 'Залишити відгук';
+
+  @override
+  String get feedbackLabel => 'Ваш відгук *';
+
+  @override
+  String get feedbackHint => 'Напишіть ваш відгук';
+
+  @override
+  String get feedbackEmailLabel => 'Електронна пошта';
+
+  @override
+  String get feedbackEmailHint => 'Введіть вашу пошту';
+
+  @override
+  String get feedbackSubmit => 'Надіслати';
+
+  @override
+  String get feedbackCancel => 'Скасувати';
+
+  @override
+  String get feedbackSuccess => 'Дякуємо за ваш відгук!';
+
+  @override
+  String get feedbackError => 'Не вдалося надіслати відгук. Спробуйте ще раз.';
+
+  @override
+  String get feedbackRequired => 'Це поле обов\'язкове';
+
+  @override
+  String get feedbackMinLength => 'Відгук має містити щонайменше 10 символів';
+
+  @override
+  String get feedbackInvalidEmail =>
+      'Введіть коректну адресу електронної пошти';
 }
