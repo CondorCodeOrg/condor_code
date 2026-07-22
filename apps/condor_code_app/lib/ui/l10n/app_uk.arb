@@ -226,5 +226,8 @@
       }
     }
   },
-  "answerResultMistakesInfo": "Зараз попрацюємо над помилками."
+  "answerResultMistakesInfo": "Зараз попрацюємо над помилками.",
+  "languageSwitcherTooltip": "Мова",
+  "languageEnglish": "English",
+  "languageUkrainian": "Українська"
 }

@@ -12,6 +12,8 @@ export 'theme/condor_theme_context.dart';
 export 'theme/fade_only_page_transitions.dart';
 export 'theme/theme_mode_extensions.dart';
 export 'theme/theme_mode_service.dart';
+export 'locale/app_locale_extensions.dart';
+export 'locale/locale_service.dart';
 export 'utils/go_router_utils.dart';
 export 'utils/regex_utils.dart';
 export 'utils/validators.dart';

@@ -8,6 +8,7 @@ import 'package:condor_code/ui/screens/staging/staging_auth_cubit/staging_auth_c
 import 'package:condor_code/ui/screens/staging/staging_auth_cubit/staging_auth_state.dart';
 import 'package:condor_code/ui/widgets/app_drawer.dart';
 import 'package:condor_code/ui/widgets/app_theme_toggle_button.dart';
+import 'package:condor_code/ui/widgets/language_switcher.dart';
 import 'package:condor_code/ui/widgets/nav_button.dart';
 import 'package:condor_code/ui/widgets/snack_bar/snack_bar_producer_widget.dart';
 import 'package:domain/domain.dart';
@@ -67,20 +68,27 @@ class _MainScreenState extends State<MainScreen> {
                   SnackBarProducerWidget(child: widget.navigationShell),
                   if (!isDesktop && !isKnowledgeCheck)
                     SafeArea(
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Builder(
-                          builder: (context) => Padding(
-                            padding: const EdgeInsets.only(left: 18, top: 12),
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.menu,
-                                color: context.colors.textPrimary,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          left: 18,
+                          right: 12,
+                          top: 12,
+                        ),
+                        child: Row(
+                          children: [
+                            Builder(
+                              builder: (context) => IconButton(
+                                icon: Icon(
+                                  Icons.menu,
+                                  color: context.colors.textPrimary,
+                                ),
+                                onPressed: () =>
+                                    Scaffold.of(context).openDrawer(),
                               ),
-                              onPressed: () =>
-                                  Scaffold.of(context).openDrawer(),
                             ),
-                          ),
+                            const Spacer(),
+                            const LanguageSwitcher(compact: true),
+                          ],
                         ),
                       ),
                     ),
@@ -160,6 +168,7 @@ class _TopNavigationBar extends StatelessWidget {
               ],
             ),
           ),
+          const LanguageSwitcher(),
           if (di<AppConfig>().isStaging)
             BlocBuilder<StagingAuthCubit, StagingAuthState>(
               builder: (context, state) {

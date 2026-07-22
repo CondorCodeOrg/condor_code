@@ -40,6 +40,7 @@ void main() async {
   final providerManager = ProviderManager();
   await providerManager.configureDependencies(config);
   await di<ThemeModeService>().load();
+  await di<LocaleService>().load();
 
   runApp(CondorCodeApp(config: config));
 }

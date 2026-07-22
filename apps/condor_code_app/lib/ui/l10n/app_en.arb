@@ -226,5 +226,8 @@
       }
     }
   },
-  "answerResultMistakesInfo": "Now we will work on the mistakes."
+  "answerResultMistakesInfo": "Now we will work on the mistakes.",
+  "languageSwitcherTooltip": "Language",
+  "languageEnglish": "English",
+  "languageUkrainian": "Ukrainian"
 }

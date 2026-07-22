@@ -3,6 +3,7 @@ import 'package:condorcode_admin/di/provider_manager.dart';
 import 'package:condorcode_admin/presentation/logic/auth/login_email_notifier/login_with_email_notifier.dart';
 import 'package:condorcode_admin/presentation/logic/auth/social_auth_notifier/social_auth_notifier.dart';
 import 'package:condorcode_admin/presentation/router/router.dart';
+import 'package:condorcode_admin/presentation/view/common/widgets/admin_language_switcher.dart';
 import 'package:condorcode_admin/presentation/view/common/widgets/admin_theme_toggle_button.dart';
 import 'package:condorcode_admin/presentation/view/common/widgets/text_field.dart';
 import 'package:condorcode_admin/utilities/context_extensions.dart';
@@ -212,7 +213,17 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               ),
             ],
           ),
-          const Positioned(top: 8, right: 8, child: AdminThemeToggleButton()),
+          const Positioned(
+            top: 8,
+            right: 8,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                AdminLanguageSwitcher(compact: true),
+                AdminThemeToggleButton(),
+              ],
+            ),
+          ),
         ],
       ),
     );

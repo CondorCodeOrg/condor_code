@@ -1,5 +1,6 @@
 import 'package:condorcode_admin/presentation/logic/auth/sign_up_notifier/sign_up_notifier.dart';
 import 'package:condorcode_admin/presentation/router/router.dart';
+import 'package:condorcode_admin/presentation/view/common/widgets/admin_language_switcher.dart';
 import 'package:condorcode_admin/presentation/view/common/widgets/admin_theme_toggle_button.dart';
 import 'package:condorcode_admin/presentation/view/common/widgets/text_field.dart';
 import 'package:condorcode_admin/utilities/context_extensions.dart';
@@ -185,7 +186,17 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
               ),
             ),
           ),
-          const Positioned(top: 8, right: 8, child: AdminThemeToggleButton()),
+          const Positioned(
+            top: 8,
+            right: 8,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                AdminLanguageSwitcher(compact: true),
+                AdminThemeToggleButton(),
+              ],
+            ),
+          ),
         ],
       ),
     );

@@ -8,3 +8,4 @@ export 'question_repository.dart';
 export 'tasks_repository.dart';
 export 'tester_access_repository.dart';
 export 'theme_mode_repository.dart';
+export 'locale_repository.dart';

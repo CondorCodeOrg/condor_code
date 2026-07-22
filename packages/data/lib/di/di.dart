@@ -14,6 +14,7 @@ import 'package:data/repository/question_repository_impl.dart';
 import 'package:data/repository/tasks_repository_impl.dart';
 import 'package:data/repository/tester_access_repository_impl.dart';
 import 'package:data/repository/theme_mode_impl.dart';
+import 'package:data/repository/locale_repository_impl.dart';
 import 'package:domain/domain.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -71,5 +72,8 @@ void _registerRepositories(GetIt di) {
   );
   di.registerLazySingleton<ThemeModeRepository>(
     () => ThemeModeRepositoryImpl(di<SharedPreferencesManager>()),
+  );
+  di.registerLazySingleton<LocaleRepository>(
+    () => LocaleRepositoryImpl(di<SharedPreferencesManager>()),
   );
 }

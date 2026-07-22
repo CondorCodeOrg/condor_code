@@ -509,4 +509,13 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get answerResultMistakesInfo => 'Зараз попрацюємо над помилками.';
+
+  @override
+  String get languageSwitcherTooltip => 'Мова';
+
+  @override
+  String get languageEnglish => 'English';
+
+  @override
+  String get languageUkrainian => 'Українська';
 }

@@ -7,6 +7,7 @@ class SharedPreferencesManagerImpl implements SharedPreferencesManager {
   static const _stagingEmailKey = 'stagingEmail';
   static const _stagingPasswordKey = 'stagingPassword';
   static const _themeModeKey = 'themeMode';
+  static const _localeLanguageCodeKey = 'localeLanguageCode';
 
   @override
   Future<void> saveUserAvatarFilePath(String path) async {
@@ -61,5 +62,17 @@ class SharedPreferencesManagerImpl implements SharedPreferencesManager {
       (mode) => mode.name == saved,
       orElse: () => ThemeMode.dark,
     );
+  }
+
+  @override
+  Future<void> saveLocaleLanguageCode(String languageCode) async {
+    final prefs = SharedPreferencesAsync();
+    await prefs.setString(_localeLanguageCodeKey, languageCode);
+  }
+
+  @override
+  Future<String?> getLocaleLanguageCode() async {
+    final prefs = SharedPreferencesAsync();
+    return prefs.getString(_localeLanguageCodeKey);
   }
 }
