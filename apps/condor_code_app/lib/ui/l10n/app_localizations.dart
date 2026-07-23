@@ -991,6 +991,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Now we will work on the mistakes.'**
   String get answerResultMistakesInfo;
+
+  /// No description provided for @languageSwitcherTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get languageSwitcherTooltip;
+
+  /// No description provided for @languageEnglish.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get languageEnglish;
+
+  /// No description provided for @languageUkrainian.
+  ///
+  /// In en, this message translates to:
+  /// **'Ukrainian'**
+  String get languageUkrainian;
 }
 
 class _AppLocalizationsDelegate

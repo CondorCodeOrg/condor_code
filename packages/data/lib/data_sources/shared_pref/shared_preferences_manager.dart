@@ -21,4 +21,10 @@ abstract class SharedPreferencesManager {
   Future<void> saveThemeMode(ThemeMode mode);
 
   Future<ThemeMode> getThemeMode();
+
+  /// Persists the UI language code (`en` or `uk`).
+  Future<void> saveLocaleLanguageCode(String languageCode);
+
+  /// Returns the saved UI language code, or null if the user has not chosen one.
+  Future<String?> getLocaleLanguageCode();
 }

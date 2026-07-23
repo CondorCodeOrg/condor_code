@@ -2,6 +2,7 @@ import 'package:condorcode_admin/config/app_config.dart';
 import 'package:data/data.dart' as data;
 import 'package:domain/domain.dart';
 import 'package:get_it/get_it.dart';
+import 'package:ui_kit/locale/locale_service.dart';
 import 'package:ui_kit/theme/theme_mode_service.dart';
 
 final di = GetIt.instance;
@@ -17,6 +18,9 @@ class ProviderManager {
   void _registerServices(GetIt di) {
     di.registerLazySingleton<ThemeModeService>(
       () => ThemeModeService(di<ThemeModeRepository>()),
+    );
+    di.registerLazySingleton<LocaleService>(
+      () => LocaleService(di<LocaleRepository>()),
     );
   }
 

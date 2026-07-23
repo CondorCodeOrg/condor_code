@@ -1073,13 +1073,41 @@ class S {
       args: [createCourseAction],
     );
   }
+
+  /// `Мова`
+  String get languageSwitcherTooltip {
+    return Intl.message(
+      'Мова',
+      name: 'languageSwitcherTooltip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `English`
+  String get languageEnglish {
+    return Intl.message('English', name: 'languageEnglish', desc: '', args: []);
+  }
+
+  /// `Українська`
+  String get languageUkrainian {
+    return Intl.message(
+      'Українська',
+      name: 'languageUkrainian',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
   const AppLocalizationDelegate();
 
   List<Locale> get supportedLocales {
-    return const <Locale>[Locale.fromSubtags(languageCode: 'uk')];
+    return const <Locale>[
+      Locale.fromSubtags(languageCode: 'uk'),
+      Locale.fromSubtags(languageCode: 'en'),
+    ];
   }
 
   @override

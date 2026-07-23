@@ -1,4 +1,5 @@
 import 'package:condorcode_admin/presentation/enums/admin_section.dart';
+import 'package:condorcode_admin/presentation/view/common/widgets/admin_language_switcher.dart';
 import 'package:condorcode_admin/presentation/view/common/widgets/admin_theme_toggle_button.dart';
 import 'package:condorcode_admin/utilities/context_extensions.dart';
 import 'package:flutter/material.dart';
@@ -59,9 +60,15 @@ class SideMenu extends StatelessWidget {
             onTap: () => onSelected(AdminSection.profile),
           ),
           const Spacer(),
-          const Align(
-            alignment: Alignment.centerRight,
-            child: AdminThemeToggleButton(),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                AdminLanguageSwitcher(compact: true),
+                AdminThemeToggleButton(),
+              ],
+            ),
           ),
           const SizedBox(height: 16),
         ],

@@ -17,6 +17,7 @@ import 'package:condor_code/ui/screens/lesson/bloc/questions/questions_bloc.dart
 import 'package:condor_code/ui/screens/lesson/provider/lesson_screen_events_provider.dart';
 import 'package:condor_code/ui/screens/lesson_details/lesson_details_cubit/lesson_details_cubit.dart';
 import 'package:condor_code/ui/screens/lessons_list/lessons_list_cubit/lessons_list_cubit.dart';
+import 'package:condor_code/ui/screens/locale/locale_cubit/locale_cubit.dart';
 import 'package:condor_code/ui/screens/main/bloc/bottom_navigation_cubit.dart';
 import 'package:condor_code/ui/screens/main/bloc/snack_bar_cubit.dart';
 import 'package:condor_code/ui/screens/staging/only_testers_cubit/only_testers_cubit.dart';
@@ -28,6 +29,7 @@ import 'package:condor_code/ui/screens/tasks_list/tasks_list_cubit/tasks_list_cu
 import 'package:data/data.dart' as data;
 import 'package:domain/domain.dart';
 import 'package:get_it/get_it.dart';
+import 'package:ui_kit/locale/locale_service.dart';
 import 'package:ui_kit/theme/theme_mode_service.dart';
 
 final di = GetIt.instance;
@@ -125,6 +127,12 @@ class ProviderManager {
         snackBarEventsProvider: di(),
         initialTaskId: initialTaskId,
       ),
+    );
+    di.registerLazySingleton<LocaleService>(
+      () => LocaleService(di<LocaleRepository>()),
+    );
+    di.registerLazySingleton<LocaleCubit>(
+      () => LocaleCubit(service: di<LocaleService>()),
     );
     di.registerLazySingleton<StagingAuthCubit>(
       () => StagingAuthCubit(
