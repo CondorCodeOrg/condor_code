@@ -17,6 +17,8 @@ export 'statistic.dart';
 export 'task_item.dart';
 export 'task.dart';
 export 'user.dart';
+export 'enums/theme_mode.dart';
+export 'enums/app_locale.dart';
 export 'enums/user_role.dart';
 export 'tester_access_request.dart';
 export 'enums/tester_access_request_status.dart';

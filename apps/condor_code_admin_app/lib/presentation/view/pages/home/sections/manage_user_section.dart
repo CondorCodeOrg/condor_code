@@ -5,6 +5,7 @@ import 'package:domain/models/tester_access_request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:ui_kit/ui_kit.dart';
 
 class ManageUserSection extends ConsumerStatefulWidget {
   const ManageUserSection({super.key});
@@ -33,16 +34,16 @@ class _ManageUserSectionState extends ConsumerState<ManageUserSection> {
       children: [
         Text(
           context.strings.usersTitle,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.bold,
-            color: Colors.black87,
+            color: context.colors.textPrimary,
           ),
         ),
         const SizedBox(height: 8),
         Text(
           context.strings.usersSubtitle,
-          style: const TextStyle(color: Colors.grey),
+          style: TextStyle(color: context.colors.textSecondary),
         ),
         const SizedBox(height: 16),
         SectionCard(
@@ -52,7 +53,7 @@ class _ManageUserSectionState extends ConsumerState<ManageUserSection> {
             children: [
               Text(
                 context.strings.testerRequestsSubtitle,
-                style: const TextStyle(color: Colors.grey),
+                style: TextStyle(color: context.colors.textSecondary),
               ),
               const SizedBox(height: 16),
               if (state.isLoading)
@@ -60,12 +61,12 @@ class _ManageUserSectionState extends ConsumerState<ManageUserSection> {
               else if (state.errorMessage != null)
                 Text(
                   state.errorMessage!,
-                  style: const TextStyle(color: Colors.red),
+                  style: TextStyle(color: context.colors.alert),
                 )
               else if (state.requests.isEmpty)
                 Text(
                   context.strings.testerRequestsEmpty,
-                  style: const TextStyle(color: Colors.grey),
+                  style: TextStyle(color: context.colors.textSecondary),
                 )
               else
                 ListView.separated(
@@ -116,7 +117,7 @@ class _TesterRequestTile extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey.shade300),
+        border: Border.all(color: context.colors.border),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -129,7 +130,7 @@ class _TesterRequestTile extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             '${context.strings.testerRequestsCreatedAt}: $createdAt',
-            style: const TextStyle(color: Colors.grey, fontSize: 13),
+            style: TextStyle(color: context.colors.textSecondary, fontSize: 13),
           ),
           const SizedBox(height: 12),
           Row(
@@ -138,8 +139,8 @@ class _TesterRequestTile extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: isProcessing ? null : onApprove,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.lightGreenAccent,
-                    foregroundColor: Colors.black87,
+                    backgroundColor: context.colors.accent,
+                    foregroundColor: context.colors.accentForeground,
                   ),
                   child: Text(context.strings.testerRequestsApprove),
                 ),

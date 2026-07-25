@@ -46,7 +46,7 @@ class _KnowledgeBaseRoadmapViewState extends State<_KnowledgeBaseRoadmapView> {
     final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: AppColors.darkGrey800,
+      backgroundColor: context.colors.textPrimary,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 22),
@@ -69,12 +69,11 @@ class _KnowledgeBaseRoadmapViewState extends State<_KnowledgeBaseRoadmapView> {
                                 name: CondorHollowSkeletonIds
                                     .roadmapMainFullScreen,
                                 loading: true,
-                                color: AppColors.grey600.withValues(
+                                color: context.colors.surface.withValues(
                                   alpha: 0.35,
                                 ),
-                                highlightColor: AppColors.neon.withValues(
-                                  alpha: 0.12,
-                                ),
+                                highlightColor: context.colors.accent
+                                    .withValues(alpha: 0.12),
                                 child: const SizedBox.shrink(),
                               ),
                             );
@@ -84,8 +83,10 @@ class _KnowledgeBaseRoadmapViewState extends State<_KnowledgeBaseRoadmapView> {
                               name: CondorHollowSkeletonIds
                                   .roadmapMainMiddleScreen,
                               loading: true,
-                              color: AppColors.grey600.withValues(alpha: 0.35),
-                              highlightColor: AppColors.neon.withValues(
+                              color: context.colors.surface.withValues(
+                                alpha: 0.35,
+                              ),
+                              highlightColor: context.colors.accent.withValues(
                                 alpha: 0.12,
                               ),
                               child: const SizedBox.shrink(),
@@ -99,7 +100,7 @@ class _KnowledgeBaseRoadmapViewState extends State<_KnowledgeBaseRoadmapView> {
                             child: Text(
                               l10n.knowledgeBaseRoadmapPlaceholder,
                               style: AppTextStyles.body2.copyWith(
-                                color: AppColors.grey200,
+                                color: context.colors.textSecondary,
                               ),
                             ),
                           );
@@ -293,9 +294,11 @@ class _RoadmapGraphState extends State<_RoadmapGraph> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.grey600.withValues(alpha: 0.42),
+        color: context.colors.surface.withValues(alpha: 0.42),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.grey400.withValues(alpha: 0.55)),
+        border: Border.all(
+          color: context.colors.border.withValues(alpha: 0.55),
+        ),
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
@@ -359,16 +362,18 @@ class _RoadmapGraphState extends State<_RoadmapGraph> {
                   child: Tooltip(
                     message: 'Reset zoom',
                     child: Material(
-                      color: AppColors.grey800.withValues(alpha: 0.88),
+                      color: context.colors.scaffoldBackground.withValues(
+                        alpha: 0.88,
+                      ),
                       shape: const CircleBorder(),
                       child: InkWell(
                         customBorder: const CircleBorder(),
                         onTap: _resetZoom,
-                        child: const Padding(
-                          padding: EdgeInsets.all(8),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8),
                           child: Icon(
                             Icons.center_focus_strong_rounded,
-                            color: AppColors.neon,
+                            color: context.colors.accent,
                             size: 20,
                           ),
                         ),
@@ -404,9 +409,11 @@ class _RoadmapInfoPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.grey600.withValues(alpha: 0.42),
+        color: context.colors.surface.withValues(alpha: 0.42),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.grey400.withValues(alpha: 0.55)),
+        border: Border.all(
+          color: context.colors.border.withValues(alpha: 0.55),
+        ),
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
@@ -422,12 +429,12 @@ class _RoadmapInfoPanel extends StatelessWidget {
                   child: Text(
                     node.title,
                     style: AppTextStyles.body1.copyWith(
-                      color: AppColors.white,
+                      color: context.colors.textPrimary,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
-                const Divider(color: AppColors.grey600, height: 1),
+                Divider(color: context.colors.surface, height: 1),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(14, 10, 14, 12),
@@ -455,9 +462,11 @@ class _RoadmapHeader extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       decoration: BoxDecoration(
-        color: AppColors.grey600.withValues(alpha: 0.35),
+        color: context.colors.surface.withValues(alpha: 0.35),
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.grey400.withValues(alpha: 0.45)),
+        border: Border.all(
+          color: context.colors.border.withValues(alpha: 0.45),
+        ),
       ),
       child: Row(
         children: [
@@ -465,12 +474,12 @@ class _RoadmapHeader extends StatelessWidget {
             width: 34,
             height: 34,
             decoration: BoxDecoration(
-              color: AppColors.neon.withValues(alpha: 0.15),
+              color: context.colors.accent.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.account_tree_rounded,
-              color: AppColors.neon,
+              color: context.colors.accent,
             ),
           ),
           const SizedBox(width: 12),
@@ -481,7 +490,7 @@ class _RoadmapHeader extends StatelessWidget {
                 Text(
                   l10n.knowledgeBaseNavRoadmap,
                   style: AppTextStyles.body1.copyWith(
-                    color: AppColors.white,
+                    color: context.colors.textPrimary,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -489,7 +498,7 @@ class _RoadmapHeader extends StatelessWidget {
                 Text(
                   l10n.knowledgeBaseRoadmapGraphHint,
                   style: AppTextStyles.caption1.copyWith(
-                    color: AppColors.grey200,
+                    color: context.colors.textSecondary,
                   ),
                 ),
               ],
@@ -583,8 +592,8 @@ class _RoadmapNodeCard extends StatelessWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                AppColors.grey600.withValues(alpha: 0.96),
-                AppColors.grey800,
+                context.colors.surface.withValues(alpha: 0.96),
+                context.colors.scaffoldBackground,
               ],
             ),
             borderRadius: BorderRadius.circular(14),
@@ -617,7 +626,7 @@ class _RoadmapNodeCard extends StatelessWidget {
                           : 1,
                       overflow: TextOverflow.ellipsis,
                       style: titleStyle.copyWith(
-                        color: AppColors.white,
+                        color: context.colors.textPrimary,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -630,7 +639,7 @@ class _RoadmapNodeCard extends StatelessWidget {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.caption1.copyWith(
-                  color: AppColors.grey200,
+                  color: context.colors.textSecondary,
                   height: 1.35,
                 ),
               ),

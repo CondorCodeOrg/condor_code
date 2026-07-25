@@ -99,7 +99,13 @@
   "goToYouTubeChannel": "Перейти на YouTube-канал",
   "footerDescription": "Condor Code — платформа для вивчення Flutter та Dart від учнів ментора Олега Савенка.",
   "copyright": "© {year} Condor Code. Усі права захищені.",
-  "@copyright": {"placeholders": {"year": {"type": "int"}}},
+  "@copyright": {
+    "placeholders": {
+      "year": {
+        "type": "int"
+      }
+    }
+  },
   "mentorName": "Олег Савенко",
   "youtubeBlockDesc": "\"Подкаст з Нуля\", корисні відео та додаткові уроки — основний контент тут.",
   "telegramChannel": "— канал",
@@ -228,5 +234,19 @@
   "feedbackError": "Не вдалося надіслати відгук. Спробуйте ще раз.",
   "feedbackRequired": "Це поле обов'язкове",
   "feedbackMinLength": "Відгук має містити щонайменше 10 символів",
-  "feedbackInvalidEmail": "Введіть коректну адресу електронної пошти"
+  "feedbackInvalidEmail": "Введіть коректну адресу електронної пошти",
+  "moveOn": "Далі",
+  "answerResultCorrect": "Все правильно, чудово!",
+  "answerResultIncorrect": "Неправильно, правильна відповідь: {number}.",
+  "@answerResultIncorrect": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "answerResultMistakesInfo": "Зараз попрацюємо над помилками.",
+  "languageSwitcherTooltip": "Мова",
+  "languageEnglish": "English",
+  "languageUkrainian": "Українська"
 }

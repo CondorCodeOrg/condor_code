@@ -99,7 +99,13 @@
   "goToYouTubeChannel": "Go to YouTube channel",
   "footerDescription": "Condor Code — a platform for learning Flutter and Dart from students of mentor Oleh Savenko.",
   "copyright": "© {year} Condor Code. All rights reserved.",
-  "@copyright": {"placeholders": {"year": {"type": "int"}}},
+  "@copyright": {
+    "placeholders": {
+      "year": {
+        "type": "int"
+      }
+    }
+  },
   "mentorName": "Oleh Savenko",
   "youtubeBlockDesc": "Flutter and Dart video lessons, tutorials and code reviews — main content is here.",
   "telegramChannel": "— channel",
@@ -228,5 +234,19 @@
   "feedbackError": "Failed to send feedback. Try again.",
   "feedbackRequired": "This field is required",
   "feedbackMinLength": "Feedback must contain at least 10 characters",
-  "feedbackInvalidEmail": "Enter a valid email address"
+  "feedbackInvalidEmail": "Enter a valid email address",
+  "moveOn": "Move on",
+  "answerResultCorrect": "Everything is right, great!",
+  "answerResultIncorrect": "Wrong, correct answer: {number}.",
+  "@answerResultIncorrect": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "answerResultMistakesInfo": "Now we will work on the mistakes.",
+  "languageSwitcherTooltip": "Language",
+  "languageEnglish": "English",
+  "languageUkrainian": "Ukrainian"
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ui_kit/ui_kit.dart';
 
 class SectionCard extends StatelessWidget {
   const SectionCard({
@@ -17,9 +18,9 @@ class SectionCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.colors.popupSurface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.black12),
+        border: Border.all(color: context.colors.border),
         boxShadow: const [
           BoxShadow(
             color: Color(0x0D000000),
@@ -37,10 +38,10 @@ class SectionCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   title,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black87,
+                    color: context.colors.textPrimary,
                   ),
                 ),
               ),

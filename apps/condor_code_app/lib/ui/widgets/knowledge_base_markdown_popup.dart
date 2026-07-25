@@ -36,9 +36,11 @@ class KnowledgeBaseMarkdownPopup extends StatelessWidget {
         constraints: BoxConstraints(maxWidth: maxWidth, maxHeight: 680),
         child: Container(
           decoration: BoxDecoration(
-            color: AppColors.grey800,
+            color: context.colors.scaffoldBackground,
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: AppColors.grey400.withValues(alpha: 0.6)),
+            border: Border.all(
+              color: context.colors.border.withValues(alpha: 0.6),
+            ),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -51,7 +53,7 @@ class KnowledgeBaseMarkdownPopup extends StatelessWidget {
                       child: Text(
                         title,
                         style: AppTextStyles.body1.copyWith(
-                          color: AppColors.white,
+                          color: context.colors.textPrimary,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -59,13 +61,13 @@ class KnowledgeBaseMarkdownPopup extends StatelessWidget {
                     IconButton(
                       onPressed: () => Navigator.of(context).pop(),
                       icon: const Icon(Icons.close_rounded),
-                      color: AppColors.grey200,
+                      color: context.colors.textSecondary,
                       tooltip: 'Close',
                     ),
                   ],
                 ),
               ),
-              const Divider(color: AppColors.grey600, height: 1),
+              Divider(color: context.colors.surface, height: 1),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),

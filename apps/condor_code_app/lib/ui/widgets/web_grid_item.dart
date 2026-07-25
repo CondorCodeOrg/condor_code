@@ -44,10 +44,14 @@ class WebGridItemState extends State<WebGridItem> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
-                    color: isHovered ? AppColors.neonBlur : AppColors.grey400,
+                    color: isHovered
+                        ? context.colors.accent
+                        : context.colors.border,
                     width: 0.8,
                   ),
-                  color: isHovered ? AppColors.grey600 : Colors.transparent,
+                  color: isHovered
+                      ? context.colors.surface
+                      : Colors.transparent,
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -72,14 +76,14 @@ class WebGridItemState extends State<WebGridItem> {
                       widget.name,
                       textAlign: TextAlign.center,
                       style: AppTextStyles.body1.copyWith(
-                        color: AppColors.white,
+                        color: context.colors.textPrimary,
                       ),
                     ),
                     const SizedBox(height: 6),
                     Text(
                       widget.description,
                       style: AppTextStyles.body2.copyWith(
-                        color: AppColors.lightGrey,
+                        color: context.colors.textSecondary,
                       ),
                     ),
                   ],
@@ -101,7 +105,7 @@ class _CustomSkeleton extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.grey400, width: 0.8),
+        border: Border.all(color: context.colors.border, width: 0.8),
         color: Colors.transparent,
       ),
       child:
@@ -121,7 +125,9 @@ class _CustomSkeleton extends StatelessWidget {
               Text(
                 '              ',
                 textAlign: TextAlign.center,
-                style: AppTextStyles.body1.copyWith(color: AppColors.white),
+                style: AppTextStyles.body1.copyWith(
+                  color: context.colors.textPrimary,
+                ),
               ),
               const SizedBox(height: 6),
               Padding(
@@ -129,7 +135,7 @@ class _CustomSkeleton extends StatelessWidget {
                 child: Text(
                   '                               ',
                   style: AppTextStyles.body2.copyWith(
-                    color: AppColors.lightGrey,
+                    color: context.colors.textSecondary,
                   ),
                 ),
               ),
@@ -139,7 +145,7 @@ class _CustomSkeleton extends StatelessWidget {
             redact: true,
             configuration: RedactedConfiguration(
               animationDuration: const Duration(milliseconds: 1500),
-              redactedColor: AppColors.grey200,
+              redactedColor: context.colors.textSecondary,
             ),
           ),
     );
@@ -150,9 +156,13 @@ class _ImagePlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.grey400.withValues(alpha: 0.2),
+      color: context.colors.border.withValues(alpha: 0.2),
       alignment: Alignment.center,
-      child: Icon(Icons.image_outlined, size: 28, color: Colors.grey.shade500),
+      child: Icon(
+        Icons.image_outlined,
+        size: 28,
+        color: context.colors.textSecondary,
+      ),
     );
   }
 }

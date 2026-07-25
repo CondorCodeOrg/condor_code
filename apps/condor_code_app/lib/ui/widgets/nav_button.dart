@@ -41,7 +41,9 @@ class _NavButtonState extends State<NavButton> {
           child: Text(
             widget.title,
             style: AppTextStyles.body1.copyWith(
-              color: highlight ? AppColors.white : AppColors.grey200,
+              color: highlight
+                  ? context.colors.textPrimary
+                  : context.colors.textSecondary,
             ),
           ),
         ),

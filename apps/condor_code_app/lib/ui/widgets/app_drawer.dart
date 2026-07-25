@@ -2,6 +2,7 @@ import 'package:condor_code/config/app_config.dart';
 import 'package:condor_code/di/provider_manager.dart';
 import 'package:condor_code/ui/navigation/route_constants.dart';
 import 'package:condor_code/ui/utils/localization.dart';
+import 'package:condor_code/ui/widgets/app_theme_toggle_button.dart';
 import 'package:condor_code/ui/widgets/drawer_item.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: AppColors.grey800,
+      backgroundColor: context.colors.scaffoldBackground,
       child: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,7 +28,6 @@ class AppDrawer extends StatelessWidget {
                 fontSize: 17,
                 onTap: kIsWeb
                     ? () {
-                        // TODO rename to home
                         context.go(RouteConstants.home);
                         Navigator.pop(context);
                       }
@@ -58,14 +58,12 @@ class AppDrawer extends StatelessWidget {
                 Navigator.pop(context);
               },
             ),
-            // TODO: uncomment when knowledge base is ready
-            // DrawerItem(
-            //   title: localization.knowledgeBase,
-            //   onTap: () {
-            //     context.go(RouteConstants.knowledgeBase);
-            //     Navigator.pop(context);
-            //   },
-            // ),
+            const Spacer(),
+            const Align(
+              alignment: Alignment.centerRight,
+              child: AppThemeToggleButton(),
+            ),
+            const SizedBox(height: 16),
           ],
         ),
       ),

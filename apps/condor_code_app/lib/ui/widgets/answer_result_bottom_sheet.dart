@@ -1,80 +1,99 @@
-import 'package:ui_kit/ui_kit.dart';
+import 'package:condor_code/ui/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:ui_kit/ui_kit.dart';
+
+enum _AnswerResultVariant { correct, incorrect, mistakesInformation }
 
 class AnswerResultBottomSheet extends StatelessWidget {
   final int? rightAnswerNumber;
-  final Color textColor;
-  final Color backgroundColor;
-  final String text;
   final VoidCallback onButtonPressed;
-  final ButtonStyle? buttonStyle;
-  final IconData? icon;
+  final _AnswerResultVariant _variant;
 
-  AnswerResultBottomSheet.correct({super.key, required this.onButtonPressed})
-    : //  backgroundColor = Colors.green.shade300,
-      backgroundColor = AppColors.grey600,
-      text = 'Everything is right, great!',
-      buttonStyle = AppButtonStyles.mainButtonStyle,
-      rightAnswerNumber = null,
-      textColor = AppColors.neon,
-      icon = Icons.gpp_good_outlined;
+  const AnswerResultBottomSheet.correct({
+    super.key,
+    required this.onButtonPressed,
+  }) : rightAnswerNumber = null,
+       _variant = _AnswerResultVariant.correct;
 
-  AnswerResultBottomSheet.incorrect({
+  const AnswerResultBottomSheet.incorrect({
     super.key,
     required this.onButtonPressed,
     this.rightAnswerNumber,
-  }) : //    backgroundColor = Colors.red.shade200,
-       backgroundColor = AppColors.grey600,
-       text = 'Wrong, correct answer:  $rightAnswerNumber.',
-       buttonStyle = AppButtonStyles.mainButtonStyle,
-       textColor = AppColors.alertRed,
-       icon = Icons.gpp_bad_outlined;
+  }) : _variant = _AnswerResultVariant.incorrect;
 
-  AnswerResultBottomSheet.mistakesInformation({
+  const AnswerResultBottomSheet.mistakesInformation({
     super.key,
     required this.onButtonPressed,
-  }) : backgroundColor = Colors.blue.shade300,
-       text = 'Now we will work on the mistakes.',
-       buttonStyle = AppButtonStyles.mainButtonStyle,
-       rightAnswerNumber = null,
-       textColor = Colors.indigo.shade900,
-       icon = null;
+  }) : rightAnswerNumber = null,
+       _variant = _AnswerResultVariant.mistakesInformation;
 
   @override
-  Widget build(BuildContext context) => Container(
-    color: backgroundColor,
-    height: 150,
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: Icon(size: 30, icon, color: textColor),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(6),
-                child: Text(
-                  text,
-                  style: AppTextStyles.body2.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: textColor,
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
+    final (
+      Color backgroundColor,
+      Color textColor,
+      String text,
+      ButtonStyle buttonStyle,
+      IconData? icon,
+    ) = switch (_variant) {
+      _AnswerResultVariant.correct => (
+        context.colors.surface,
+        context.colors.accent,
+        l10n.answerResultCorrect,
+        AppButtonStyles.mainButtonStyle(context),
+        Icons.gpp_good_outlined,
+      ),
+      _AnswerResultVariant.incorrect => (
+        context.colors.surface,
+        context.colors.alert,
+        l10n.answerResultIncorrect(rightAnswerNumber ?? 0),
+        AppButtonStyles.mainButtonStyle(context),
+        Icons.gpp_bad_outlined,
+      ),
+      _AnswerResultVariant.mistakesInformation => (
+        Colors.blue.shade300,
+        Colors.indigo.shade900,
+        l10n.answerResultMistakesInfo,
+        AppButtonStyles.mainButtonStyle(context),
+        null,
+      ),
+    };
+
+    return Container(
+      color: backgroundColor,
+      height: 150,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Icon(size: 30, icon, color: textColor),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(6),
+                  child: Text(
+                    text,
+                    style: AppTextStyles.body2.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: textColor,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-        ElevatedButton(
-          onPressed: () {
-            onButtonPressed();
-          },
-          style: buttonStyle,
-          child: const Text('MOVE ON', style: AppTextStyles.button),
-        ),
-      ],
-    ),
-  );
+            ],
+          ),
+          ElevatedButton(
+            onPressed: onButtonPressed,
+            style: buttonStyle,
+            child: Text(l10n.moveOn, style: AppTextStyles.button),
+          ),
+        ],
+      ),
+    );
+  }
 }

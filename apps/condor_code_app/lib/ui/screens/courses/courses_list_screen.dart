@@ -69,7 +69,7 @@ class _CoursesListScreenState extends State<CoursesListScreen>
                       ),
                     ),
                   ),
-                  const Divider(height: 0.6, color: AppColors.grey600),
+                  Divider(height: 0.6, color: context.colors.surface),
                 ],
               ),
             ),

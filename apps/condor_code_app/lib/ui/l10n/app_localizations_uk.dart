@@ -132,7 +132,7 @@ class AppLocalizationsUk extends AppLocalizations {
   String get tiktok => 'ТікТок';
 
   @override
-  String get welcomeTo => 'Друзі, всіх вітаємо на ';
+  String get welcomeTo => 'Друзі, всех вітаємо на ';
 
   @override
   String get condorCodeBrand => 'CondorCode!';
@@ -535,4 +535,27 @@ class AppLocalizationsUk extends AppLocalizations {
   @override
   String get feedbackInvalidEmail =>
       'Введіть коректну адресу електронної пошти';
+
+  @override
+  String get moveOn => 'Далі';
+
+  @override
+  String get answerResultCorrect => 'Все правильно, чудово!';
+
+  @override
+  String answerResultIncorrect(int number) {
+    return 'Неправильно, правильна відповідь: $number.';
+  }
+
+  @override
+  String get answerResultMistakesInfo => 'Зараз попрацюємо над помилками.';
+
+  @override
+  String get languageSwitcherTooltip => 'Мова';
+
+  @override
+  String get languageEnglish => 'English';
+
+  @override
+  String get languageUkrainian => 'Українська';
 }

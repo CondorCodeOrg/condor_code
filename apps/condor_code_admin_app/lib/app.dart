@@ -1,15 +1,19 @@
 import 'dart:async';
 
+import 'package:condorcode_admin/config/app_config.dart';
+import 'package:condorcode_admin/generated/l10n/l10n.dart';
+import 'package:condorcode_admin/presentation/logic/locale/locale_notifier.dart';
+import 'package:condorcode_admin/presentation/logic/theme/theme_notifier.dart';
 import 'package:condorcode_admin/presentation/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ui_kit/theme/fade_only_page_transitions.dart';
-
-import 'package:condorcode_admin/generated/l10n/l10n.dart';
+import 'package:ui_kit/ui_kit.dart';
 
 class App extends ConsumerStatefulWidget {
-  const App({super.key});
+  final AppConfig config;
+
+  const App({super.key, required this.config});
 
   @override
   ConsumerState<App> createState() => _AppState();
@@ -44,10 +48,17 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     final routerConfig = ref.watch(AppRouter.routerProvider);
+    final themeMode = ref.watch(themeNotifierProvider);
+    final appLocale = ref.watch(localeNotifierProvider);
+
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      themeMode: ThemeMode.light,
-      theme: ThemeData(pageTransitionsTheme: fadeOnlyPageTransitionsTheme()),
+      locale: appLocale.toFlutter,
+      theme: buildCondorTheme(Brightness.light),
+      darkTheme: buildCondorTheme(Brightness.dark),
+      themeMode: themeMode.toMaterial,
+      themeAnimationDuration: const Duration(milliseconds: 300),
+      themeAnimationCurve: Curves.easeInOut,
       routerConfig: routerConfig,
       localizationsDelegates: const [
         GlobalWidgetsLocalizations.delegate,
@@ -56,7 +67,15 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
         S.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      builder: (context, child) => child ?? const SizedBox.shrink(),
+      builder: (context, child) => Stack(
+        children: [
+          if (child != null) child else const SizedBox.shrink(),
+          AppEnvBanner(
+            environmentLabel: widget.config.bannerLabel,
+            style: AppEnvBannerStyle.dark,
+          ),
+        ],
+      ),
     );
   }
 }

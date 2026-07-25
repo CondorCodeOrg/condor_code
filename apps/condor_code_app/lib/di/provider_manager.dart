@@ -17,10 +17,12 @@ import 'package:condor_code/ui/screens/lesson/bloc/questions/questions_bloc.dart
 import 'package:condor_code/ui/screens/lesson/provider/lesson_screen_events_provider.dart';
 import 'package:condor_code/ui/screens/lesson_details/lesson_details_cubit/lesson_details_cubit.dart';
 import 'package:condor_code/ui/screens/lessons_list/lessons_list_cubit/lessons_list_cubit.dart';
+import 'package:condor_code/ui/screens/locale/locale_cubit/locale_cubit.dart';
 import 'package:condor_code/ui/screens/main/bloc/bottom_navigation_cubit.dart';
 import 'package:condor_code/ui/screens/main/bloc/snack_bar_cubit.dart';
 import 'package:condor_code/ui/screens/staging/only_testers_cubit/only_testers_cubit.dart';
 import 'package:condor_code/ui/screens/staging/staging_auth_cubit/staging_auth_cubit.dart';
+import 'package:condor_code/ui/theme/theme_cubit.dart';
 import 'package:condor_code/ui/screens/task_answer/task_answer_cubit/task_answer_cubit.dart';
 import 'package:condor_code/ui/screens/task_details/task_details_cubit/task_details_cubit.dart';
 import 'package:condor_code/ui/screens/tasks_list/tasks_list_cubit/tasks_list_cubit.dart';
@@ -32,6 +34,8 @@ import 'package:data/data_sources/remote/feedback_remote_data_source.dart';
 import 'package:data/repository/feedback_repository_impl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:condor_code/ui/screens/feedback/feedback_cubit.dart';
+import 'package:ui_kit/locale/locale_service.dart';
+import 'package:ui_kit/theme/theme_mode_service.dart';
 
 final di = GetIt.instance;
 
@@ -151,6 +155,12 @@ class ProviderManager {
         initialTaskId: initialTaskId,
       ),
     );
+    di.registerLazySingleton<LocaleService>(
+      () => LocaleService(di<LocaleRepository>()),
+    );
+    di.registerLazySingleton<LocaleCubit>(
+      () => LocaleCubit(service: di<LocaleService>()),
+    );
     di.registerLazySingleton<StagingAuthCubit>(
       () => StagingAuthCubit(
         authRepository: di(),
@@ -158,6 +168,12 @@ class ProviderManager {
         snackBarEventsProvider: di(),
         analytics: di(),
       ),
+    );
+    di.registerLazySingleton<ThemeModeService>(
+      () => ThemeModeService(di<ThemeModeRepository>()),
+    );
+    di.registerLazySingleton<ThemeCubit>(
+      () => ThemeCubit(service: di<ThemeModeService>()),
     );
     di.registerFactory<OnlyTestersCubit>(
       () => OnlyTestersCubit(

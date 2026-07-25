@@ -39,9 +39,11 @@ void main() async {
   }
 
   final providerManager = ProviderManager();
-  providerManager.configureDependencies(config);
+  await providerManager.configureDependencies(config);
+  await di<ThemeModeService>().load();
+  await di<LocaleService>().load();
 
-  runApp(const ProviderScope(child: App()));
+  runApp(ProviderScope(child: App(config: config)));
 }
 
 FirebaseOptions _getFirebaseOptions(AppConfig config) {

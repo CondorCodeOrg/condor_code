@@ -118,6 +118,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "incorrectEmailOrPassword": MessageLookupByLibrary.simpleMessage(
       "Неправильный email або пароль",
     ),
+    "languageEnglish": MessageLookupByLibrary.simpleMessage("English"),
+    "languageSwitcherTooltip": MessageLookupByLibrary.simpleMessage("Мова"),
+    "languageUkrainian": MessageLookupByLibrary.simpleMessage("Українська"),
     "lessonBundleSaved": MessageLookupByLibrary.simpleMessage(
       "Урок і матеріали збережено",
     ),

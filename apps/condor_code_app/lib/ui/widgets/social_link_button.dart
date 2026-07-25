@@ -10,12 +10,12 @@ class SocialLinkButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppColors.grey800,
+      color: context.colors.scaffoldBackground,
       borderRadius: BorderRadius.circular(16),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.grey400, width: 0.8),
+          border: Border.all(color: context.colors.border, width: 0.8),
         ),
         child: InkWell(
           borderRadius: BorderRadius.circular(16),
@@ -27,11 +27,13 @@ class SocialLinkButton extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(link.icon, color: AppColors.white, size: 28),
+                Icon(link.icon, color: context.colors.textPrimary, size: 28),
                 const SizedBox(width: 12),
                 Text(
                   link.name,
-                  style: AppTextStyles.h1.copyWith(color: AppColors.white),
+                  style: AppTextStyles.h1.copyWith(
+                    color: context.colors.textPrimary,
+                  ),
                 ),
               ],
             ),

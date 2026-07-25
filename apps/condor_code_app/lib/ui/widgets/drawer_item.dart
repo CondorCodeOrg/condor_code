@@ -16,7 +16,9 @@ class DrawerItem extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
         child: Text(
           title,
-          style: AppTextStyles.body1.copyWith(color: AppColors.white),
+          style: AppTextStyles.body1.copyWith(
+            color: context.colors.textPrimary,
+          ),
         ),
       ),
     );

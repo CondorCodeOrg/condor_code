@@ -21,7 +21,7 @@ class LessonProgressBar extends StatelessWidget {
     height: height,
     width: width,
     decoration: BoxDecoration(
-      color: AppColors.lightGrey,
+      color: context.colors.textSecondary,
       borderRadius: BorderRadius.circular(10),
     ),
     child: Stack(
@@ -30,7 +30,7 @@ class LessonProgressBar extends StatelessWidget {
           width: width * progress,
           height: height,
           decoration: BoxDecoration(
-            color: AppColors.neon,
+            color: context.colors.accent,
             borderRadius: BorderRadius.circular(10),
           ),
         ),

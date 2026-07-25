@@ -125,5 +125,8 @@
         "type": "String"
       }
     }
-  }
+  },
+  "languageSwitcherTooltip": "Мова",
+  "languageEnglish": "English",
+  "languageUkrainian": "Українська"
 }
