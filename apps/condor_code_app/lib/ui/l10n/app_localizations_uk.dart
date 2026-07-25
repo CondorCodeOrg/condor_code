@@ -132,7 +132,7 @@ class AppLocalizationsUk extends AppLocalizations {
   String get tiktok => 'ТікТок';
 
   @override
-  String get welcomeTo => 'Друзі, всех вітаємо на ';
+  String get welcomeTo => 'Друзі, всіх вітаємо на ';
 
   @override
   String get condorCodeBrand => 'CondorCode!';
