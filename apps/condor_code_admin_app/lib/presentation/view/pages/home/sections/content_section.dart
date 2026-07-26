@@ -864,7 +864,7 @@ class _CourseDetailsState extends ConsumerState<_CourseDetails> {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   buildDefaultDragHandles: false,
-                  onReorderItem: _isDeletingCourse
+                  onReorder: _isDeletingCourse
                       ? (_, __) {}
                       : (oldIndex, newIndex) =>
                             _onLessonsReordered(lessons, oldIndex, newIndex),
