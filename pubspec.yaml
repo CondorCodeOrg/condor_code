@@ -19,8 +19,7 @@ dependencies:
 
 dev_dependencies:
   melos: ^7.4.0
-  build_runner: ^2.15.0
-  json_serializable: ^6.14.0
+  
 
 melos:
   scripts:
