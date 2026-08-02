@@ -15,6 +15,7 @@ LessonRemote _$LessonRemoteFromJson(Map<String, dynamic> json) => LessonRemote(
   description: json['description'] as String,
   isYouTubeLesson: json['isYouTubeLesson'] as bool,
   sortOrder: (json['sortOrder'] as num?)?.toInt() ?? 0,
+  summary: json['summary'] as String?,
 );
 
 Map<String, dynamic> _$LessonRemoteToJson(LessonRemote instance) =>
@@ -27,4 +28,5 @@ Map<String, dynamic> _$LessonRemoteToJson(LessonRemote instance) =>
       'youtubeUrl': instance.youtubeUrl,
       'isYouTubeLesson': instance.isYouTubeLesson,
       'sortOrder': instance.sortOrder,
+      'summary': instance.summary,
     };

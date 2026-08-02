@@ -44,8 +44,9 @@ class CourseActionPanel extends StatelessWidget {
           )
         : null;
 
-    final onSummaryPressed =
-        lesson != null ? () => _openSummary(context, lesson!) : null;
+    final onSummaryPressed = lesson != null
+        ? () => _openSummary(context, lesson!)
+        : null;
 
     if (!expanded) {
       return Column(

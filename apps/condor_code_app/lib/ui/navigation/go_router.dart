@@ -29,7 +29,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:condor_code/ui/screens/lesson_summary/lesson_summary_screen.dart';
 
-
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 ///TODO uncomment if this logic will be need
@@ -195,7 +194,7 @@ GoRouter getRouter(AppConfig appConfig) => GoRouter(
                 if (lesson == null) {
                   return _fadeTransitionPage(
                     state: state,
-                    child: EmptyCourseScreen(courseName: 'Dart/Flutter'),
+                    child: const EmptyCourseScreen(courseName: 'Dart/Flutter'),
                   );
                 }
                 return _fadeTransitionPage(
