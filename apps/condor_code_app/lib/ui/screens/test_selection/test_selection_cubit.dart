@@ -1,5 +1,6 @@
 import 'package:condor_code/ui/base/bloc/base_cubit.dart';
 import 'package:condor_code/ui/screens/test_selection/test_selection_state.dart';
+import 'package:condor_code/ui/utils/localization.dart';
 import 'package:domain/domain.dart';
 
 class TestSelectionCubit extends BaseCubit<TestSelectionState> {
@@ -27,14 +28,14 @@ class TestSelectionCubit extends BaseCubit<TestSelectionState> {
       final lesson = lessonResult.data;
 
       if (lesson == null) {
-        emit(const TestSelectionError(message: 'Lesson data is empty.'));
+        emit(TestSelectionError(message: localization.testSelectionLessonDataEmpty));
         return;
       }
 
       if (questions.isEmpty) {
         emit(
-          const TestSelectionError(
-            message: 'No questions available for this test.',
+          TestSelectionError(
+            message: localization.testSelectionNoQuestions,
           ),
         );
         return;
@@ -42,16 +43,16 @@ class TestSelectionCubit extends BaseCubit<TestSelectionState> {
 
       final test = TestModel(
         id: lessonId,
-        title: '${lesson.title} Practice Test',
-        difficulty: 'Medium',
+        title: localization.testSelectionPracticeTest(lesson.title),
+        difficulty: localization.testSelectionDifficultyMedium,
         durationMinutes: (questions.length * 1.5).ceil(),
         questionCount: questions.length,
-        status: 'Ready',
+        status: localization.testSelectionStatusReady,
       );
 
       emit(TestSelectionLoaded(tests: [test], lessonName: lesson.title));
     } else {
-      String errMsg = 'Failed to load test details.';
+      String errMsg = localization.testSelectionFailedToLoad;
       if (questionsResult is ErrorResult) {
         errMsg = (questionsResult as ErrorResult).message;
       } else if (lessonResult is ErrorResult) {

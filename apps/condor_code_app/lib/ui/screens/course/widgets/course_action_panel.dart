@@ -40,7 +40,9 @@ class CourseActionPanel extends StatelessWidget {
 
     final onTakeTestsPressed = lessonId != null
         ? () {
-            context.push('/course/$courseId/$lessonId/tests');
+            context.push(
+              '${RouteConstants.course}/$courseId/$lessonId/tests',
+            );
           }
         : null;
 

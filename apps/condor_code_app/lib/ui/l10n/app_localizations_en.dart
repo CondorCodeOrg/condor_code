@@ -551,4 +551,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get exit => 'EXIT';
+
+  @override
+  String get testSelectionLessonDataEmpty => 'Lesson data is empty.';
+
+  @override
+  String get testSelectionNoQuestions => 'No questions available for this test.';
+
+  @override
+  String testSelectionPracticeTest(String lessonTitle) {
+    return '$lessonTitle Practice Test';
+  }
+
+  @override
+  String get testSelectionDifficultyMedium => 'Medium';
+
+  @override
+  String get testSelectionStatusReady => 'Ready';
+
+  @override
+  String get testSelectionFailedToLoad => 'Failed to load test details.';
 }

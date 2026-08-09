@@ -550,4 +550,24 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get exit => 'ВИХІД';
+
+  @override
+  String get testSelectionLessonDataEmpty => 'Дані уроку порожні.';
+
+  @override
+  String get testSelectionNoQuestions => 'Немає доступних запитань для цього тесту.';
+
+  @override
+  String testSelectionPracticeTest(String lessonTitle) {
+    return 'Практичний тест: $lessonTitle';
+  }
+
+  @override
+  String get testSelectionDifficultyMedium => 'Середній';
+
+  @override
+  String get testSelectionStatusReady => 'Готовий';
+
+  @override
+  String get testSelectionFailedToLoad => 'Не вдалося завантажити деталі тесту.';
 }

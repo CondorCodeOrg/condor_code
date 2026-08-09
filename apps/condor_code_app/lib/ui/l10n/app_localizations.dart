@@ -1069,6 +1069,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'EXIT'**
   String get exit;
+
+  /// No description provided for @testSelectionLessonDataEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Lesson data is empty.'**
+  String get testSelectionLessonDataEmpty;
+
+  /// No description provided for @testSelectionNoQuestions.
+  ///
+  /// In en, this message translates to:
+  /// **'No questions available for this test.'**
+  String get testSelectionNoQuestions;
+
+  /// No description provided for @testSelectionPracticeTest.
+  ///
+  /// In en, this message translates to:
+  /// **'{lessonTitle} Practice Test'**
+  String testSelectionPracticeTest(String lessonTitle);
+
+  /// No description provided for @testSelectionDifficultyMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get testSelectionDifficultyMedium;
+
+  /// No description provided for @testSelectionStatusReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready'**
+  String get testSelectionStatusReady;
+
+  /// No description provided for @testSelectionFailedToLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load test details.'**
+  String get testSelectionFailedToLoad;
 }
 
 class _AppLocalizationsDelegate

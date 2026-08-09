@@ -18,6 +18,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:condor_code/ui/analytics/analytics.dart';
 import 'package:condor_code/ui/analytics/analytics_constants.dart';
+import 'package:condor_code/ui/base/provider/events/snack_bar_events_provider.dart';
 import 'package:condor_code/ui/l10n/app_localizations.dart';
 
 part '_test_header.dart';
@@ -356,10 +357,11 @@ class _TestScreenState extends State<TestScreen> {
   }
 
   void _returnToPreviousPageWithError(BuildContext context) {
+    final errorMessage = AppLocalizations.of(context)!.testGenericError;
     context.pop();
-    BlocProvider.of<TestCubit>(
-      context,
-    ).showErrorSnackBar(AppLocalizations.of(context)!.testGenericError);
+    di<SnackBarEventsProvider>().addEvent(
+      SnackBarEvent.error(errorMessage),
+    );
   }
 
   _showExitBottomSheet() => showModalBottomSheet(

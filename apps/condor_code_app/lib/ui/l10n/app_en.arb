@@ -239,5 +239,18 @@
   "testSelectionRetry": "Retry",
   "heartInfoNoHearts": "You used all the hearts, watch the video or complete the mini game to earn a heart.",
   "exitTestLossWarning": "If you leave you will lose all the points you earned during the test!",
-  "exit": "EXIT"
+  "exit": "EXIT",
+  "testSelectionLessonDataEmpty": "Lesson data is empty.",
+  "testSelectionNoQuestions": "No questions available for this test.",
+  "testSelectionPracticeTest": "{lessonTitle} Practice Test",
+  "@testSelectionPracticeTest": {
+    "placeholders": {
+      "lessonTitle": {
+        "type": "String"
+      }
+    }
+  },
+  "testSelectionDifficultyMedium": "Medium",
+  "testSelectionStatusReady": "Ready",
+  "testSelectionFailedToLoad": "Failed to load test details."
 }
