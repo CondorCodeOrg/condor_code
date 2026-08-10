@@ -1,11 +1,13 @@
 import 'package:condor_code/ui/base/bloc/base_cubit.dart';
+import 'package:condor_code/ui/screens/feedback/feedback_state.dart';
 import 'package:domain/models/feedback_model.dart';
 import 'package:domain/repository/feedback_repository.dart';
-import 'feedback_state.dart';
 
 class FeedbackCubit extends BaseCubit<FeedbackState> {
-  FeedbackCubit(this._repo, {required super.snackBarEventsProvider})
-      : super(const FeedbackState());
+  FeedbackCubit(
+      this._repo, {
+        required super.snackBarEventsProvider,
+      }) : super(const FeedbackState());
 
   final FeedbackRepository _repo;
 
@@ -16,24 +18,24 @@ class FeedbackCubit extends BaseCubit<FeedbackState> {
       success: false,
     ));
 
-    try {
-      final success = await _repo.submitFeedback(feedback);
-
-      emit(
-        state.copyWith(
-          isSubmitting: false,
-          success: success,
-          error: success ? null : 'Failed to submit feedback',
-        ),
-      );
-    } catch (e) {
-      emit(
-        state.copyWith(
-          isSubmitting: false,
-          success: false,
-          error: e.toString(),
-        ),
-      );
-    }
+    await processDataResult(
+      _repo.submitFeedback(feedback),
+      onSuccess: (success) {
+        emit(
+          state.copyWith(
+            isSubmitting: false,
+            success: success,
+          ),
+        );
+      },
+      onError: (_) {
+        emit(
+          state.copyWith(
+            isSubmitting: false,
+            success: false,
+          ),
+        );
+      },
+    );
   }
 }

@@ -1,13 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:ui_kit/ui_kit.dart';
-import 'package:domain/models/feedback_model.dart';
-import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:condor_code/ui/l10n/app_localizations.dart';
 import 'dart:io';
+
+import 'package:condor_code/ui/l10n/app_localizations.dart';
 import 'package:condor_code/ui/screens/feedback/feedback_cubit.dart';
 import 'package:condor_code/ui/screens/feedback/feedback_state.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:domain/models/feedback_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ui_kit/ui_kit.dart';
 
 class FeedbackDialog extends StatefulWidget {
   const FeedbackDialog({super.key});
@@ -43,7 +44,13 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
   Future<void> _submitFeedback() async {
     if (!_formKey.currentState!.validate()) return;
 
+    final cubit = context.read<FeedbackCubit>();
     final user = FirebaseAuth.instance.currentUser;
+
+    final platform = await _getPlatform();
+    final deviceInfo = await _getDeviceInfo();
+
+    if (!mounted) return;
 
     final feedback = FeedbackModel(
       id: '',
@@ -51,11 +58,11 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
       userId: user?.uid,
       email: _showEmailField ? _emailController.text : null,
       timestamp: DateTime.now(),
-      platform: await _getPlatform(),
-      deviceInfo: await _getDeviceInfo(),
+      platform: platform,
+      deviceInfo: deviceInfo,
     );
 
-    context.read<FeedbackCubit>().submitFeedback(feedback);
+    cubit.submitFeedback(feedback);
   }
 
   Future<String> _getPlatform() async {
@@ -104,6 +111,8 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return BlocListener<FeedbackCubit, FeedbackState>(
       listener: (context, state) {
         if (state.success) {
@@ -113,7 +122,7 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
         if (state.error != null && state.error!.isNotEmpty) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(AppLocalizations.of(context)!.feedbackError),
+              content: Text(l10n.feedbackError),
               backgroundColor: Colors.red,
             ),
           );
@@ -133,7 +142,7 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Залишити відгук',
+                      l10n.leaveFeedback,
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     IconButton(
@@ -142,62 +151,53 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 16),
-
                 TextFormField(
                   controller: _messageController,
                   maxLines: 5,
-                  decoration: const InputDecoration(
-                    labelText: 'Ваш відгук *',
-                    hintText: 'Розкажіть нам про ваш досвід...',
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    labelText: l10n.leaveFeedback,
+                    border: const OutlineInputBorder(),
                   ),
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Будь ласка, введіть ваш відгук';
+                    if (value == null || value.trim().isEmpty) {
+                      return l10n.feedbackError;
                     }
                     if (value.length < 10) {
-                      return 'Відгук повинен містити щонайменше 10 символів';
+                      return l10n.feedbackError;
                     }
                     return null;
                   },
                 ),
-
                 const SizedBox(height: 16),
-
                 if (_showEmailField) ...[
                   TextFormField(
                     controller: _emailController,
-                    decoration: const InputDecoration(
-                      labelText: 'Email (необов\'язково)',
-                      hintText: 'example@email.com',
-                      border: OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      labelText: l10n.feedbackEmailLabel,
+                      hintText: l10n.feedbackEmailHint,
+                      border: const OutlineInputBorder(),
                     ),
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
                       if (value != null &&
                           value.isNotEmpty &&
                           !RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                        return 'Введіть коректний email';
+                        return l10n.feedbackInvalidEmail;
                       }
                       return null;
                     },
                   ),
                   const SizedBox(height: 16),
                 ],
-
                 BlocBuilder<FeedbackCubit, FeedbackState>(
                   builder: (context, state) {
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        TextButton(
+                        IconButton(
                           onPressed: () => Navigator.pop(context),
-                          style: TextButton.styleFrom(
-                            foregroundColor: AppColors.white,
-                          ),
-                          child: const Text('Скасувати'),
+                          icon: const Icon(Icons.close),
                         ),
                         const SizedBox(width: 12),
                         ElevatedButton(
@@ -214,14 +214,16 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
                           ),
                           child: state.isSubmitting
                               ? const SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    color: AppColors.darkGrey800,
-                                  ),
-                                )
-                              : const Text('Надіслати'),
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: AppColors.darkGrey800,
+                            ),
+                          )
+                              : Text(
+                            l10n.leaveFeedback,
+                          ),
                         ),
                       ],
                     );

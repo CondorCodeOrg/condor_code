@@ -1,5 +1,6 @@
+import 'package:domain/data_result/data_result.dart';
 import 'package:domain/models/feedback_model.dart';
 
 abstract class FeedbackRepository {
-  Future<bool> submitFeedback(FeedbackModel feedback);
+  Future<DataResult<bool>> submitFeedback(FeedbackModel feedback);
 }
