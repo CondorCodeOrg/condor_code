@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:condor_code/di/provider_manager.dart';
 import 'package:condor_code/ui/analytics/analytics.dart';
 import 'package:condor_code/ui/l10n/app_localizations.dart';
+import 'package:condor_code/ui/screens/feedback/feedback_cubit.dart';
 import 'package:condor_code/ui/widgets/feedback_dialog.dart';
 import 'package:condor_code/ui/widgets/top_navigation_bar.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui_kit/ui_kit.dart';
 import 'package:ui_kit/widgets/condor_code_network_image_view.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -119,18 +121,18 @@ class ContactsScreen extends StatelessWidget {
   }
 
   void _showFeedbackDialog(BuildContext context) {
-    di<Analytics>().logEvent(
-      'feedback_button_clicked',
-      {
-        'screen': 'contacts',
-        'timestamp': DateTime.now().toIso8601String(),
-      },
-    );
+    di<Analytics>().logEvent('feedback_button_clicked', {
+      'screen': 'contacts',
+      'timestamp': DateTime.now().toIso8601String(),
+    });
 
     showDialog(
       context: context,
       barrierDismissible: true,
-      builder: (context) => const FeedbackDialog(),
+      builder: (context) => BlocProvider(
+        create: (_) => di<FeedbackCubit>(),
+        child: const FeedbackDialog(),
+      ),
     );
   }
 
@@ -174,10 +176,7 @@ class ContactsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: !isDesktop
-          ? TopNavigationBar(
-        text: l10n.contactsScreen,
-        isLeading: false,
-      )
+          ? TopNavigationBar(text: l10n.contactsScreen, isLeading: false)
           : null,
       body: Stack(
         children: [
@@ -206,7 +205,7 @@ class ContactsScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 32),
                             ..._blocksWithVideos(l10n).map(
-                                  (b) => Padding(
+                              (b) => Padding(
                                 padding: const EdgeInsets.only(bottom: 32),
                                 child: _ContactRowBlock(block: b),
                               ),
@@ -240,10 +239,10 @@ class ContactsScreen extends StatelessWidget {
           children: entries
               .map(
                 (e) => Padding(
-              padding: const EdgeInsets.only(bottom: 16),
-              child: _ContactCard(entry: e),
-            ),
-          )
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: _ContactCard(entry: e),
+                ),
+              )
               .toList(),
         );
       }
@@ -252,12 +251,12 @@ class ContactsScreen extends StatelessWidget {
         children: entries
             .map(
               (e) => Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: _ContactCard(entry: e),
-            ),
-          ),
-        )
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: _ContactCard(entry: e),
+                ),
+              ),
+            )
             .toList(),
       );
     }
@@ -317,12 +316,12 @@ class _ContactRowBlockState extends State<_ContactRowBlock> {
           ),
           boxShadow: _hover
               ? [
-            BoxShadow(
-              color: context.colors.accent.withValues(alpha: 0.06),
-              blurRadius: 20,
-              offset: const Offset(0, 6),
-            ),
-          ]
+                  BoxShadow(
+                    color: context.colors.accent.withValues(alpha: 0.06),
+                    blurRadius: 20,
+                    offset: const Offset(0, 6),
+                  ),
+                ]
               : null,
         ),
         child: isWide ? _buildWideLayout(b) : _buildNarrowLayout(b),
@@ -684,12 +683,12 @@ class _ContactCardState extends State<_ContactCard> {
               ),
               boxShadow: _hover
                   ? [
-                BoxShadow(
-                  color: context.colors.accent.withValues(alpha: 0.08),
-                  blurRadius: 16,
-                  offset: const Offset(0, 4),
-                ),
-              ]
+                      BoxShadow(
+                        color: context.colors.accent.withValues(alpha: 0.08),
+                        blurRadius: 16,
+                        offset: const Offset(0, 4),
+                      ),
+                    ]
                   : null,
             ),
             child: Column(

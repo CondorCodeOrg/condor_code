@@ -118,15 +118,6 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
         if (state.success) {
           Navigator.pop(context);
         }
-
-        if (state.error != null && state.error!.isNotEmpty) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(l10n.feedbackError),
-              backgroundColor: Colors.red,
-            ),
-          );
-        }
       },
       child: Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -142,7 +133,7 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      l10n.leaveFeedback,
+                      l10n.feedbackTitle,
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     IconButton(
@@ -156,15 +147,16 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
                   controller: _messageController,
                   maxLines: 5,
                   decoration: InputDecoration(
-                    labelText: l10n.leaveFeedback,
+                    labelText: l10n.feedbackLabel,
+                    hintText: l10n.feedbackHint,
                     border: const OutlineInputBorder(),
                   ),
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
-                      return l10n.feedbackError;
+                      return l10n.feedbackRequired;
                     }
                     if (value.length < 10) {
-                      return l10n.feedbackError;
+                      return l10n.feedbackMinLength;
                     }
                     return null;
                   },
@@ -195,9 +187,9 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        IconButton(
+                        TextButton(
                           onPressed: () => Navigator.pop(context),
-                          icon: const Icon(Icons.close),
+                          child: Text(l10n.feedbackCancel),
                         ),
                         const SizedBox(width: 12),
                         ElevatedButton(
@@ -214,16 +206,14 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
                           ),
                           child: state.isSubmitting
                               ? const SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color: AppColors.darkGrey800,
-                            ),
-                          )
-                              : Text(
-                            l10n.leaveFeedback,
-                          ),
+                                  height: 20,
+                                  width: 20,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    color: AppColors.darkGrey800,
+                                  ),
+                                )
+                              : Text(l10n.feedbackSubmit),
                         ),
                       ],
                     );
