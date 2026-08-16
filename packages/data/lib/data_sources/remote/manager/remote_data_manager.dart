@@ -25,7 +25,10 @@ abstract class RemoteDataManager {
 
   bool get isEmailPasswordAuth;
 
-  Future<UserRemote> signUpWithEmailPassword({required String email, required String password});
+  Future<UserRemote> signUpWithEmailPassword({
+    required String email,
+    required String password,
+  });
 
   Future<void> createUserProfile({
     required String uid,
@@ -33,7 +36,10 @@ abstract class RemoteDataManager {
     required String email,
   });
 
-  Future<UserRemote> signInWithEmailPassword({required String email, required String password});
+  Future<UserRemote> signInWithEmailPassword({
+    required String email,
+    required String password,
+  });
 
   Future<UserRemote?> signInWithGoogle();
 
@@ -101,11 +107,16 @@ abstract class RemoteDataManager {
 
   Future<void> submitTesterAccessRequest();
 
-  Future<TesterAccessRequestRemote?> fetchTesterAccessRequestForUser(String userId);
+  Future<TesterAccessRequestRemote?> fetchTesterAccessRequestForUser(
+    String userId,
+  );
 
   Future<List<TesterAccessRequestRemote>> fetchPendingTesterAccessRequests();
 
-  Future<void> approveTesterAccessRequest({required String requestId, required String userId});
+  Future<void> approveTesterAccessRequest({
+    required String requestId,
+    required String userId,
+  });
 
   Future<void> rejectTesterAccessRequest({required String requestId});
 

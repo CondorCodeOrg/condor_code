@@ -52,16 +52,26 @@ class ProviderManager {
     di.registerLazySingleton<StagingGateNotifier>(
       () => StagingGateNotifier(di<AuthRepository>(), di<Analytics>(), config),
     );
-    di.registerLazySingleton<SnackBarEventsProvider>(() => SnackBarEventsProvider());
-    di.registerLazySingleton<LessonScreenEventsProvider>(() => LessonScreenEventsProvider());
-    di.registerLazySingleton<AnalyticsEventsProvider>(() => AnalyticsEventsProviderImpl(di()));
+    di.registerLazySingleton<SnackBarEventsProvider>(
+      () => SnackBarEventsProvider(),
+    );
+    di.registerLazySingleton<LessonScreenEventsProvider>(
+      () => LessonScreenEventsProvider(),
+    );
+    di.registerLazySingleton<AnalyticsEventsProvider>(
+      () => AnalyticsEventsProviderImpl(di()),
+    );
 
     if (!di.isRegistered<FirebaseFirestore>()) {
-      di.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
+      di.registerLazySingleton<FirebaseFirestore>(
+        () => FirebaseFirestore.instance,
+      );
     }
 
     // Register Feedback Repository
-    di.registerLazySingleton<FeedbackRepository>(() => FeedbackRepositoryImpl(di()));
+    di.registerLazySingleton<FeedbackRepository>(
+      () => FeedbackRepositoryImpl(di()),
+    );
   }
 
   void _registerBlocs(GetIt di) {
@@ -86,7 +96,9 @@ class ProviderManager {
         snackBarEventsProvider: di<SnackBarEventsProvider>(),
       ),
     );
-    di.registerFactory<ContactsCubit>(() => ContactsCubit(snackBarEventsProvider: di()));
+    di.registerFactory<ContactsCubit>(
+      () => ContactsCubit(snackBarEventsProvider: di()),
+    );
     di.registerFactoryParam<CourseCubit, String, String?>(
       (courseId, initialLessonId) => CourseCubit(
         courseId: courseId,
@@ -105,11 +117,15 @@ class ProviderManager {
       ),
     );
     di.registerFactoryParam<TaskDetailsCubit, String, dynamic>(
-      (taskId, _) =>
-          TaskDetailsCubit(taskId: taskId, snackBarEventsProvider: di(), tasksRepository: di()),
+      (taskId, _) => TaskDetailsCubit(
+        taskId: taskId,
+        snackBarEventsProvider: di(),
+        tasksRepository: di(),
+      ),
     );
     di.registerFactoryParam<TaskAnswerCubit, Answer, dynamic>(
-      (answer, _) => TaskAnswerCubit(snackBarEventsProvider: di(), answer: answer),
+      (answer, _) =>
+          TaskAnswerCubit(snackBarEventsProvider: di(), answer: answer),
     );
     di.registerFactoryParam<LessonsListCubit, String, dynamic>(
       (courseId, _) => LessonsListCubit(
@@ -119,8 +135,11 @@ class ProviderManager {
       ),
     );
     di.registerFactoryParam<TasksListCubit, String, dynamic>(
-      (lessonId, _) =>
-          TasksListCubit(tasksRepository: di(), snackBarEventsProvider: di(), lessonId: lessonId),
+      (lessonId, _) => TasksListCubit(
+        tasksRepository: di(),
+        snackBarEventsProvider: di(),
+        lessonId: lessonId,
+      ),
     );
     di.registerFactoryParam<KnowledgeCheckCubit, String, String?>(
       (lessonId, initialTaskId) => KnowledgeCheckCubit(
@@ -130,8 +149,12 @@ class ProviderManager {
         initialTaskId: initialTaskId,
       ),
     );
-    di.registerLazySingleton<LocaleService>(() => LocaleService(di<LocaleRepository>()));
-    di.registerLazySingleton<LocaleCubit>(() => LocaleCubit(service: di<LocaleService>()));
+    di.registerLazySingleton<LocaleService>(
+      () => LocaleService(di<LocaleRepository>()),
+    );
+    di.registerLazySingleton<LocaleCubit>(
+      () => LocaleCubit(service: di<LocaleService>()),
+    );
     di.registerLazySingleton<StagingAuthCubit>(
       () => StagingAuthCubit(
         authRepository: di(),
@@ -140,10 +163,17 @@ class ProviderManager {
         analytics: di(),
       ),
     );
-    di.registerLazySingleton<ThemeModeService>(() => ThemeModeService(di<ThemeModeRepository>()));
-    di.registerLazySingleton<ThemeCubit>(() => ThemeCubit(service: di<ThemeModeService>()));
+    di.registerLazySingleton<ThemeModeService>(
+      () => ThemeModeService(di<ThemeModeRepository>()),
+    );
+    di.registerLazySingleton<ThemeCubit>(
+      () => ThemeCubit(service: di<ThemeModeService>()),
+    );
     di.registerFactory<OnlyTestersCubit>(
-      () => OnlyTestersCubit(testerAccessRepository: di(), snackBarEventsProvider: di()),
+      () => OnlyTestersCubit(
+        testerAccessRepository: di(),
+        snackBarEventsProvider: di(),
+      ),
     );
     di.registerFactory<CoursesCubit>(
       () => CoursesCubit(
@@ -153,10 +183,16 @@ class ProviderManager {
       ),
     );
     di.registerFactory<KnowledgeBaseHomeCubit>(
-      () => KnowledgeBaseHomeCubit(knowledgeBaseRepository: di(), snackBarEventsProvider: di()),
+      () => KnowledgeBaseHomeCubit(
+        knowledgeBaseRepository: di(),
+        snackBarEventsProvider: di(),
+      ),
     );
     di.registerFactory<KnowledgeBaseRoadmapCubit>(
-      () => KnowledgeBaseRoadmapCubit(knowledgeBaseRepository: di(), snackBarEventsProvider: di()),
+      () => KnowledgeBaseRoadmapCubit(
+        knowledgeBaseRepository: di(),
+        snackBarEventsProvider: di(),
+      ),
     );
     di.registerSingleton(SnackBarCubit(di()));
   }

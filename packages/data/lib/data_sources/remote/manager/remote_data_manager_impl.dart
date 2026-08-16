@@ -41,15 +41,16 @@ class RemoteDataManagerImpl implements RemoteDataManager {
   }
 
   @override
-  Stream<UserRemote?> get authStateChanges => _auth.authStateChanges().map((user) {
-    if (user == null) return null;
-    return UserRemote(
-      id: user.uid,
-      fullName: user.displayName ?? '',
-      email: user.email ?? '',
-      role: 'user',
-    );
-  });
+  Stream<UserRemote?> get authStateChanges =>
+      _auth.authStateChanges().map((user) {
+        if (user == null) return null;
+        return UserRemote(
+          id: user.uid,
+          fullName: user.displayName ?? '',
+          email: user.email ?? '',
+          role: 'user',
+        );
+      });
 
   @override
   bool get isUserExist => currentUser != null;
@@ -64,7 +65,10 @@ class RemoteDataManagerImpl implements RemoteDataManager {
   //Fetch user role from Firestore based on UID
   @override
   Future<String?> getUserRole(String uid) async {
-    final doc = await _fireStore.collection(DatabaseCollections.users).doc(uid).get();
+    final doc = await _fireStore
+        .collection(DatabaseCollections.users)
+        .doc(uid)
+        .get();
     return doc.data()?['role'] as String?;
   }
 
@@ -94,7 +98,10 @@ class RemoteDataManagerImpl implements RemoteDataManager {
       'createdAt': FieldValue.serverTimestamp(),
     };
 
-    await _fireStore.collection(DatabaseCollections.users).doc(user.uid).set(userData);
+    await _fireStore
+        .collection(DatabaseCollections.users)
+        .doc(user.uid)
+        .set(userData);
 
     return UserRemote(
       id: user.uid,
@@ -132,7 +139,10 @@ class RemoteDataManagerImpl implements RemoteDataManager {
     final user = userCredential.user;
     if (user == null) throw Exception('User not authenticated');
 
-    final snapshot = await _fireStore.collection(DatabaseCollections.users).doc(user.uid).get();
+    final snapshot = await _fireStore
+        .collection(DatabaseCollections.users)
+        .doc(user.uid)
+        .get();
 
     final userData = snapshot.data();
     final String roleFromDb = userData?['role'] ?? 'user';
@@ -155,7 +165,9 @@ class RemoteDataManagerImpl implements RemoteDataManager {
 
     if (user == null) return null;
 
-    final userDoc = _fireStore.collection(DatabaseCollections.users).doc(user.uid);
+    final userDoc = _fireStore
+        .collection(DatabaseCollections.users)
+        .doc(user.uid);
     final snapshot = await userDoc.get();
 
     String role = 'user';
@@ -200,7 +212,10 @@ class RemoteDataManagerImpl implements RemoteDataManager {
   Future<void> logout() async {
     await _auth.signOut();
     await _googleSignIn.signOut();
-    Logger.print(data: 'User logged out successfully', from: 'RemoteDataSource.logout');
+    Logger.print(
+      data: 'User logged out successfully',
+      from: 'RemoteDataSource.logout',
+    );
   }
 
   @override
@@ -211,13 +226,17 @@ class RemoteDataManagerImpl implements RemoteDataManager {
     final bool isNew = lesson.id.isEmpty;
     var lessonToSave = lesson;
     if (isNew && lesson.courseId.trim().isNotEmpty) {
-      final sortOrder = await _allocateSortOrderForNewLessonInCourse(lesson.courseId);
+      final sortOrder = await _allocateSortOrderForNewLessonInCourse(
+        lesson.courseId,
+      );
       lessonToSave = lesson.copyWith(sortOrder: sortOrder);
     }
 
     final docRef = isNew
         ? _fireStore.collection(DatabaseCollections.lessons).doc()
-        : _fireStore.collection(DatabaseCollections.lessons).doc(lessonToSave.id);
+        : _fireStore
+              .collection(DatabaseCollections.lessons)
+              .doc(lessonToSave.id);
     final Map<String, dynamic> data = lessonToSave.toJson();
     data['id'] = docRef.id;
 
@@ -226,7 +245,9 @@ class RemoteDataManagerImpl implements RemoteDataManager {
       final batch = _fireStore.batch();
       batch.set(docRef, data);
       if (lesson.courseId.isNotEmpty) {
-        final courseRef = _fireStore.collection(DatabaseCollections.courses).doc(lesson.courseId);
+        final courseRef = _fireStore
+            .collection(DatabaseCollections.courses)
+            .doc(lesson.courseId);
         batch.update(courseRef, {'lessonsAmount': FieldValue.increment(1)});
       }
       await batch.commit();
@@ -244,7 +265,10 @@ class RemoteDataManagerImpl implements RemoteDataManager {
         .get();
     return snapshot.docs.map((doc) {
       final data = doc.data();
-      return RemoteDocumentParsers.lessonFromFirestoreData(Map<String, dynamic>.from(data), doc.id);
+      return RemoteDocumentParsers.lessonFromFirestoreData(
+        Map<String, dynamic>.from(data),
+        doc.id,
+      );
     }).toList();
   }
 
@@ -269,7 +293,10 @@ class RemoteDataManagerImpl implements RemoteDataManager {
 
   @override
   Future<LessonRemote> fetchLesson(String lessonId) async {
-    final doc = await _fireStore.collection(DatabaseCollections.lessons).doc(lessonId).get();
+    final doc = await _fireStore
+        .collection(DatabaseCollections.lessons)
+        .doc(lessonId)
+        .get();
     if (!doc.exists || doc.data() == null) {
       throw Exception('Lesson not found');
     }
@@ -287,13 +314,19 @@ class RemoteDataManagerImpl implements RemoteDataManager {
         .get();
     return snapshot.docs.map((doc) {
       final data = doc.data();
-      return RemoteDocumentParsers.taskFromFirestoreData(Map<String, dynamic>.from(data), doc.id);
+      return RemoteDocumentParsers.taskFromFirestoreData(
+        Map<String, dynamic>.from(data),
+        doc.id,
+      );
     }).toList();
   }
 
   @override
   Future<TaskRemote> fetchTask(String taskId) async {
-    final doc = await _fireStore.collection(DatabaseCollections.tasks).doc(taskId).get();
+    final doc = await _fireStore
+        .collection(DatabaseCollections.tasks)
+        .doc(taskId)
+        .get();
     if (!doc.exists || doc.data() == null) {
       throw Exception('Task not found');
     }
@@ -328,7 +361,9 @@ class RemoteDataManagerImpl implements RemoteDataManager {
       throw ArgumentError('lessonId is empty');
     }
 
-    final lessonRef = _fireStore.collection(DatabaseCollections.lessons).doc(normalizedLessonId);
+    final lessonRef = _fireStore
+        .collection(DatabaseCollections.lessons)
+        .doc(normalizedLessonId);
     final lessonSnapshot = await lessonRef.get();
     if (!lessonSnapshot.exists) {
       return;
@@ -361,7 +396,9 @@ class RemoteDataManagerImpl implements RemoteDataManager {
     }
 
     if (lessonCourseId.isNotEmpty) {
-      final courseRef = _fireStore.collection(DatabaseCollections.courses).doc(lessonCourseId);
+      final courseRef = _fireStore
+          .collection(DatabaseCollections.courses)
+          .doc(lessonCourseId);
       batch.update(courseRef, {'lessonsAmount': FieldValue.increment(-1)});
     }
 
@@ -388,7 +425,9 @@ class RemoteDataManagerImpl implements RemoteDataManager {
     final isNewLesson = lesson.id.isEmpty;
     var lessonToWrite = lesson.copyWith(id: resolvedLessonId);
     if (isNewLesson && lessonToWrite.courseId.trim().isNotEmpty) {
-      final sortOrder = await _allocateSortOrderForNewLessonInCourse(lessonToWrite.courseId);
+      final sortOrder = await _allocateSortOrderForNewLessonInCourse(
+        lessonToWrite.courseId,
+      );
       lessonToWrite = lessonToWrite.copyWith(sortOrder: sortOrder);
     }
     final lessonPayload = Map<String, dynamic>.from(lessonToWrite.toJson());
@@ -453,8 +492,13 @@ class RemoteDataManagerImpl implements RemoteDataManager {
     for (final question in questions) {
       final questionRef = question.id.isEmpty
           ? _fireStore.collection(DatabaseCollections.questions).doc()
-          : _fireStore.collection(DatabaseCollections.questions).doc(question.id);
-      final written = question.copyWith(id: questionRef.id, lessonId: resolvedLessonId);
+          : _fireStore
+                .collection(DatabaseCollections.questions)
+                .doc(question.id);
+      final written = question.copyWith(
+        id: questionRef.id,
+        lessonId: resolvedLessonId,
+      );
       batch.set(questionRef, written.toJson(), SetOptions(merge: true));
       resolvedQuestions.add(written);
     }
@@ -488,7 +532,9 @@ class RemoteDataManagerImpl implements RemoteDataManager {
 
   @override
   Future<List<CourseRemote>> fetchAllCourses() async {
-    final snapshot = await _fireStore.collection(DatabaseCollections.courses).get();
+    final snapshot = await _fireStore
+        .collection(DatabaseCollections.courses)
+        .get();
     return snapshot.docs.map((doc) {
       final json = Map<String, dynamic>.from(doc.data());
       json['id'] = doc.id;
@@ -510,10 +556,13 @@ class RemoteDataManagerImpl implements RemoteDataManager {
       throw ArgumentError('courseId is empty');
     }
 
-    await _fireStore.collection(DatabaseCollections.courses).doc(normalizedCourseId).set({
-      'name': name.trim(),
-      'imageUrl': imageUrl.trim(),
-    }, SetOptions(merge: true));
+    await _fireStore
+        .collection(DatabaseCollections.courses)
+        .doc(normalizedCourseId)
+        .set({
+          'name': name.trim(),
+          'imageUrl': imageUrl.trim(),
+        }, SetOptions(merge: true));
   }
 
   @override
@@ -526,7 +575,9 @@ class RemoteDataManagerImpl implements RemoteDataManager {
       throw ArgumentError('courseId is empty');
     }
 
-    final courseRef = _fireStore.collection(DatabaseCollections.courses).doc(normalizedCourseId);
+    final courseRef = _fireStore
+        .collection(DatabaseCollections.courses)
+        .doc(normalizedCourseId);
     final lessonSnapshot = await _fireStore
         .collection(DatabaseCollections.lessons)
         .where('courseId', isEqualTo: normalizedCourseId)
@@ -551,7 +602,9 @@ class RemoteDataManagerImpl implements RemoteDataManager {
       final questionsSnapshot = linkedCollections[1];
 
       referencesToDelete.addAll(tasksSnapshot.docs.map((doc) => doc.reference));
-      referencesToDelete.addAll(questionsSnapshot.docs.map((doc) => doc.reference));
+      referencesToDelete.addAll(
+        questionsSnapshot.docs.map((doc) => doc.reference),
+      );
     }
 
     await _deleteDocumentsInBatches(referencesToDelete);
@@ -612,7 +665,9 @@ class RemoteDataManagerImpl implements RemoteDataManager {
         : _fireStore.collection(DatabaseCollections.courses).doc(course.id);
     final courseId = courseRef.id;
 
-    final courseData = course.copyWith(id: courseId, lessonsAmount: lessons.length).toJson();
+    final courseData = course
+        .copyWith(id: courseId, lessonsAmount: lessons.length)
+        .toJson();
     batch.set(courseRef, courseData, SetOptions(merge: true));
 
     final Map<String, String> lessonIdMap = {};
@@ -632,7 +687,11 @@ class RemoteDataManagerImpl implements RemoteDataManager {
       }
 
       final lessonData = lesson
-          .copyWith(id: resolvedLessonId, courseId: courseId, sortOrder: lessonIndex)
+          .copyWith(
+            id: resolvedLessonId,
+            courseId: courseId,
+            sortOrder: lessonIndex,
+          )
           .toJson();
 
       batch.set(lessonRef, lessonData, SetOptions(merge: true));
@@ -650,13 +709,16 @@ class RemoteDataManagerImpl implements RemoteDataManager {
           ? _fireStore.collection(DatabaseCollections.tasks).doc()
           : _fireStore.collection(DatabaseCollections.tasks).doc(task.id);
 
-      final taskData = task.copyWith(id: taskRef.id, lessonId: resolvedLessonId).toJson();
+      final taskData = task
+          .copyWith(id: taskRef.id, lessonId: resolvedLessonId)
+          .toJson();
 
       batch.set(taskRef, taskData, SetOptions(merge: true));
     }
 
     for (final question in questions) {
-      final resolvedLessonId = lessonIdMap[question.lessonId] ?? question.lessonId;
+      final resolvedLessonId =
+          lessonIdMap[question.lessonId] ?? question.lessonId;
       if (resolvedLessonId.isEmpty) {
         throw ArgumentError(
           'Question "${question.id}" is missing a resolvable lessonId for bundle upload.',
@@ -665,7 +727,9 @@ class RemoteDataManagerImpl implements RemoteDataManager {
 
       final questionRef = question.id.isEmpty
           ? _fireStore.collection(DatabaseCollections.questions).doc()
-          : _fireStore.collection(DatabaseCollections.questions).doc(question.id);
+          : _fireStore
+                .collection(DatabaseCollections.questions)
+                .doc(question.id);
 
       final questionData = question
           .copyWith(id: questionRef.id, lessonId: resolvedLessonId)
@@ -683,7 +747,9 @@ class RemoteDataManagerImpl implements RemoteDataManager {
     final user = _auth.currentUser;
     if (user == null) throw Exception('User not authenticated');
 
-    final docRef = _fireStore.collection(DatabaseCollections.testerAccessRequests).doc(user.uid);
+    final docRef = _fireStore
+        .collection(DatabaseCollections.testerAccessRequests)
+        .doc(user.uid);
     final existing = await docRef.get();
     final existingStatus = existing.data()?['status'] as String?;
 
@@ -703,7 +769,9 @@ class RemoteDataManagerImpl implements RemoteDataManager {
   }
 
   @override
-  Future<TesterAccessRequestRemote?> fetchTesterAccessRequestForUser(String userId) async {
+  Future<TesterAccessRequestRemote?> fetchTesterAccessRequestForUser(
+    String userId,
+  ) async {
     final doc = await _fireStore
         .collection(DatabaseCollections.testerAccessRequests)
         .doc(userId)
@@ -713,7 +781,8 @@ class RemoteDataManagerImpl implements RemoteDataManager {
   }
 
   @override
-  Future<List<TesterAccessRequestRemote>> fetchPendingTesterAccessRequests() async {
+  Future<List<TesterAccessRequestRemote>>
+  fetchPendingTesterAccessRequests() async {
     final snapshot = await _fireStore
         .collection(DatabaseCollections.testerAccessRequests)
         .where('status', isEqualTo: 'pending')
@@ -721,7 +790,9 @@ class RemoteDataManagerImpl implements RemoteDataManager {
         .get();
 
     return snapshot.docs
-        .map((doc) => TesterAccessRequestRemote.fromFirestore(doc.data(), doc.id))
+        .map(
+          (doc) => TesterAccessRequestRemote.fromFirestore(doc.data(), doc.id),
+        )
         .toList();
   }
 
@@ -731,22 +802,32 @@ class RemoteDataManagerImpl implements RemoteDataManager {
     required String userId,
   }) async {
     final batch = _fireStore.batch();
-    batch.update(_fireStore.collection(DatabaseCollections.users).doc(userId), {'role': 'tester'});
-    batch.update(_fireStore.collection(DatabaseCollections.testerAccessRequests).doc(requestId), {
-      'status': 'approved',
-      'reviewedAt': FieldValue.serverTimestamp(),
-      'reviewedBy': currentUserId,
+    batch.update(_fireStore.collection(DatabaseCollections.users).doc(userId), {
+      'role': 'tester',
     });
+    batch.update(
+      _fireStore
+          .collection(DatabaseCollections.testerAccessRequests)
+          .doc(requestId),
+      {
+        'status': 'approved',
+        'reviewedAt': FieldValue.serverTimestamp(),
+        'reviewedBy': currentUserId,
+      },
+    );
     await batch.commit();
   }
 
   @override
   Future<void> rejectTesterAccessRequest({required String requestId}) async {
-    await _fireStore.collection(DatabaseCollections.testerAccessRequests).doc(requestId).update({
-      'status': 'rejected',
-      'reviewedAt': FieldValue.serverTimestamp(),
-      'reviewedBy': currentUserId,
-    });
+    await _fireStore
+        .collection(DatabaseCollections.testerAccessRequests)
+        .doc(requestId)
+        .update({
+          'status': 'rejected',
+          'reviewedAt': FieldValue.serverTimestamp(),
+          'reviewedBy': currentUserId,
+        });
   }
 
   @override

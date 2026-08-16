@@ -19,7 +19,10 @@ class MockRemoteDataManager implements RemoteDataManager {
   static final _mockQuestions = mockQuestions;
 
   @override
-  Future<void> approveTesterAccessRequest({required String requestId, required String userId}) {
+  Future<void> approveTesterAccessRequest({
+    required String requestId,
+    required String userId,
+  }) {
     return Future.delayed(const Duration(milliseconds: 300));
   }
 
@@ -53,7 +56,10 @@ class MockRemoteDataManager implements RemoteDataManager {
 
   @override
   Future<List<CourseRemote>> fetchAllCourses() {
-    return Future.delayed(const Duration(seconds: 1), () => List.unmodifiable(_mockCourses));
+    return Future.delayed(
+      const Duration(seconds: 1),
+      () => List.unmodifiable(_mockCourses),
+    );
   }
 
   @override
@@ -102,13 +108,18 @@ class MockRemoteDataManager implements RemoteDataManager {
   }
 
   @override
-  Future<TesterAccessRequestRemote?> fetchTesterAccessRequestForUser(String userId) {
+  Future<TesterAccessRequestRemote?> fetchTesterAccessRequestForUser(
+    String userId,
+  ) {
     return Future.delayed(const Duration(milliseconds: 500), () => null);
   }
 
   @override
   Future<String?> getUserRole(String uid) {
-    return Future.delayed(const Duration(milliseconds: 300), () => _mockUser.role);
+    return Future.delayed(
+      const Duration(milliseconds: 300),
+      () => _mockUser.role,
+    );
   }
 
   @override
@@ -140,12 +151,19 @@ class MockRemoteDataManager implements RemoteDataManager {
   }) {
     return Future.delayed(
       const Duration(milliseconds: 500),
-      () => LessonBundleRemote(lesson: lesson, tasks: tasks, questions: questions),
+      () => LessonBundleRemote(
+        lesson: lesson,
+        tasks: tasks,
+        questions: questions,
+      ),
     );
   }
 
   @override
-  Future<UserRemote> signInWithEmailPassword({required String email, required String password}) {
+  Future<UserRemote> signInWithEmailPassword({
+    required String email,
+    required String password,
+  }) {
     return Future.delayed(const Duration(milliseconds: 500), () => _mockUser);
   }
 
@@ -155,7 +173,10 @@ class MockRemoteDataManager implements RemoteDataManager {
   }
 
   @override
-  Future<UserRemote> signUpWithEmailPassword({required String email, required String password}) {
+  Future<UserRemote> signUpWithEmailPassword({
+    required String email,
+    required String password,
+  }) {
     return Future.delayed(const Duration(milliseconds: 500), () => _mockUser);
   }
 
@@ -225,7 +246,8 @@ class MockRemoteDataManager implements RemoteDataManager {
           category: KnowledgeBaseNewsCategory.article,
           relativeTimeLabel: '5 днів тому',
           title: 'Навігація: GoRouter у прикладах',
-          snippet: 'Додано добірку прикладів і типових помилок при оголошенні маршрутів.',
+          snippet:
+              'Додано добірку прикладів і типових помилок при оголошенні маршрутів.',
         ),
       ],
     );
@@ -233,7 +255,10 @@ class MockRemoteDataManager implements RemoteDataManager {
 
   @override
   Future<String> fetchKnowledgeBaseRoadmapJson() {
-    return Future.delayed(const Duration(milliseconds: 250), () => mockKnowledgeBaseRoadmapJson);
+    return Future.delayed(
+      const Duration(milliseconds: 250),
+      () => mockKnowledgeBaseRoadmapJson,
+    );
   }
 
   @override
