@@ -89,7 +89,7 @@
   "tiktok": "TikTok",
   "welcomeTo": "Welcome to ",
   "condorCodeBrand": "Condor Code!",
-  "homeIntro": "You are on the Condor Code website — a platform created by students of individual mentor Oleh Savenko. Here you can learn Flutter and Dart, find lessons and homework with answers, and check your results.",
+  "homeIntro": "You are on the Condor Code website — a platform created by students of individual mentor Oleh Savenko. Here you can learn Flutter and Dart, find lessons and homework with answers[...]",
   "featureLessonsTitle": "Flutter and Dart Lessons",
   "featureLessonsDesc": "Structured materials for gradual learning of Dart and the Flutter framework.",
   "featureHomeworkTitle": "Homework with Answers",
@@ -101,7 +101,13 @@
   "goToYouTubeChannel": "Go to YouTube channel",
   "footerDescription": "Condor Code — a platform for learning Flutter and Dart from students of mentor Oleh Savenko.",
   "copyright": "© {year} Condor Code. All rights reserved.",
-  "@copyright": {"placeholders": {"year": {"type": "int"}}},
+  "@copyright": {
+    "placeholders": {
+      "year": {
+        "type": "int"
+      }
+    }
+  },
   "mentorName": "Oleh Savenko",
   "youtubeBlockDesc": "Flutter and Dart video lessons, tutorials and code reviews — main content is here.",
   "telegramChannel": "— channel",
@@ -218,6 +224,19 @@
   "stagingRoleDeveloper": "Developer",
   "stagingRolePatron": "Patron",
   "stagingRolePatronDeveloper": "Patron + Developer",
+  "leaveFeedback": "Leave feedback",
+  "feedbackTitle": "Leave feedback",
+  "feedbackLabel": "Your feedback *",
+  "feedbackHint": "Write your feedback",
+  "feedbackEmailLabel": "Email",
+  "feedbackEmailHint": "Enter your email",
+  "feedbackSubmit": "Submit",
+  "feedbackCancel": "Cancel",
+  "feedbackSuccess": "Thank you for your feedback!",
+  "feedbackError": "Failed to send feedback. Try again.",
+  "feedbackRequired": "This field is required",
+  "feedbackMinLength": "Feedback must contain at least 10 characters",
+  "feedbackInvalidEmail": "Enter a valid email address",
   "moveOn": "Move on",
   "answerResultCorrect": "Everything is right, great!",
   "answerResultIncorrect": "Wrong, correct answer: {number}.",

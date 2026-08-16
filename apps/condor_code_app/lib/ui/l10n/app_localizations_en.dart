@@ -146,7 +146,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeIntro =>
-      'You are on the Condor Code website — a platform created by students of individual mentor Oleh Savenko. Here you can learn Flutter and Dart, find lessons and homework with answers, and check your results.';
+      'You are on the Condor Code website — a platform created by students of individual mentor Oleh Savenko. Here you can learn Flutter and Dart, find lessons and homework with answers[...]';
 
   @override
   String get featureLessonsTitle => 'Flutter and Dart Lessons';
@@ -502,6 +502,46 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stagingRolePatronDeveloper => 'Patron + Developer';
+
+  @override
+  String get leaveFeedback => 'Leave feedback';
+
+  @override
+  String get feedbackTitle => 'Leave feedback';
+
+  @override
+  String get feedbackLabel => 'Your feedback *';
+
+  @override
+  String get feedbackHint => 'Write your feedback';
+
+  @override
+  String get feedbackEmailLabel => 'Email';
+
+  @override
+  String get feedbackEmailHint => 'Enter your email';
+
+  @override
+  String get feedbackSubmit => 'Submit';
+
+  @override
+  String get feedbackCancel => 'Cancel';
+
+  @override
+  String get feedbackSuccess => 'Thank you for your feedback!';
+
+  @override
+  String get feedbackError => 'Failed to send feedback. Try again.';
+
+  @override
+  String get feedbackRequired => 'This field is required';
+
+  @override
+  String get feedbackMinLength =>
+      'Feedback must contain at least 10 characters';
+
+  @override
+  String get feedbackInvalidEmail => 'Enter a valid email address';
 
   @override
   String get moveOn => 'Move on';
