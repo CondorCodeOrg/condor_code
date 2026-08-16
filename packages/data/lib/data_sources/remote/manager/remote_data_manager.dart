@@ -5,6 +5,7 @@ import 'package:data/data_sources/remote/models/question_remote.dart';
 import 'package:data/data_sources/remote/models/task_remote.dart';
 import 'package:data/data_sources/remote/models/tester_access_request_remote.dart';
 import 'package:data/data_sources/remote/models/user_remote.dart';
+import 'package:domain/models/feedback_model.dart';
 import 'package:domain/models/knowledge_base_news_item.dart';
 
 /// Remote service: Firebase logic, REST API calls, etc.
@@ -24,10 +25,7 @@ abstract class RemoteDataManager {
 
   bool get isEmailPasswordAuth;
 
-  Future<UserRemote> signUpWithEmailPassword({
-    required String email,
-    required String password,
-  });
+  Future<UserRemote> signUpWithEmailPassword({required String email, required String password});
 
   Future<void> createUserProfile({
     required String uid,
@@ -35,10 +33,7 @@ abstract class RemoteDataManager {
     required String email,
   });
 
-  Future<UserRemote> signInWithEmailPassword({
-    required String email,
-    required String password,
-  });
+  Future<UserRemote> signInWithEmailPassword({required String email, required String password});
 
   Future<UserRemote?> signInWithGoogle();
 
@@ -106,18 +101,15 @@ abstract class RemoteDataManager {
 
   Future<void> submitTesterAccessRequest();
 
-  Future<TesterAccessRequestRemote?> fetchTesterAccessRequestForUser(
-    String userId,
-  );
+  Future<TesterAccessRequestRemote?> fetchTesterAccessRequestForUser(String userId);
 
   Future<List<TesterAccessRequestRemote>> fetchPendingTesterAccessRequests();
 
-  Future<void> approveTesterAccessRequest({
-    required String requestId,
-    required String userId,
-  });
+  Future<void> approveTesterAccessRequest({required String requestId, required String userId});
 
   Future<void> rejectTesterAccessRequest({required String requestId});
+
+  Future<String> saveFeedback(FeedbackModel feedback);
 
   Future<List<KnowledgeBaseNewsItem>> fetchKnowledgeBaseNews();
 

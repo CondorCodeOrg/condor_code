@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:condor_code/config/app_config.dart';
 import 'package:condor_code/ui/analytics/analytics.dart';
 import 'package:condor_code/ui/analytics/firebase/firebase_analytics_impl.dart';
@@ -9,6 +10,7 @@ import 'package:condor_code/ui/navigation/staging_gate_notifier.dart';
 import 'package:condor_code/ui/screens/contacts/contacts_cubit/contacts_cubit.dart';
 import 'package:condor_code/ui/screens/course/course_cubit/course_cubit.dart';
 import 'package:condor_code/ui/screens/courses/courses_cubit/courses_cubit.dart';
+import 'package:condor_code/ui/screens/feedback/feedback_cubit.dart';
 import 'package:condor_code/ui/screens/knowledge_base/knowledge_base_cubit/knowledge_base_home_cubit.dart';
 import 'package:condor_code/ui/screens/knowledge_base/roadmap/cubit/knowledge_base_roadmap_cubit.dart';
 import 'package:condor_code/ui/screens/knowledge_check/knowledge_check_cubit/knowledge_check_cubit.dart';
@@ -22,18 +24,15 @@ import 'package:condor_code/ui/screens/main/bloc/bottom_navigation_cubit.dart';
 import 'package:condor_code/ui/screens/main/bloc/snack_bar_cubit.dart';
 import 'package:condor_code/ui/screens/staging/only_testers_cubit/only_testers_cubit.dart';
 import 'package:condor_code/ui/screens/staging/staging_auth_cubit/staging_auth_cubit.dart';
-import 'package:condor_code/ui/theme/theme_cubit.dart';
 import 'package:condor_code/ui/screens/task_answer/task_answer_cubit/task_answer_cubit.dart';
 import 'package:condor_code/ui/screens/task_details/task_details_cubit/task_details_cubit.dart';
 import 'package:condor_code/ui/screens/tasks_list/tasks_list_cubit/tasks_list_cubit.dart';
+import 'package:condor_code/ui/theme/theme_cubit.dart';
 import 'package:data/data.dart' as data;
+import 'package:data/repository/feedback_repository_impl.dart';
 import 'package:domain/domain.dart';
 import 'package:domain/repository/feedback_repository.dart';
 import 'package:get_it/get_it.dart';
-import 'package:data/data_sources/remote/feedback_remote_data_source.dart';
-import 'package:data/repository/feedback_repository_impl.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:condor_code/ui/screens/feedback/feedback_cubit.dart';
 import 'package:ui_kit/locale/locale_service.dart';
 import 'package:ui_kit/theme/theme_mode_service.dart';
 
@@ -53,31 +52,16 @@ class ProviderManager {
     di.registerLazySingleton<StagingGateNotifier>(
       () => StagingGateNotifier(di<AuthRepository>(), di<Analytics>(), config),
     );
-    di.registerLazySingleton<SnackBarEventsProvider>(
-      () => SnackBarEventsProvider(),
-    );
-    di.registerLazySingleton<LessonScreenEventsProvider>(
-      () => LessonScreenEventsProvider(),
-    );
-    di.registerLazySingleton<AnalyticsEventsProvider>(
-      () => AnalyticsEventsProviderImpl(di()),
-    );
+    di.registerLazySingleton<SnackBarEventsProvider>(() => SnackBarEventsProvider());
+    di.registerLazySingleton<LessonScreenEventsProvider>(() => LessonScreenEventsProvider());
+    di.registerLazySingleton<AnalyticsEventsProvider>(() => AnalyticsEventsProviderImpl(di()));
 
     if (!di.isRegistered<FirebaseFirestore>()) {
-      di.registerLazySingleton<FirebaseFirestore>(
-        () => FirebaseFirestore.instance,
-      );
+      di.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
     }
 
-    // Register Feedback Remote Data Source
-    di.registerLazySingleton<FeedbackRemoteDataSource>(
-      () => FeedbackRemoteDataSource(di<FirebaseFirestore>()),
-    );
-
     // Register Feedback Repository
-    di.registerLazySingleton<FeedbackRepository>(
-      () => FeedbackRepositoryImpl(di<FeedbackRemoteDataSource>()),
-    );
+    di.registerLazySingleton<FeedbackRepository>(() => FeedbackRepositoryImpl(di()));
   }
 
   void _registerBlocs(GetIt di) {
@@ -102,9 +86,7 @@ class ProviderManager {
         snackBarEventsProvider: di<SnackBarEventsProvider>(),
       ),
     );
-    di.registerFactory<ContactsCubit>(
-      () => ContactsCubit(snackBarEventsProvider: di()),
-    );
+    di.registerFactory<ContactsCubit>(() => ContactsCubit(snackBarEventsProvider: di()));
     di.registerFactoryParam<CourseCubit, String, String?>(
       (courseId, initialLessonId) => CourseCubit(
         courseId: courseId,
@@ -123,15 +105,11 @@ class ProviderManager {
       ),
     );
     di.registerFactoryParam<TaskDetailsCubit, String, dynamic>(
-      (taskId, _) => TaskDetailsCubit(
-        taskId: taskId,
-        snackBarEventsProvider: di(),
-        tasksRepository: di(),
-      ),
+      (taskId, _) =>
+          TaskDetailsCubit(taskId: taskId, snackBarEventsProvider: di(), tasksRepository: di()),
     );
     di.registerFactoryParam<TaskAnswerCubit, Answer, dynamic>(
-      (answer, _) =>
-          TaskAnswerCubit(snackBarEventsProvider: di(), answer: answer),
+      (answer, _) => TaskAnswerCubit(snackBarEventsProvider: di(), answer: answer),
     );
     di.registerFactoryParam<LessonsListCubit, String, dynamic>(
       (courseId, _) => LessonsListCubit(
@@ -141,11 +119,8 @@ class ProviderManager {
       ),
     );
     di.registerFactoryParam<TasksListCubit, String, dynamic>(
-      (lessonId, _) => TasksListCubit(
-        tasksRepository: di(),
-        snackBarEventsProvider: di(),
-        lessonId: lessonId,
-      ),
+      (lessonId, _) =>
+          TasksListCubit(tasksRepository: di(), snackBarEventsProvider: di(), lessonId: lessonId),
     );
     di.registerFactoryParam<KnowledgeCheckCubit, String, String?>(
       (lessonId, initialTaskId) => KnowledgeCheckCubit(
@@ -155,12 +130,8 @@ class ProviderManager {
         initialTaskId: initialTaskId,
       ),
     );
-    di.registerLazySingleton<LocaleService>(
-      () => LocaleService(di<LocaleRepository>()),
-    );
-    di.registerLazySingleton<LocaleCubit>(
-      () => LocaleCubit(service: di<LocaleService>()),
-    );
+    di.registerLazySingleton<LocaleService>(() => LocaleService(di<LocaleRepository>()));
+    di.registerLazySingleton<LocaleCubit>(() => LocaleCubit(service: di<LocaleService>()));
     di.registerLazySingleton<StagingAuthCubit>(
       () => StagingAuthCubit(
         authRepository: di(),
@@ -169,17 +140,10 @@ class ProviderManager {
         analytics: di(),
       ),
     );
-    di.registerLazySingleton<ThemeModeService>(
-      () => ThemeModeService(di<ThemeModeRepository>()),
-    );
-    di.registerLazySingleton<ThemeCubit>(
-      () => ThemeCubit(service: di<ThemeModeService>()),
-    );
+    di.registerLazySingleton<ThemeModeService>(() => ThemeModeService(di<ThemeModeRepository>()));
+    di.registerLazySingleton<ThemeCubit>(() => ThemeCubit(service: di<ThemeModeService>()));
     di.registerFactory<OnlyTestersCubit>(
-      () => OnlyTestersCubit(
-        testerAccessRepository: di(),
-        snackBarEventsProvider: di(),
-      ),
+      () => OnlyTestersCubit(testerAccessRepository: di(), snackBarEventsProvider: di()),
     );
     di.registerFactory<CoursesCubit>(
       () => CoursesCubit(
@@ -189,16 +153,10 @@ class ProviderManager {
       ),
     );
     di.registerFactory<KnowledgeBaseHomeCubit>(
-      () => KnowledgeBaseHomeCubit(
-        knowledgeBaseRepository: di(),
-        snackBarEventsProvider: di(),
-      ),
+      () => KnowledgeBaseHomeCubit(knowledgeBaseRepository: di(), snackBarEventsProvider: di()),
     );
     di.registerFactory<KnowledgeBaseRoadmapCubit>(
-      () => KnowledgeBaseRoadmapCubit(
-        knowledgeBaseRepository: di(),
-        snackBarEventsProvider: di(),
-      ),
+      () => KnowledgeBaseRoadmapCubit(knowledgeBaseRepository: di(), snackBarEventsProvider: di()),
     );
     di.registerSingleton(SnackBarCubit(di()));
   }
