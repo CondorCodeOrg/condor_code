@@ -9,6 +9,7 @@ import 'package:data/data_sources/remote/models/task_remote.dart';
 import 'package:data/data_sources/remote/models/tester_access_request_remote.dart';
 import 'package:data/data_sources/remote/models/user_remote.dart';
 import 'package:data/data_sources/remote/remote_document_parsers.dart';
+import 'package:domain/models/feedback_model.dart';
 import 'package:domain/models/knowledge_base_news_item.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -827,6 +828,17 @@ class RemoteDataManagerImpl implements RemoteDataManager {
           'reviewedAt': FieldValue.serverTimestamp(),
           'reviewedBy': currentUserId,
         });
+  }
+
+  @override
+  Future<String> saveFeedback(FeedbackModel feedback) async {
+    try {
+      final docRef = _fireStore.collection('feedback').doc();
+      await docRef.set({...feedback.toJson(), 'id': docRef.id});
+      return docRef.id;
+    } catch (e) {
+      throw Exception('Failed to save feedback: $e');
+    }
   }
 
   @override

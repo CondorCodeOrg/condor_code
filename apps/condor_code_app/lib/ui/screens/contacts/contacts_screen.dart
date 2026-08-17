@@ -1,9 +1,10 @@
-import 'package:condor_code/di/provider_manager.dart';
-import 'package:condor_code/ui/screens/contacts/contacts_cubit/contacts_cubit.dart';
-import 'package:condor_code/ui/screens/contacts/contacts_cubit/contacts_state.dart';
-import 'package:condor_code/ui/utils/localization.dart';
-import 'package:condor_code/ui/widgets/top_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:condor_code/di/provider_manager.dart';
+import 'package:condor_code/ui/analytics/analytics.dart';
+import 'package:condor_code/ui/l10n/app_localizations.dart';
+import 'package:condor_code/ui/screens/feedback/feedback_cubit.dart';
+import 'package:condor_code/ui/widgets/feedback_dialog.dart';
+import 'package:condor_code/ui/widgets/top_navigation_bar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui_kit/ui_kit.dart';
 import 'package:ui_kit/widgets/condor_code_network_image_view.dart';
@@ -34,7 +35,7 @@ class ContactVideoPreview {
   final String? title;
 }
 
-/// Block with description and one horizontal video on the right (YouTube, Telegram channel, Telegram group).
+/// Block with description and one horizontal video on the right.
 class ContactBlockWithVideos {
   const ContactBlockWithVideos({
     required this.title,
@@ -49,11 +50,10 @@ class ContactBlockWithVideos {
   final String url;
   final IconData icon;
 
-  /// Main video for the block — displayed horizontally on the right. Add your own: videoUrl + thumbnail.
   final ContactVideoPreview? mainVideo;
 }
 
-/// Compact contact without video (LinkedIn, TikTok).
+/// Compact contact without video.
 class _ContactEntry {
   const _ContactEntry({
     required this.title,
@@ -71,118 +71,157 @@ class _ContactEntry {
 class ContactsScreen extends StatelessWidget {
   const ContactsScreen({super.key});
 
-  static List<ContactBlockWithVideos> _blocksWithVideos() {
+  static List<ContactBlockWithVideos> _blocksWithVideos(AppLocalizations l10n) {
     return [
       ContactBlockWithVideos(
-        title: localization.youTube,
-        description: localization.youtubeBlockDesc,
+        title: l10n.youTube,
+        description: l10n.youtubeBlockDesc,
         url: _urlYouTube,
         icon: Icons.play_circle_filled_rounded,
         mainVideo: const ContactVideoPreview(
           videoUrl: _urlYouTube,
           thumbnailAsset: 'assets/images/oleh_youtube_contacts.png',
         ),
-        // Add your own: mainVideo: ContactVideoPreview(videoUrl: 'https://youtube.com/watch?v=xxx', thumbnailUrl: 'https://img.youtube.com/vi/xxx/maxresdefault.jpg'),
       ),
     ];
   }
 
-  static List<_ContactEntry> _telegramEntries() {
+  static List<_ContactEntry> _telegramEntries(AppLocalizations l10n) {
     return [
       _ContactEntry(
-        title: '${localization.telegram} ${localization.telegramChannel}',
-        description: localization.telegramChannelDesc,
+        title: '${l10n.telegram} ${l10n.telegramChannel}',
+        description: l10n.telegramChannelDesc,
         url: _urlTelegramChannel,
         icon: Icons.telegram,
       ),
       _ContactEntry(
-        title: '${localization.telegram} ${localization.telegramGroup}',
-        description: localization.telegramGroupDesc,
+        title: '${l10n.telegram} ${l10n.telegramGroup}',
+        description: l10n.telegramGroupDesc,
         url: _urlTelegramGroup,
         icon: Icons.groups_rounded,
       ),
     ];
   }
 
-  static List<_ContactEntry> _socialEntries() {
+  static List<_ContactEntry> _socialEntries(AppLocalizations l10n) {
     return [
       _ContactEntry(
-        title: localization.linkedIn,
-        description: localization.mentorName,
+        title: l10n.linkedIn,
+        description: l10n.mentorName,
         url: _urlLinkedIn,
         icon: Icons.business_center_rounded,
       ),
       _ContactEntry(
-        title: localization.tiktok,
-        description: localization.mentorName,
+        title: l10n.tiktok,
+        description: l10n.mentorName,
         url: _urlTikTok,
         icon: Icons.music_video_rounded,
       ),
     ];
   }
 
+  void _showFeedbackDialog(BuildContext context) {
+    di<Analytics>().logEvent('feedback_button_clicked', {
+      'screen': 'contacts',
+      'timestamp': DateTime.now().toIso8601String(),
+    });
+
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) => BlocProvider(
+        create: (_) => di<FeedbackCubit>(),
+        child: const FeedbackDialog(),
+      ),
+    );
+  }
+
+  Widget _buildFeedbackButton(BuildContext context, AppLocalizations l10n) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      child: ElevatedButton(
+        onPressed: () => _showFeedbackDialog(context),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.neon,
+          foregroundColor: AppColors.darkGrey800,
+          minimumSize: const Size(double.infinity, 56),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          elevation: 0,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.feedback_outlined, size: 24),
+            const SizedBox(width: 12),
+            Text(
+              l10n.leaveFeedback,
+              style: AppTextStyles.button.copyWith(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDesktop = MediaQuery.sizeOf(context).width >= 1024;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: !isDesktop
-          ? TopNavigationBar(
-              text: localization.contactsScreen,
-              isLeading: false,
-            )
+          ? TopNavigationBar(text: l10n.contactsScreen, isLeading: false)
           : null,
       body: Stack(
         children: [
           const Positioned.fill(child: _ContactsBackground()),
           SafeArea(
-            child: BlocProvider(
-              create: (context) => di<ContactsCubit>(),
-              child: BlocBuilder<ContactsCubit, ContactsState>(
-                builder: (context, state) {
-                  return CustomScrollView(
-                    slivers: [
-                      SliverToBoxAdapter(
-                        child: Center(
-                          child: ConstrainedBox(
-                            constraints: const BoxConstraints(maxWidth: 1100),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 24,
-                                vertical: 32,
+            child: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 1100),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 32,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              l10n.subscribeToUs,
+                              style: AppTextStyles.body1.copyWith(
+                                color: context.colors.textPrimary,
                               ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    localization.subscribeToUs,
-                                    style: AppTextStyles.body1.copyWith(
-                                      color: context.colors.textPrimary,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  const SizedBox(height: 32),
-                                  ..._blocksWithVideos().map(
-                                    (b) => Padding(
-                                      padding: const EdgeInsets.only(
-                                        bottom: 32,
-                                      ),
-                                      child: _ContactRowBlock(block: b),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 16),
-                                  _buildCompactRow(context),
-                                ],
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 32),
+                            ..._blocksWithVideos(l10n).map(
+                              (b) => Padding(
+                                padding: const EdgeInsets.only(bottom: 32),
+                                child: _ContactRowBlock(block: b),
                               ),
                             ),
-                          ),
+                            const SizedBox(height: 16),
+                            _buildCompactRow(context, l10n),
+                            const SizedBox(height: 24),
+                            _buildFeedbackButton(context, l10n),
+                            const SizedBox(height: 16),
+                          ],
                         ),
                       ),
-                    ],
-                  );
-                },
-              ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -190,7 +229,7 @@ class ContactsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCompactRow(BuildContext context) {
+  Widget _buildCompactRow(BuildContext context, AppLocalizations l10n) {
     final width = MediaQuery.sizeOf(context).width;
     final isNarrow = width < 500;
 
@@ -225,9 +264,9 @@ class ContactsScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        buildRow(_telegramEntries()),
+        buildRow(_telegramEntries(l10n)),
         const SizedBox(height: 16),
-        buildRow(_socialEntries()),
+        buildRow(_socialEntries(l10n)),
       ],
     );
   }
@@ -378,6 +417,7 @@ class _ContactRowBlockState extends State<_ContactRowBlock> {
   }
 
   Widget _buildLink(ContactBlockWithVideos b) {
+    final l10n = AppLocalizations.of(context)!;
     return InkWell(
       onTap: () => _openUrl(b.url),
       borderRadius: BorderRadius.circular(8),
@@ -387,7 +427,7 @@ class _ContactRowBlockState extends State<_ContactRowBlock> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              localization.goTo,
+              l10n.goTo,
               style: AppTextStyles.button.copyWith(
                 color: context.colors.accent,
                 fontSize: 14,
@@ -406,7 +446,6 @@ class _ContactRowBlockState extends State<_ContactRowBlock> {
   }
 }
 
-/// Horizontal video on the right side of the block (16:9). Add mainVideo with thumbnailUrl/thumbnailAsset.
 class _HorizontalVideoCard extends StatefulWidget {
   const _HorizontalVideoCard({required this.video, required this.fallbackUrl});
 
@@ -541,7 +580,6 @@ class _HorizontalVideoCardState extends State<_HorizontalVideoCard>
   }
 }
 
-/// Placeholder when mainVideo is not set — tap opens the block URL.
 class _HorizontalVideoPlaceholder extends StatelessWidget {
   const _HorizontalVideoPlaceholder({required this.onTap});
 
@@ -549,6 +587,7 @@ class _HorizontalVideoPlaceholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return LayoutBuilder(
       builder: (context, constraints) {
         final width = constraints.maxWidth;
@@ -579,7 +618,7 @@ class _HorizontalVideoPlaceholder extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    localization.addVideoPlaceholder,
+                    l10n.addVideoPlaceholder,
                     style: AppTextStyles.caption1.copyWith(
                       color: context.colors.textPrimary,
                     ),
@@ -617,6 +656,8 @@ class _ContactCardState extends State<_ContactCard> {
   @override
   Widget build(BuildContext context) {
     final e = widget.entry;
+    final l10n = AppLocalizations.of(context)!;
+
     return MouseRegion(
       onEnter: (_) => setState(() => _hover = true),
       onExit: (_) => setState(() => _hover = false),
@@ -684,7 +725,7 @@ class _ContactCardState extends State<_ContactCard> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      localization.goTo,
+                      l10n.goTo,
                       style: AppTextStyles.button.copyWith(
                         color: context.colors.accent,
                         fontSize: 13,

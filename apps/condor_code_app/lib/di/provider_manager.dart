@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:condor_code/config/app_config.dart';
 import 'package:condor_code/ui/analytics/analytics.dart';
 import 'package:condor_code/ui/analytics/firebase/firebase_analytics_impl.dart';
@@ -9,6 +10,7 @@ import 'package:condor_code/ui/navigation/staging_gate_notifier.dart';
 import 'package:condor_code/ui/screens/contacts/contacts_cubit/contacts_cubit.dart';
 import 'package:condor_code/ui/screens/course/course_cubit/course_cubit.dart';
 import 'package:condor_code/ui/screens/courses/courses_cubit/courses_cubit.dart';
+import 'package:condor_code/ui/screens/feedback/feedback_cubit.dart';
 import 'package:condor_code/ui/screens/knowledge_base/knowledge_base_cubit/knowledge_base_home_cubit.dart';
 import 'package:condor_code/ui/screens/knowledge_base/roadmap/cubit/knowledge_base_roadmap_cubit.dart';
 import 'package:condor_code/ui/screens/knowledge_check/knowledge_check_cubit/knowledge_check_cubit.dart';
@@ -22,12 +24,14 @@ import 'package:condor_code/ui/screens/main/bloc/bottom_navigation_cubit.dart';
 import 'package:condor_code/ui/screens/main/bloc/snack_bar_cubit.dart';
 import 'package:condor_code/ui/screens/staging/only_testers_cubit/only_testers_cubit.dart';
 import 'package:condor_code/ui/screens/staging/staging_auth_cubit/staging_auth_cubit.dart';
-import 'package:condor_code/ui/theme/theme_cubit.dart';
 import 'package:condor_code/ui/screens/task_answer/task_answer_cubit/task_answer_cubit.dart';
 import 'package:condor_code/ui/screens/task_details/task_details_cubit/task_details_cubit.dart';
 import 'package:condor_code/ui/screens/tasks_list/tasks_list_cubit/tasks_list_cubit.dart';
+import 'package:condor_code/ui/theme/theme_cubit.dart';
 import 'package:data/data.dart' as data;
+import 'package:data/repository/feedback_repository_impl.dart';
 import 'package:domain/domain.dart';
+import 'package:domain/repository/feedback_repository.dart';
 import 'package:get_it/get_it.dart';
 import 'package:ui_kit/locale/locale_service.dart';
 import 'package:ui_kit/theme/theme_mode_service.dart';
@@ -57,10 +61,27 @@ class ProviderManager {
     di.registerLazySingleton<AnalyticsEventsProvider>(
       () => AnalyticsEventsProviderImpl(di()),
     );
+
+    if (!di.isRegistered<FirebaseFirestore>()) {
+      di.registerLazySingleton<FirebaseFirestore>(
+        () => FirebaseFirestore.instance,
+      );
+    }
+
+    // Register Feedback Repository
+    di.registerLazySingleton<FeedbackRepository>(
+      () => FeedbackRepositoryImpl(di()),
+    );
   }
 
   void _registerBlocs(GetIt di) {
     di.registerFactory<BottomNavigationCubit>(() => BottomNavigationCubit());
+    di.registerFactory<FeedbackCubit>(
+      () => FeedbackCubit(
+        di<FeedbackRepository>(),
+        snackBarEventsProvider: di<SnackBarEventsProvider>(),
+      ),
+    );
     di.registerFactoryParam<QuestionsBloc, String, dynamic>(
       (lessonId, _) => QuestionsBloc(
         lessonId: lessonId,
