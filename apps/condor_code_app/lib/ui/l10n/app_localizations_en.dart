@@ -504,6 +504,102 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stagingRolePatronDeveloper => 'Patron + Developer';
 
   @override
+  String get signInTitle => 'Sign in';
+
+  @override
+  String get signInSubtitle => 'Sign in to continue.';
+
+  @override
+  String get signInEmailLabel => 'Email';
+
+  @override
+  String get signInPasswordLabel => 'Password';
+
+  @override
+  String get signInButton => 'Sign in';
+
+  @override
+  String get signInMissingCredentials => 'Enter email and password';
+
+  @override
+  String get signInErrorWrongCredentials => 'Wrong email or password.';
+
+  @override
+  String get signInErrorAccountNotFound =>
+      'No account exists with this email address.';
+
+  @override
+  String get signInErrorInvalidEmail => 'Enter a valid email address.';
+
+  @override
+  String get signInErrorUserDisabled => 'This account has been disabled.';
+
+  @override
+  String get signInErrorGeneric => 'Sign-in failed. Please try again.';
+
+  @override
+  String get signUpSubtitle => 'Create an account to continue.';
+
+  @override
+  String get signUpNameLabel => 'Name';
+
+  @override
+  String get signUpMissingFields => 'Enter name, email, and password';
+
+  @override
+  String get signUpConfirmPasswordLabel => 'Confirm password';
+
+  @override
+  String get signUpButton => 'Create account';
+
+  @override
+  String get signUpPasswordsMismatch => 'Passwords do not match.';
+
+  @override
+  String get signUpErrorEmailInUse =>
+      'An account with this email already exists.';
+
+  @override
+  String get signUpErrorWeakPassword =>
+      'Password is too weak. Use at least 6 characters.';
+
+  @override
+  String get signUpErrorGeneric =>
+      'Could not create account. Please try again.';
+
+  @override
+  String get switchToSignUp => 'Don\'t have an account? Sign up';
+
+  @override
+  String get switchToSignIn => 'Already have an account? Sign in';
+
+  @override
+  String get signInWithGoogle => 'Continue with Google';
+
+  @override
+  String get signInWithGoogleError =>
+      'Google sign-in failed. Please try again.';
+
+  @override
+  String get signInWithGoogleAccountExists =>
+      'An account with this email already exists. Sign in with email and password.';
+
+  @override
+  String get accountTitle => 'Account';
+
+  @override
+  String get accountSignOut => 'Sign out';
+
+  @override
+  String get accountSignOutConfirmTitle => 'Sign out';
+
+  @override
+  String get accountSignOutConfirm => 'Are you sure you want to sign out?';
+
+  @override
+  String get accountCancel => 'Cancel';
+
+  @override
   String get leaveFeedback => 'Leave feedback';
 
   @override

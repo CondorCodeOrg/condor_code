@@ -4,6 +4,8 @@ import 'package:condor_code/ui/analytics/analytics.dart';
 import 'package:condor_code/ui/analytics/analytics_constants.dart';
 import 'package:condor_code/ui/l10n/app_localizations.dart';
 import 'package:condor_code/ui/navigation/route_constants.dart';
+import 'package:condor_code/ui/screens/auth/auth_cubit/auth_cubit.dart';
+import 'package:condor_code/ui/screens/auth/auth_cubit/auth_state.dart';
 import 'package:condor_code/ui/screens/staging/staging_auth_cubit/staging_auth_cubit.dart';
 import 'package:condor_code/ui/screens/staging/staging_auth_cubit/staging_auth_state.dart';
 import 'package:condor_code/ui/widgets/app_drawer.dart';
@@ -58,8 +60,11 @@ class _MainScreenState extends State<MainScreen> {
         child: Column(
           children: [
             if (isDesktop)
-              BlocProvider.value(
-                value: di<StagingAuthCubit>(),
+              MultiBlocProvider(
+                providers: [
+                  BlocProvider.value(value: di<StagingAuthCubit>()),
+                  BlocProvider.value(value: di<AuthCubit>()),
+                ],
                 child: const SafeArea(child: _TopNavigationBar()),
               ),
             Expanded(
@@ -177,18 +182,32 @@ class _TopNavigationBar extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const AppThemeToggleButton(),
-                    if (user != null) _ProfilePopupMenu(user: user),
+                    if (user != null)
+                      _ProfilePopupMenu(
+                        user: user,
+                        onLogout: () =>
+                            context.read<StagingAuthCubit>().logout(),
+                      ),
                   ],
                 );
               },
             )
           else
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const AppThemeToggleButton(),
-                SizedBox(width: MediaQuery.of(context).size.width * 0.136),
-              ],
+            BlocBuilder<AuthCubit, AuthState>(
+              builder: (context, state) {
+                final user = state.user;
+                return Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const AppThemeToggleButton(),
+                    if (user != null)
+                      _ProfilePopupMenu(
+                        user: user,
+                        onLogout: () => context.read<AuthCubit>().logout(),
+                      ),
+                  ],
+                );
+              },
             ),
         ],
       ),
@@ -204,15 +223,21 @@ class _TopNavigationBar extends StatelessWidget {
 
 class _ProfilePopupMenu extends StatelessWidget {
   final User user;
+  final Future<void> Function() onLogout;
 
-  const _ProfilePopupMenu({required this.user});
+  const _ProfilePopupMenu({required this.user, required this.onLogout});
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final isStaging = di<AppConfig>().isStaging;
+    final title = isStaging ? l10n.stagingProfileTitle : l10n.accountTitle;
+    final signOut = isStaging
+        ? l10n.stagingProfileSignOut
+        : l10n.accountSignOut;
 
     return PopupMenuButton<VoidCallback>(
-      tooltip: l10n.stagingProfileTitle,
+      tooltip: title,
       offset: const Offset(0, 40),
       color: context.colors.popupSurface,
       surfaceTintColor: Colors.transparent,
@@ -227,6 +252,14 @@ class _ProfilePopupMenu extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              if (user.fullName != null && user.fullName!.trim().isNotEmpty)
+                Text(
+                  user.fullName!.trim(),
+                  style: AppTextStyles.body2.copyWith(
+                    color: context.colors.textPrimary,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               Text(
                 user.email,
                 style: AppTextStyles.body2.copyWith(
@@ -241,17 +274,16 @@ class _ProfilePopupMenu extends StatelessWidget {
         const PopupMenuDivider(),
         PopupMenuItem<VoidCallback>(
           value: () async {
-            final cubit = context.read<StagingAuthCubit>();
             final confirmed = await showDialog<bool>(
               context: context,
               builder: (_) => _LogoutConfirmationDialog(l10n: l10n),
             );
             if (confirmed == true) {
-              await cubit.logout();
+              await onLogout();
             }
           },
           child: Text(
-            l10n.stagingProfileSignOut,
+            signOut,
             style: AppTextStyles.body2.copyWith(color: context.colors.accent),
           ),
         ),
@@ -273,11 +305,15 @@ class _LogoutConfirmationDialog extends StatelessWidget {
       surfaceTintColor: Colors.transparent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       title: Text(
-        l10n.stagingProfileSignOutConfirmTitle,
+        di<AppConfig>().isStaging
+            ? l10n.stagingProfileSignOutConfirmTitle
+            : l10n.accountSignOutConfirmTitle,
         style: AppTextStyles.h2.copyWith(color: context.colors.textPrimary),
       ),
       content: Text(
-        l10n.stagingProfileSignOutConfirm,
+        di<AppConfig>().isStaging
+            ? l10n.stagingProfileSignOutConfirm
+            : l10n.accountSignOutConfirm,
         style: AppTextStyles.body1.copyWith(
           color: context.colors.textSecondary,
         ),
@@ -286,7 +322,9 @@ class _LogoutConfirmationDialog extends StatelessWidget {
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
           child: Text(
-            l10n.stagingProfileCancel,
+            di<AppConfig>().isStaging
+                ? l10n.stagingProfileCancel
+                : l10n.accountCancel,
             style: AppTextStyles.body2.copyWith(
               color: context.colors.textSecondary,
             ),
@@ -295,7 +333,9 @@ class _LogoutConfirmationDialog extends StatelessWidget {
         TextButton(
           onPressed: () => Navigator.of(context).pop(true),
           child: Text(
-            l10n.stagingProfileSignOut,
+            di<AppConfig>().isStaging
+                ? l10n.stagingProfileSignOut
+                : l10n.accountSignOut,
             style: AppTextStyles.body2.copyWith(color: context.colors.accent),
           ),
         ),

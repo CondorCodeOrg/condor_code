@@ -6,7 +6,9 @@ import 'package:condor_code/ui/analytics/mock/mock_analytics_impl.dart';
 import 'package:condor_code/ui/analytics/provider/analytics_events_provider.dart';
 import 'package:condor_code/ui/analytics/provider/analytics_events_provider_impl.dart';
 import 'package:condor_code/ui/base/provider/events/snack_bar_events_provider.dart';
+import 'package:condor_code/ui/navigation/auth_session_notifier.dart';
 import 'package:condor_code/ui/navigation/staging_gate_notifier.dart';
+import 'package:condor_code/ui/screens/auth/auth_cubit/auth_cubit.dart';
 import 'package:condor_code/ui/screens/contacts/contacts_cubit/contacts_cubit.dart';
 import 'package:condor_code/ui/screens/course/course_cubit/course_cubit.dart';
 import 'package:condor_code/ui/screens/courses/courses_cubit/courses_cubit.dart';
@@ -51,6 +53,13 @@ class ProviderManager {
   void _registerProviders(GetIt di, AppConfig config) {
     di.registerLazySingleton<StagingGateNotifier>(
       () => StagingGateNotifier(di<AuthRepository>(), di<Analytics>(), config),
+    );
+    di.registerLazySingleton<AuthSessionNotifier>(
+      () => AuthSessionNotifier(
+        di<AuthRepository>(),
+        di<Analytics>(),
+        di<AnalyticsEventsProvider>(),
+      ),
     );
     di.registerLazySingleton<SnackBarEventsProvider>(
       () => SnackBarEventsProvider(),
@@ -159,6 +168,13 @@ class ProviderManager {
       () => StagingAuthCubit(
         authRepository: di(),
         sharedPreferencesManager: di(),
+        snackBarEventsProvider: di(),
+        analytics: di(),
+      ),
+    );
+    di.registerLazySingleton<AuthCubit>(
+      () => AuthCubit(
+        authRepository: di(),
         snackBarEventsProvider: di(),
         analytics: di(),
       ),

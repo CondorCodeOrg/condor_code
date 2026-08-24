@@ -76,6 +76,7 @@ class AuthRepositoryImpl extends AuthRepository {
       dataCall: () => _remoteDataManager.signUpWithEmailPassword(
         email: email,
         password: password,
+        fullName: username,
       ),
       processResult: (userRemote) {
         return SuccessResult(userRemote.toDomain());

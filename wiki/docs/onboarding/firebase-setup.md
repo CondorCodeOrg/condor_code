@@ -144,6 +144,37 @@ fvm flutter run --dart-define=BUILD_TYPE=dev --dart-define=DATA_SOURCE=remote
 
 The app should connect to Firebase Auth + Firestore and load real content.
 
+### Production auth (same flow as dev)
+
+Dev and prod share the same `/login` screen and [AuthSessionNotifier](apps/condor_code_app/lib/ui/navigation/auth_session_notifier.dart). Only the Firebase project changes via `BUILD_TYPE`.
+
+**Local prod test:**
+```bash
+cd apps/condor_code_app
+flutterfire configure   # select production Firebase project, Web
+# copy generated content to lib/config/firebase/firebase_options_prod.dart
+git update-index --skip-worktree lib/config/firebase/firebase_options_prod.dart
+
+fvm flutter run -d chrome \
+  --dart-define=BUILD_TYPE=prod \
+  --dart-define=DATA_SOURCE=remote
+```
+
+**Production Firebase Console** (same as dev):
+- Authentication → Email/Password + Google enabled
+- Authorized domains → production hosting URL + `localhost` (for local prod testing)
+- Firestore rules → users can create/read their own `users/{uid}` document
+
+**CI/CD:** CD injects `firebase_options_prod.dart` from GitHub secrets before `flutter build web`:
+- `FIREBASE_OPTIONS_PROD_APP` — full file contents for `apps/condor_code_app/lib/config/firebase/firebase_options_prod.dart`
+- `FIREBASE_OPTIONS_PROD_ADMIN` — same for admin app
+
+To create a secret locally:
+```bash
+pbcopy < apps/condor_code_app/lib/config/firebase/firebase_options_prod.dart
+# paste into GitHub → Settings → Secrets → FIREBASE_OPTIONS_PROD_APP
+```
+
 ---
 
 ## Troubleshooting

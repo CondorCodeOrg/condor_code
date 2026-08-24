@@ -1,6 +1,9 @@
 import 'package:condor_code/config/app_config.dart';
 import 'package:condor_code/di/provider_manager.dart';
+import 'package:condor_code/ui/l10n/app_localizations.dart';
 import 'package:condor_code/ui/navigation/route_constants.dart';
+import 'package:condor_code/ui/screens/auth/auth_cubit/auth_cubit.dart';
+import 'package:condor_code/ui/screens/staging/staging_auth_cubit/staging_auth_cubit.dart';
 import 'package:condor_code/ui/utils/localization.dart';
 import 'package:condor_code/ui/widgets/app_theme_toggle_button.dart';
 import 'package:condor_code/ui/widgets/drawer_item.dart';
@@ -59,6 +62,12 @@ class AppDrawer extends StatelessWidget {
               },
             ),
             const Spacer(),
+            DrawerItem(
+              title: di<AppConfig>().isStaging
+                  ? localization.stagingProfileSignOut
+                  : localization.accountSignOut,
+              onTap: () => _confirmLogout(context),
+            ),
             const Align(
               alignment: Alignment.centerRight,
               child: AppThemeToggleButton(),
@@ -68,6 +77,59 @@ class AppDrawer extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _confirmLogout(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
+    final isStaging = di<AppConfig>().isStaging;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        backgroundColor: context.colors.popupSurface,
+        surfaceTintColor: Colors.transparent,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Text(
+          isStaging
+              ? l10n.stagingProfileSignOutConfirmTitle
+              : l10n.accountSignOutConfirmTitle,
+          style: AppTextStyles.h2.copyWith(color: context.colors.textPrimary),
+        ),
+        content: Text(
+          isStaging
+              ? l10n.stagingProfileSignOutConfirm
+              : l10n.accountSignOutConfirm,
+          style: AppTextStyles.body1.copyWith(
+            color: context.colors.textSecondary,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: Text(
+              isStaging ? l10n.stagingProfileCancel : l10n.accountCancel,
+              style: AppTextStyles.body2.copyWith(
+                color: context.colors.textSecondary,
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: Text(
+              isStaging ? l10n.stagingProfileSignOut : l10n.accountSignOut,
+              style: AppTextStyles.body2.copyWith(color: context.colors.accent),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true || !context.mounted) return;
+    Navigator.pop(context);
+    if (isStaging) {
+      await di<StagingAuthCubit>().logout();
+    } else {
+      await di<AuthCubit>().logout();
+    }
   }
 
   AppLogoLabel _getLogoLabel() => switch (di<AppConfig>().buildType) {

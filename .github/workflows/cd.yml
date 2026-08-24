@@ -37,6 +37,26 @@ jobs:
       - name: Generate code
         run: dart run melos run generate
 
+      - name: Write prod Firebase options (main app)
+        env:
+          FIREBASE_OPTIONS_PROD_APP: ${{ secrets.FIREBASE_OPTIONS_PROD_APP }}
+        run: |
+          if [ -z "$FIREBASE_OPTIONS_PROD_APP" ]; then
+            echo "FIREBASE_OPTIONS_PROD_APP secret is not set. Add the full contents of firebase_options_prod.dart in GitHub Actions secrets."
+            exit 1
+          fi
+          printf '%s' "$FIREBASE_OPTIONS_PROD_APP" > apps/condor_code_app/lib/config/firebase/firebase_options_prod.dart
+
+      - name: Write prod Firebase options (admin app)
+        env:
+          FIREBASE_OPTIONS_PROD_ADMIN: ${{ secrets.FIREBASE_OPTIONS_PROD_ADMIN }}
+        run: |
+          if [ -z "$FIREBASE_OPTIONS_PROD_ADMIN" ]; then
+            echo "FIREBASE_OPTIONS_PROD_ADMIN secret is not set. Add the full contents of firebase_options_prod.dart in GitHub Actions secrets."
+            exit 1
+          fi
+          printf '%s' "$FIREBASE_OPTIONS_PROD_ADMIN" > apps/condor_code_admin_app/lib/config/firebase/firebase_options_prod.dart
+
       - name: Build condor_code web
         run: cd apps/condor_code_app && flutter build web -t lib/main.dart --dart-define=BUILD_TYPE=prod --dart-define=DATA_SOURCE=remote
 

@@ -2,9 +2,11 @@ import 'package:condor_code/config/app_config.dart';
 import 'package:condor_code/di/provider_manager.dart';
 import 'package:condor_code/ui/analytics/analytics.dart';
 import 'package:condor_code/ui/analytics/analytics_navigator_observer.dart';
+import 'package:condor_code/ui/navigation/auth_session_notifier.dart';
 import 'package:condor_code/ui/navigation/route_constants.dart';
 import 'package:condor_code/ui/navigation/route_observers.dart';
 import 'package:condor_code/ui/navigation/staging_gate_notifier.dart';
+import 'package:condor_code/ui/screens/auth/login_screen.dart';
 import 'package:condor_code/ui/screens/contacts/contacts_screen.dart';
 import 'package:condor_code/ui/screens/course/course_screen.dart';
 import 'package:condor_code/ui/screens/courses/courses_list_screen.dart';
@@ -45,9 +47,12 @@ bool get _isDesktopWeb {
 
 BuildContext get globalContext => _rootNavigatorKey.currentContext!;
 
+String _authenticatedHome() =>
+    _isDesktopWeb ? RouteConstants.home : RouteConstants.courses;
+
 String _initialLocation(AppConfig appConfig) {
   if (appConfig.isStaging) return RouteConstants.stagingLogin;
-  return _isDesktopWeb ? RouteConstants.home : RouteConstants.courses;
+  return RouteConstants.login;
 }
 
 CustomTransitionPage<void> _fadeTransitionPage({
@@ -84,12 +89,11 @@ GoRouter getRouter(AppConfig appConfig) => GoRouter(
   navigatorKey: _rootNavigatorKey,
   observers: _getObservers(appConfig),
   initialLocation: _initialLocation(appConfig),
-  refreshListenable: appConfig.isStaging ? di<StagingGateNotifier>() : null,
+  refreshListenable: appConfig.isStaging
+      ? di<StagingGateNotifier>()
+      : di<AuthSessionNotifier>(),
   redirect: (context, state) {
     final p = state.uri.path;
-    if (!appConfig.isStaging && p == RouteConstants.stagingLogin) {
-      return _isDesktopWeb ? RouteConstants.home : RouteConstants.courses;
-    }
     if (p == RouteConstants.knowledgeBase ||
         p == RouteConstants.knowledgeBaseTrailingSlash) {
       return RouteConstants.knowledgeBaseHome;
@@ -111,18 +115,37 @@ GoRouter getRouter(AppConfig appConfig) => GoRouter(
         return RouteConstants.onlyTesters;
       }
 
-      if (!gate.shouldBlockStagingAccess && p == RouteConstants.stagingLogin) {
-        return _isDesktopWeb ? RouteConstants.home : RouteConstants.courses;
+      if (!gate.shouldBlockStagingAccess &&
+          (p == RouteConstants.stagingLogin || p == RouteConstants.login)) {
+        return _authenticatedHome();
       }
 
       if (!gate.shouldBlockStagingAccess && p == RouteConstants.onlyTesters) {
-        return _isDesktopWeb ? RouteConstants.home : RouteConstants.courses;
+        return _authenticatedHome();
       }
+
+      return null;
+    }
+
+    final session = di<AuthSessionNotifier>();
+    if (!session.hasFirebaseSession) {
+      if (p == RouteConstants.login) return null;
+      return RouteConstants.login;
+    }
+
+    if (p == RouteConstants.login ||
+        p == RouteConstants.stagingLogin ||
+        p == RouteConstants.onlyTesters) {
+      return _authenticatedHome();
     }
 
     return null;
   },
   routes: <RouteBase>[
+    GoRoute(
+      path: RouteConstants.login,
+      builder: (context, state) => const LoginScreen(),
+    ),
     GoRoute(
       path: RouteConstants.stagingLogin,
       builder: (context, state) => const StagingLoginScreen(),
