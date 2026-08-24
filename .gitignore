@@ -36,6 +36,8 @@ migrate_working_dir/
 # Firebase
 **/google-services.json
 **/GoogleService-Info.plist
+# FlutterFire CLI output — copy to lib/config/firebase/firebase_options_<env>.dart instead
+**/lib/firebase_options.dart
 .firebaserc
 firebase.json
 apps/**/firebase.json

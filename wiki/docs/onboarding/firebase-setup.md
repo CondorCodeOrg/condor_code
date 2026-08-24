@@ -105,6 +105,9 @@ flutterfire configure
 
 `flutterfire configure` creates `lib/firebase_options.dart` in each app. **However**, the app imports from `lib/config/firebase/` instead. You must copy the generated content to the correct file:
 
+> 🔒 **Never commit `lib/firebase_options.dart`.**  
+> This path is in `.gitignore`. It is only a temporary FlutterFire CLI output. Copy values into the matching `lib/config/firebase/firebase_options_<env>.dart` file, then leave or delete the generated file locally. The runtime entry point (`lib/main.dart`) does **not** import `lib/firebase_options.dart`.
+
 | Environment | Copy generated content to |
 |-------------|--------------------------|
 | Dev | `apps/condor_code_app/lib/config/firebase/firebase_options_dev.dart` |
@@ -123,7 +126,14 @@ git update-index --skip-worktree apps/condor_code_app/lib/config/firebase/fireba
 ```
 to prevent accidental commits of these files. Do the same for the admin app.
 
-After copying, you can delete the generated `lib/firebase_options.dart` to avoid confusion.
+After copying, delete the generated `lib/firebase_options.dart` locally (or keep it gitignored with your keys — it must not be staged or pushed).
+
+Before pushing, verify:
+
+```bash
+git status -- apps/condor_code_app/lib/firebase_options.dart
+# should show nothing, or "Untracked" only if .gitignore is not applied yet
+```
 ---
 
 ## 5. Run the App with Real Data
