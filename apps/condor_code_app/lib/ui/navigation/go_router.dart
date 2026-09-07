@@ -52,7 +52,7 @@ String _authenticatedHome() =>
 
 String _initialLocation(AppConfig appConfig) {
   if (appConfig.isStaging) return RouteConstants.stagingLogin;
-  return RouteConstants.login;
+  return _authenticatedHome();
 }
 
 CustomTransitionPage<void> _fadeTransitionPage({
@@ -128,14 +128,10 @@ GoRouter getRouter(AppConfig appConfig) => GoRouter(
     }
 
     final session = di<AuthSessionNotifier>();
-    if (!session.hasFirebaseSession) {
-      if (p == RouteConstants.login) return null;
-      return RouteConstants.login;
-    }
-
-    if (p == RouteConstants.login ||
-        p == RouteConstants.stagingLogin ||
-        p == RouteConstants.onlyTesters) {
+    if (session.hasFirebaseSession &&
+        (p == RouteConstants.login ||
+            p == RouteConstants.stagingLogin ||
+            p == RouteConstants.onlyTesters)) {
       return _authenticatedHome();
     }
 

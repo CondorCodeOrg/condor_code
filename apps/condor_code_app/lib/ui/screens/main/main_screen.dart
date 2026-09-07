@@ -43,64 +43,64 @@ class _MainScreenState extends State<MainScreen> {
       '${RouteConstants.knowledgeCheck}/',
     );
 
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      backgroundColor: context.colors.scaffoldBackground,
-      drawer: isDesktop ? null : const AppDrawer(),
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: const AssetImage(
-              'packages/ui_kit/assets/images/bg & pattern.png',
-            ),
-            fit: BoxFit.cover,
-            opacity: context.colors.patternOpacity,
-          ),
-        ),
-        child: Column(
-          children: [
-            if (isDesktop)
-              MultiBlocProvider(
-                providers: [
-                  BlocProvider.value(value: di<StagingAuthCubit>()),
-                  BlocProvider.value(value: di<AuthCubit>()),
-                ],
-                child: const SafeArea(child: _TopNavigationBar()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider.value(value: di<StagingAuthCubit>()),
+        BlocProvider.value(value: di<AuthCubit>()),
+      ],
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        backgroundColor: context.colors.scaffoldBackground,
+        drawer: isDesktop ? null : const AppDrawer(),
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: const AssetImage(
+                'packages/ui_kit/assets/images/bg & pattern.png',
               ),
-            Expanded(
-              child: Stack(
-                children: [
-                  SnackBarProducerWidget(child: widget.navigationShell),
-                  if (!isDesktop && !isKnowledgeCheck)
-                    SafeArea(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          left: 18,
-                          right: 12,
-                          top: 12,
-                        ),
-                        child: Row(
-                          children: [
-                            Builder(
-                              builder: (context) => IconButton(
-                                icon: Icon(
-                                  Icons.menu,
-                                  color: context.colors.textPrimary,
+              fit: BoxFit.cover,
+              opacity: context.colors.patternOpacity,
+            ),
+          ),
+          child: Column(
+            children: [
+              if (isDesktop) const SafeArea(child: _TopNavigationBar()),
+              Expanded(
+                child: Stack(
+                  children: [
+                    SnackBarProducerWidget(child: widget.navigationShell),
+                    if (!isDesktop && !isKnowledgeCheck)
+                      SafeArea(
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            left: 18,
+                            right: 12,
+                            top: 12,
+                          ),
+                          child: Row(
+                            children: [
+                              Builder(
+                                builder: (context) => IconButton(
+                                  icon: Icon(
+                                    Icons.menu,
+                                    color: context.colors.textPrimary,
+                                  ),
+                                  onPressed: () =>
+                                      Scaffold.of(context).openDrawer(),
                                 ),
-                                onPressed: () =>
-                                    Scaffold.of(context).openDrawer(),
                               ),
-                            ),
-                            const Spacer(),
-                            const LanguageSwitcher(compact: true),
-                          ],
+                              const Spacer(),
+                              const LanguageSwitcher(compact: true),
+                              const _MobileProfileButton(),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -204,7 +204,9 @@ class _TopNavigationBar extends StatelessWidget {
                       _ProfilePopupMenu(
                         user: user,
                         onLogout: () => context.read<AuthCubit>().logout(),
-                      ),
+                      )
+                    else
+                      const _GuestSignInMenu(),
                   ],
                 );
               },
@@ -219,6 +221,81 @@ class _TopNavigationBar extends StatelessWidget {
     BuildType.staging => AppLogoLabel.staging,
     BuildType.prod => AppLogoLabel.prod,
   };
+}
+
+class _MobileProfileButton extends StatelessWidget {
+  const _MobileProfileButton();
+
+  @override
+  Widget build(BuildContext context) {
+    if (di<AppConfig>().isStaging) {
+      return BlocBuilder<StagingAuthCubit, StagingAuthState>(
+        builder: (context, state) {
+          final user = state.user;
+          if (user == null) return const SizedBox.shrink();
+          return _ProfilePopupMenu(
+            user: user,
+            onLogout: () => context.read<StagingAuthCubit>().logout(),
+          );
+        },
+      );
+    }
+
+    return BlocBuilder<AuthCubit, AuthState>(
+      builder: (context, state) {
+        final user = state.user;
+        if (user != null) {
+          return _ProfilePopupMenu(
+            user: user,
+            onLogout: () => context.read<AuthCubit>().logout(),
+          );
+        }
+        return const _GuestSignInMenu();
+      },
+    );
+  }
+}
+
+class _GuestSignInMenu extends StatelessWidget {
+  const _GuestSignInMenu();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
+    return PopupMenuButton<VoidCallback>(
+      tooltip: l10n.signInTitle,
+      offset: const Offset(0, 40),
+      color: context.colors.popupSurface,
+      surfaceTintColor: Colors.transparent,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: Icon(Icons.person_outline, color: context.colors.textPrimary),
+      ),
+      itemBuilder: (context) => [
+        PopupMenuItem<VoidCallback>(
+          value: () => context.go(RouteConstants.login),
+          child: Text(
+            l10n.signInTitle,
+            style: AppTextStyles.body2.copyWith(
+              color: context.colors.textPrimary,
+            ),
+          ),
+        ),
+        PopupMenuItem<VoidCallback>(
+          value: () => context.read<AuthCubit>().signInWithGoogle(),
+          child: Text(
+            l10n.signInWithGoogle,
+            style: AppTextStyles.body2.copyWith(
+              color: context.colors.textPrimary,
+            ),
+          ),
+        ),
+      ],
+      onSelected: (callback) => callback(),
+    );
+  }
 }
 
 class _ProfilePopupMenu extends StatelessWidget {

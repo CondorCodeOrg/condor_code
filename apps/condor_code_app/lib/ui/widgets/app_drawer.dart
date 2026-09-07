@@ -3,12 +3,15 @@ import 'package:condor_code/di/provider_manager.dart';
 import 'package:condor_code/ui/l10n/app_localizations.dart';
 import 'package:condor_code/ui/navigation/route_constants.dart';
 import 'package:condor_code/ui/screens/auth/auth_cubit/auth_cubit.dart';
+import 'package:condor_code/ui/screens/auth/auth_cubit/auth_state.dart';
 import 'package:condor_code/ui/screens/staging/staging_auth_cubit/staging_auth_cubit.dart';
+import 'package:condor_code/ui/screens/staging/staging_auth_cubit/staging_auth_state.dart';
 import 'package:condor_code/ui/utils/localization.dart';
 import 'package:condor_code/ui/widgets/app_theme_toggle_button.dart';
 import 'package:condor_code/ui/widgets/drawer_item.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ui_kit/ui_kit.dart';
 
@@ -62,12 +65,7 @@ class AppDrawer extends StatelessWidget {
               },
             ),
             const Spacer(),
-            DrawerItem(
-              title: di<AppConfig>().isStaging
-                  ? localization.stagingProfileSignOut
-                  : localization.accountSignOut,
-              onTap: () => _confirmLogout(context),
-            ),
+            _DrawerAuthAction(onLogout: () => _confirmLogout(context)),
             const Align(
               alignment: Alignment.centerRight,
               child: AppThemeToggleButton(),
@@ -137,4 +135,43 @@ class AppDrawer extends StatelessWidget {
     BuildType.staging => AppLogoLabel.staging,
     BuildType.prod => AppLogoLabel.prod,
   };
+}
+
+class _DrawerAuthAction extends StatelessWidget {
+  const _DrawerAuthAction({required this.onLogout});
+
+  final VoidCallback onLogout;
+
+  @override
+  Widget build(BuildContext context) {
+    if (di<AppConfig>().isStaging) {
+      return BlocBuilder<StagingAuthCubit, StagingAuthState>(
+        builder: (context, state) {
+          if (state.user == null) return const SizedBox.shrink();
+          return DrawerItem(
+            title: localization.stagingProfileSignOut,
+            onTap: onLogout,
+          );
+        },
+      );
+    }
+
+    return BlocBuilder<AuthCubit, AuthState>(
+      builder: (context, state) {
+        if (state.user != null) {
+          return DrawerItem(
+            title: localization.accountSignOut,
+            onTap: onLogout,
+          );
+        }
+        return DrawerItem(
+          title: localization.signInTitle,
+          onTap: () {
+            Navigator.pop(context);
+            context.go(RouteConstants.login);
+          },
+        );
+      },
+    );
+  }
 }
