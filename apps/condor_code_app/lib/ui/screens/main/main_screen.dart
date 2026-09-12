@@ -4,6 +4,8 @@ import 'package:condor_code/ui/analytics/analytics.dart';
 import 'package:condor_code/ui/analytics/analytics_constants.dart';
 import 'package:condor_code/ui/l10n/app_localizations.dart';
 import 'package:condor_code/ui/navigation/route_constants.dart';
+import 'package:condor_code/ui/screens/auth/auth_cubit/auth_cubit.dart';
+import 'package:condor_code/ui/screens/auth/auth_cubit/auth_state.dart';
 import 'package:condor_code/ui/screens/staging/staging_auth_cubit/staging_auth_cubit.dart';
 import 'package:condor_code/ui/screens/staging/staging_auth_cubit/staging_auth_state.dart';
 import 'package:condor_code/ui/widgets/app_drawer.dart';
@@ -41,61 +43,64 @@ class _MainScreenState extends State<MainScreen> {
       '${RouteConstants.knowledgeCheck}/',
     );
 
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      backgroundColor: context.colors.scaffoldBackground,
-      drawer: isDesktop ? null : const AppDrawer(),
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: const AssetImage(
-              'packages/ui_kit/assets/images/bg & pattern.png',
-            ),
-            fit: BoxFit.cover,
-            opacity: context.colors.patternOpacity,
-          ),
-        ),
-        child: Column(
-          children: [
-            if (isDesktop)
-              BlocProvider.value(
-                value: di<StagingAuthCubit>(),
-                child: const SafeArea(child: _TopNavigationBar()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider.value(value: di<StagingAuthCubit>()),
+        BlocProvider.value(value: di<AuthCubit>()),
+      ],
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        backgroundColor: context.colors.scaffoldBackground,
+        drawer: isDesktop ? null : const AppDrawer(),
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: const AssetImage(
+                'packages/ui_kit/assets/images/bg & pattern.png',
               ),
-            Expanded(
-              child: Stack(
-                children: [
-                  SnackBarProducerWidget(child: widget.navigationShell),
-                  if (!isDesktop && !isKnowledgeCheck)
-                    SafeArea(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          left: 18,
-                          right: 12,
-                          top: 12,
-                        ),
-                        child: Row(
-                          children: [
-                            Builder(
-                              builder: (context) => IconButton(
-                                icon: Icon(
-                                  Icons.menu,
-                                  color: context.colors.textPrimary,
+              fit: BoxFit.cover,
+              opacity: context.colors.patternOpacity,
+            ),
+          ),
+          child: Column(
+            children: [
+              if (isDesktop) const SafeArea(child: _TopNavigationBar()),
+              Expanded(
+                child: Stack(
+                  children: [
+                    SnackBarProducerWidget(child: widget.navigationShell),
+                    if (!isDesktop && !isKnowledgeCheck)
+                      SafeArea(
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            left: 18,
+                            right: 12,
+                            top: 12,
+                          ),
+                          child: Row(
+                            children: [
+                              Builder(
+                                builder: (context) => IconButton(
+                                  icon: Icon(
+                                    Icons.menu,
+                                    color: context.colors.textPrimary,
+                                  ),
+                                  onPressed: () =>
+                                      Scaffold.of(context).openDrawer(),
                                 ),
-                                onPressed: () =>
-                                    Scaffold.of(context).openDrawer(),
                               ),
-                            ),
-                            const Spacer(),
-                            const LanguageSwitcher(compact: true),
-                          ],
+                              const Spacer(),
+                              const LanguageSwitcher(compact: true),
+                              const _MobileProfileButton(),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -177,18 +182,34 @@ class _TopNavigationBar extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const AppThemeToggleButton(),
-                    if (user != null) _ProfilePopupMenu(user: user),
+                    if (user != null)
+                      _ProfilePopupMenu(
+                        user: user,
+                        onLogout: () =>
+                            context.read<StagingAuthCubit>().logout(),
+                      ),
                   ],
                 );
               },
             )
           else
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const AppThemeToggleButton(),
-                SizedBox(width: MediaQuery.of(context).size.width * 0.136),
-              ],
+            BlocBuilder<AuthCubit, AuthState>(
+              builder: (context, state) {
+                final user = state.user;
+                return Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const AppThemeToggleButton(),
+                    if (user != null)
+                      _ProfilePopupMenu(
+                        user: user,
+                        onLogout: () => context.read<AuthCubit>().logout(),
+                      )
+                    else
+                      const _GuestSignInMenu(),
+                  ],
+                );
+              },
             ),
         ],
       ),
@@ -202,17 +223,98 @@ class _TopNavigationBar extends StatelessWidget {
   };
 }
 
-class _ProfilePopupMenu extends StatelessWidget {
-  final User user;
+class _MobileProfileButton extends StatelessWidget {
+  const _MobileProfileButton();
 
-  const _ProfilePopupMenu({required this.user});
+  @override
+  Widget build(BuildContext context) {
+    if (di<AppConfig>().isStaging) {
+      return BlocBuilder<StagingAuthCubit, StagingAuthState>(
+        builder: (context, state) {
+          final user = state.user;
+          if (user == null) return const SizedBox.shrink();
+          return _ProfilePopupMenu(
+            user: user,
+            onLogout: () => context.read<StagingAuthCubit>().logout(),
+          );
+        },
+      );
+    }
+
+    return BlocBuilder<AuthCubit, AuthState>(
+      builder: (context, state) {
+        final user = state.user;
+        if (user != null) {
+          return _ProfilePopupMenu(
+            user: user,
+            onLogout: () => context.read<AuthCubit>().logout(),
+          );
+        }
+        return const _GuestSignInMenu();
+      },
+    );
+  }
+}
+
+class _GuestSignInMenu extends StatelessWidget {
+  const _GuestSignInMenu();
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
     return PopupMenuButton<VoidCallback>(
-      tooltip: l10n.stagingProfileTitle,
+      tooltip: l10n.signInTitle,
+      offset: const Offset(0, 40),
+      color: context.colors.popupSurface,
+      surfaceTintColor: Colors.transparent,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: Icon(Icons.person_outline, color: context.colors.textPrimary),
+      ),
+      itemBuilder: (context) => [
+        PopupMenuItem<VoidCallback>(
+          value: () => context.go(RouteConstants.login),
+          child: Text(
+            l10n.signInTitle,
+            style: AppTextStyles.body2.copyWith(
+              color: context.colors.textPrimary,
+            ),
+          ),
+        ),
+        PopupMenuItem<VoidCallback>(
+          value: () => context.read<AuthCubit>().signInWithGoogle(),
+          child: Text(
+            l10n.signInWithGoogle,
+            style: AppTextStyles.body2.copyWith(
+              color: context.colors.textPrimary,
+            ),
+          ),
+        ),
+      ],
+      onSelected: (callback) => callback(),
+    );
+  }
+}
+
+class _ProfilePopupMenu extends StatelessWidget {
+  final User user;
+  final Future<void> Function() onLogout;
+
+  const _ProfilePopupMenu({required this.user, required this.onLogout});
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final isStaging = di<AppConfig>().isStaging;
+    final title = isStaging ? l10n.stagingProfileTitle : l10n.accountTitle;
+    final signOut = isStaging
+        ? l10n.stagingProfileSignOut
+        : l10n.accountSignOut;
+
+    return PopupMenuButton<VoidCallback>(
+      tooltip: title,
       offset: const Offset(0, 40),
       color: context.colors.popupSurface,
       surfaceTintColor: Colors.transparent,
@@ -227,6 +329,14 @@ class _ProfilePopupMenu extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              if (user.fullName != null && user.fullName!.trim().isNotEmpty)
+                Text(
+                  user.fullName!.trim(),
+                  style: AppTextStyles.body2.copyWith(
+                    color: context.colors.textPrimary,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               Text(
                 user.email,
                 style: AppTextStyles.body2.copyWith(
@@ -241,17 +351,16 @@ class _ProfilePopupMenu extends StatelessWidget {
         const PopupMenuDivider(),
         PopupMenuItem<VoidCallback>(
           value: () async {
-            final cubit = context.read<StagingAuthCubit>();
             final confirmed = await showDialog<bool>(
               context: context,
               builder: (_) => _LogoutConfirmationDialog(l10n: l10n),
             );
             if (confirmed == true) {
-              await cubit.logout();
+              await onLogout();
             }
           },
           child: Text(
-            l10n.stagingProfileSignOut,
+            signOut,
             style: AppTextStyles.body2.copyWith(color: context.colors.accent),
           ),
         ),
@@ -273,11 +382,15 @@ class _LogoutConfirmationDialog extends StatelessWidget {
       surfaceTintColor: Colors.transparent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       title: Text(
-        l10n.stagingProfileSignOutConfirmTitle,
+        di<AppConfig>().isStaging
+            ? l10n.stagingProfileSignOutConfirmTitle
+            : l10n.accountSignOutConfirmTitle,
         style: AppTextStyles.h2.copyWith(color: context.colors.textPrimary),
       ),
       content: Text(
-        l10n.stagingProfileSignOutConfirm,
+        di<AppConfig>().isStaging
+            ? l10n.stagingProfileSignOutConfirm
+            : l10n.accountSignOutConfirm,
         style: AppTextStyles.body1.copyWith(
           color: context.colors.textSecondary,
         ),
@@ -286,7 +399,9 @@ class _LogoutConfirmationDialog extends StatelessWidget {
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
           child: Text(
-            l10n.stagingProfileCancel,
+            di<AppConfig>().isStaging
+                ? l10n.stagingProfileCancel
+                : l10n.accountCancel,
             style: AppTextStyles.body2.copyWith(
               color: context.colors.textSecondary,
             ),
@@ -295,7 +410,9 @@ class _LogoutConfirmationDialog extends StatelessWidget {
         TextButton(
           onPressed: () => Navigator.of(context).pop(true),
           child: Text(
-            l10n.stagingProfileSignOut,
+            di<AppConfig>().isStaging
+                ? l10n.stagingProfileSignOut
+                : l10n.accountSignOut,
             style: AppTextStyles.body2.copyWith(color: context.colors.accent),
           ),
         ),

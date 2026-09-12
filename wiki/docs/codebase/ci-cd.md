@@ -132,8 +132,18 @@ Builds production artifacts for deployment (web and Android).
 |------|---------|--------|
 | Bootstrap | `dart run melos bootstrap` | — |
 | Generate | `dart run melos run generate` | — |
-| Build condor_code web | `cd apps/condor_code_app && flutter build web -t lib/main.dart --dart-define=BUILD_TYPE=prod --dart-define=DATA_SOURCE=remote` | Web build for main app |
-| Build condor_code_admin web | `cd apps/condor_code_admin_app && flutter build web -t lib/main.dart --dart-define=BUILD_TYPE=prod --dart-define=DATA_SOURCE=remote` | Web build for admin app |
+| Write prod Firebase options | Injects `firebase_options_prod.dart` from secrets | Required for prod auth at runtime |
+| Build condor_code web | `cd apps/condor_code_app && flutter build web ... BUILD_TYPE=prod ...` | Web build for main app |
+| Build condor_code_admin web | `cd apps/condor_code_admin_app && flutter build web ...` | Web build for admin app |
+
+### Required secrets (production auth)
+
+| Secret | Contents |
+|--------|----------|
+| `FIREBASE_OPTIONS_PROD_APP` | Full text of `apps/condor_code_app/lib/config/firebase/firebase_options_prod.dart` |
+| `FIREBASE_OPTIONS_PROD_ADMIN` | Full text of `apps/condor_code_admin_app/lib/config/firebase/firebase_options_prod.dart` |
+
+Without these secrets, the CD web build fails before deploy. PR CI still builds with empty templates (compile-only check).
 
 #### Build Android APK
 

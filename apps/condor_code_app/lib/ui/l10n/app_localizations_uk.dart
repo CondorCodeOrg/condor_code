@@ -503,6 +503,102 @@ class AppLocalizationsUk extends AppLocalizations {
   String get stagingRolePatronDeveloper => 'Патрон + Розробник';
 
   @override
+  String get signInTitle => 'Вхід';
+
+  @override
+  String get signInSubtitle => 'Увійдіть, щоб продовжити.';
+
+  @override
+  String get signInEmailLabel => 'Електронна пошта';
+
+  @override
+  String get signInPasswordLabel => 'Пароль';
+
+  @override
+  String get signInButton => 'Увійти';
+
+  @override
+  String get signInMissingCredentials => 'Введіть електронну пошту та пароль';
+
+  @override
+  String get signInErrorWrongCredentials => 'Невірна пошта або пароль.';
+
+  @override
+  String get signInErrorAccountNotFound =>
+      'Облікового запису з такою адресою не існує.';
+
+  @override
+  String get signInErrorInvalidEmail => 'Введіть коректну адресу пошти.';
+
+  @override
+  String get signInErrorUserDisabled => 'Цей обліковий запис вимкнено.';
+
+  @override
+  String get signInErrorGeneric => 'Не вдалося увійти. Спробуйте ще раз.';
+
+  @override
+  String get signUpSubtitle => 'Створіть обліковий запис, щоб продовжити.';
+
+  @override
+  String get signUpNameLabel => 'Ім\'я';
+
+  @override
+  String get signUpMissingFields => 'Введіть ім\'я, пошту та пароль';
+
+  @override
+  String get signUpConfirmPasswordLabel => 'Підтвердіть пароль';
+
+  @override
+  String get signUpButton => 'Створити обліковий запис';
+
+  @override
+  String get signUpPasswordsMismatch => 'Паролі не збігаються.';
+
+  @override
+  String get signUpErrorEmailInUse =>
+      'Обліковий запис з такою поштою вже існує.';
+
+  @override
+  String get signUpErrorWeakPassword =>
+      'Пароль занадто слабкий. Використайте щонайменше 6 символів.';
+
+  @override
+  String get signUpErrorGeneric =>
+      'Не вдалося створити обліковий запис. Спробуйте ще раз.';
+
+  @override
+  String get switchToSignUp => 'Немає облікового запису? Зареєструватися';
+
+  @override
+  String get switchToSignIn => 'Вже є обліковий запис? Увійти';
+
+  @override
+  String get signInWithGoogle => 'Продовжити з Google';
+
+  @override
+  String get signInWithGoogleError =>
+      'Не вдалося увійти через Google. Спробуйте ще раз.';
+
+  @override
+  String get signInWithGoogleAccountExists =>
+      'Обліковий запис з такою поштою вже існує. Увійдіть з поштою та паролем.';
+
+  @override
+  String get accountTitle => 'Акаунт';
+
+  @override
+  String get accountSignOut => 'Вийти';
+
+  @override
+  String get accountSignOutConfirmTitle => 'Вийти з акаунту';
+
+  @override
+  String get accountSignOutConfirm => 'Ви впевнені, що хочете вийти?';
+
+  @override
+  String get accountCancel => 'Скасувати';
+
+  @override
   String get leaveFeedback => 'Залишити відгук';
 
   @override

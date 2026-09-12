@@ -36,9 +36,9 @@ class _CondorCodeAppState extends State<CondorCodeApp> {
       case BuildType.dev:
         di<Analytics>().setUserProperty(name: 'environment', value: 'dev');
       case BuildType.staging:
-        di<Analytics>().setUserProperty(name: 'environment', value: 'prod');
-      case BuildType.prod:
         di<Analytics>().setUserProperty(name: 'environment', value: 'staging');
+      case BuildType.prod:
+        di<Analytics>().setUserProperty(name: 'environment', value: 'prod');
     }
 
     _setPortraitOrientation();

@@ -28,6 +28,7 @@ abstract class RemoteDataManager {
   Future<UserRemote> signUpWithEmailPassword({
     required String email,
     required String password,
+    required String fullName,
   });
 
   Future<void> createUserProfile({
